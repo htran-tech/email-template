@@ -1,3 +1,13 @@
+# Keep only: blocks/, docs/, Assets/ (plus this file)
+/*
+!.gitignore
+!blocks/
+!blocks/**
+!docs/
+!docs/**
+!Assets/
+!Assets/**
+
 .DS_Store
 Thumbs.db
 *.log
