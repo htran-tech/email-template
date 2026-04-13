@@ -1,0 +1,306 @@
+<!--[if mso]>
+<style type="text/css">
+  body, table, td { font-family: Arial, Helvetica, sans-serif !important; }
+</style>
+<![endif]-->
+
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+
+<style type="text/css">
+  /* ============================================================
+     CSS GLOBAL — Tubi CRM Email Template System
+     ============================================================ */
+
+  :root {
+    color-scheme: light dark;
+  }
+
+  /* --- RESET --- */
+  body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+  table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+  img { -ms-interpolation-mode: bicubic; border: 0; line-height: 100%; outline: none; text-decoration: none; }
+  body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+  /* --- TYPOGRAPHY (Mobile-first base) --- */
+  .t-headline {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    line-height: 100%;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+  .t-body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 120%;
+    color: #ffffff;
+  }
+  .t-genre {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+  .t-badge {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+  .t-year {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 130%;
+    color: #ffffff;
+    opacity: 0.7;
+  }
+  .t-disclaimer {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 160%;
+    color: rgba(255,255,255,0.5);
+  }
+  .t-cta {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    letter-spacing: 0;
+    text-decoration: none;
+  }
+  .t-footer {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 136%;
+    color: rgba(255,255,255,0.5);
+  }
+  .t-footer a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: underline;
+  }
+  .t-footer-social {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 29px;
+    line-height: 100%;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* --- CREATIVE MODULE --- */
+  .t-cm-headline {
+    font-family: 'Arial Black', Arial, Helvetica, sans-serif;
+    font-weight: 900;
+    font-size: 42px;
+    line-height: 80%;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+  }
+  .t-cm-subhead {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 120%;
+  }
+
+  /* --- CTA BUTTONS --- */
+  .cta-primary {
+    background-color: #ffff13;
+    color: #000000;
+    border-radius: 200px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  .cta-primary:hover { opacity: 0.9; }
+
+  .cta-secondary {
+    background-color: transparent;
+    color: #ffffff;
+    border: 3px solid #ffffff;
+    border-radius: 200px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+
+  .cta-secondary-brand {
+    background-color: transparent;
+    color: #ffff13;
+    border: 3px solid #ffff13;
+    border-radius: 200px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+
+  /* --- IMAGES --- */
+  .fluid-img {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  .poster-img {
+    border-radius: 8px;
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* --- GRID CELL GAPS --- */
+  .grid-gap { width: 12px; min-width: 12px; font-size: 0; line-height: 0; }
+
+  /* --- LAYOUT UTILITIES --- */
+  .email-wrapper {
+    width: 100%;
+    background-color: {% if email_outer_bg %}{{email_outer_bg}}{% else %}transparent{% endif %};
+  }
+  .email-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: {% if email_inner_bg %}{{email_inner_bg}}{% else %}transparent{% endif %};
+  }
+  .content-pad {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .content-pad-bleed {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .v-space { height: 12px; font-size: 0; line-height: 0; }
+  .v-space-lg { height: 24px; font-size: 0; line-height: 0; }
+
+  /* --- DARK MODE OVERRIDES --- */
+  /* Apple Mail, iOS */
+  @media (prefers-color-scheme: dark) {
+    .email-wrapper { background-color: #000000 !important; }
+    .email-container { background-color: #000000 !important; }
+    .dm-bg-dark { background-color: #000000 !important; }
+    .dm-content-bg { background-color: #000000 !important; }
+    .dm-text-white { color: #ffffff !important; }
+    .dm-text-muted { color: rgba(255,255,255,0.5) !important; }
+    .t-headline { color: #ffffff !important; }
+    .t-body { color: #ffffff !important; }
+    .cta-primary { background-color: #ffff13 !important; color: #000000 !important; }
+    .cta-secondary { color: #ffffff !important; border-color: #ffffff !important; }
+    .t-badge { color: #ffffff !important; }
+    .t-year { color: #ffffff !important; }
+
+    /* Light mode overrides for light-themed emails */
+    .lm-bg-white { background-color: #000000 !important; }
+    .lm-text-dark { color: #ffffff !important; }
+  }
+
+  /* Outlook app dark mode */
+  [data-ogsc] .dm-bg-dark { background-color: #000000 !important; }
+  [data-ogsc] .dm-content-bg { background-color: #000000 !important; }
+  [data-ogsc] .dm-text-white { color: #ffffff !important; }
+  [data-ogsc] .t-headline { color: #ffffff !important; }
+  [data-ogsc] .t-body { color: #ffffff !important; }
+  [data-ogsc] .cta-primary { background-color: #ffff13 !important; color: #000000 !important; }
+  [data-ogsc] .t-badge { color: #ffffff !important; }
+  [data-ogsc] .t-year { color: #ffffff !important; }
+
+  /* --- RESPONSIVE: DESKTOP (min-width: 600px) --- */
+  @media screen and (min-width: 600px) {
+    .email-container {
+      max-width: 800px !important;
+    }
+    .content-pad {
+      padding-left: 40px !important;
+      padding-right: 40px !important;
+    }
+    .content-pad-bleed {
+      padding-left: 40px !important;
+      padding-right: 40px !important;
+    }
+    .v-space { height: 16px !important; }
+    .v-space-lg { height: 32px !important; }
+
+    /* Typography desktop scale */
+    .t-headline {
+      font-size: 42px !important;
+    }
+    .t-body {
+      font-size: 20px !important;
+    }
+    .t-genre {
+      font-size: 20px !important;
+    }
+    .t-badge {
+      font-size: 12px !important;
+    }
+    .t-year {
+      font-size: 13px !important;
+    }
+    .t-disclaimer {
+      font-size: 12px !important;
+    }
+    .t-cta {
+      font-size: 28px !important;
+    }
+    .t-footer {
+      font-size: 16px !important;
+    }
+    .t-footer-social {
+      font-size: 36px !important;
+    }
+    .t-cm-headline {
+      font-size: 72px !important;
+    }
+    .t-cm-subhead {
+      font-size: 24px !important;
+    }
+
+    /* Desktop image-only */
+    .img-full-width { width: 720px !important; max-width: 720px !important; }
+
+    /* Desktop hero (fills full container, no side padding) */
+    .hero-full-width { width: 800px !important; max-width: 800px !important; }
+
+    /* Desktop poster grid sizes */
+    .poster-1l { width: 720px !important; height: 405px !important; }
+    .poster-2l { width: 352px !important; height: 198px !important; }
+    .poster-2v { width: 352px !important; height: 504px !important; }
+    .poster-3v { width: 229px !important; height: 329px !important; }
+    .grid-gap { width: 16px !important; min-width: 16px !important; }
+    .grid-gap-v { height: 16px !important; }
+
+    /* CTA desktop */
+    .cta-primary, .cta-secondary, .cta-secondary-brand {
+      font-size: 28px !important;
+      min-height: 44px !important;
+    }
+  }
+
+  /* --- GMAIL FIX --- */
+  u + .body .email-container { width: 600px !important; }
+  @media screen and (min-width: 600px) {
+    u + .body .email-container { width: 800px !important; }
+  }
+</style>

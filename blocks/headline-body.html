@@ -1,0 +1,87 @@
+<!-- HEADLINE + BODY COPY CONTENT BLOCK — Override-with-Fallback
+     Standalone headline with optional body copy.
+     If neither headline_copy nor body_copy is set, nothing renders.
+     Body copy disappears when left blank.
+
+     Content (optional):
+       headline_copy          — Headline text
+       headline_url           — Optional link wrapping the headline
+       body_copy              — Body text
+
+     Font sizes (configurable per PRD):
+       hb_headline_size       — Headline font-size in px (default: inherits .t-headline = 32px mobile / 42px desktop)
+       hb_body_size           — Body font-size in px (default: inherits .t-body = 16px mobile / 20px desktop)
+
+     Colors:
+       content_bg_color       — Content area background (global, default: "#000000")
+       hb_text_color          — Text color for both (default: "#ffffff")
+       hb_headline_color      — Headline-specific color (default: same as hb_text_color)
+       hb_body_color          — Body-specific color (default: same as hb_text_color)
+
+     Layout:
+       hb_align               — "left" | "center" | "right" (default: "center")
+       hb_padding_top         — Top padding in px (default: 12)
+       hb_padding_bottom      — Bottom padding in px (default: 12)
+       hb_padding_side        — Side padding in px (default: 20)
+       hb_gap                 — Gap between headline and body in px (default: 8)
+       hb_headline_transform  — "uppercase" | "none" | "capitalize" (default: "uppercase")
+-->
+
+{% comment %} ===== 1. DEFAULTS ===== {% endcomment %}
+{% unless content_bg_color %}{% assign content_bg_color = email_inner_bg | default: "transparent" %}{% endunless %}
+{% unless hb_text_color %}{% assign hb_text_color = "#ffffff" %}{% endunless %}
+{% unless hb_headline_color %}{% assign hb_headline_color = hb_text_color %}{% endunless %}
+{% unless hb_body_color %}{% assign hb_body_color = hb_text_color %}{% endunless %}
+{% unless hb_align %}{% assign hb_align = "center" %}{% endunless %}
+{% unless hb_padding_top %}{% assign hb_padding_top = 12 %}{% endunless %}
+{% unless hb_padding_bottom %}{% assign hb_padding_bottom = 12 %}{% endunless %}
+{% unless hb_padding_side %}{% assign hb_padding_side = 20 %}{% endunless %}
+{% unless hb_gap %}{% assign hb_gap = 8 %}{% endunless %}
+{% unless hb_headline_transform %}{% assign hb_headline_transform = "uppercase" %}{% endunless %}
+
+{% comment %} ===== 2. RENDER ===== {% endcomment %}
+{% if headline_copy or body_copy %}
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
+  <tr>
+    <td align="center" style="padding: {{hb_padding_top}}px {{hb_padding_side}}px {{hb_padding_bottom}}px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" style="max-width: 560px; background-color: {{content_bg_color}}; border-radius: 8px; border: none; mso-border-alt: none;" class="dm-content-bg">
+
+        {% if headline_copy %}
+        <tr>
+          <td align="{{hb_align}}" style="padding-bottom: {% if body_copy %}{{hb_gap}}{% else %}0{% endif %}px;">
+            {% if headline_url %}<a href="{{headline_url}}" style="text-decoration: none; color: {{hb_headline_color}};">{% endif %}
+              <span class="t-headline dm-text-white" style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;{% if hb_headline_size %} font-size: {{hb_headline_size}}px;{% else %} font-size: 32px;{% endif %} letter-spacing: -0.02em; line-height: 100%; text-transform: {{hb_headline_transform}}; color: {{hb_headline_color}};">{{headline_copy}}</span>
+            {% if headline_url %}</a>{% endif %}
+          </td>
+        </tr>
+        {% endif %}
+
+        {% if body_copy %}
+        <tr>
+          <td align="{{hb_align}}">
+            <span class="t-body dm-text-white" style="font-family: Arial, Helvetica, sans-serif; font-weight: normal;{% if hb_body_size %} font-size: {{hb_body_size}}px;{% else %} font-size: 16px;{% endif %} letter-spacing: 0; line-height: 120%; color: {{hb_body_color}};">{{body_copy}}</span>
+          </td>
+        </tr>
+        {% endif %}
+
+      </table>
+    </td>
+  </tr>
+</table>
+{% endif %}
+
+{% comment %} ===== 3. RESET ===== {% endcomment %}
+{% assign headline_copy = null %}
+{% assign headline_url = null %}
+{% assign body_copy = null %}
+{% assign hb_text_color = null %}
+{% assign hb_headline_color = null %}
+{% assign hb_body_color = null %}
+{% assign hb_align = null %}
+{% assign hb_padding_top = null %}
+{% assign hb_padding_bottom = null %}
+{% assign hb_padding_side = null %}
+{% assign hb_gap = null %}
+{% assign hb_headline_size = null %}
+{% assign hb_body_size = null %}
+{% assign hb_headline_transform = null %}

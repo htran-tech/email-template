@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Campaign — Component QA</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#ffffff;">
+
+  {% assign email_outer_bg = "#ffffff" %}
+  {% assign email_inner_bg = "#000000" %}
+
+  {{content_blocks.${css_global}}}
+
+  <table role="presentation" class="email-wrapper" cellpadding="0" cellspacing="0" border="0" width="100%">
+  <tr>
+  <td align="center">
+  <table role="presentation" class="email-container" cellpadding="0" cellspacing="0" border="0" width="600" bgcolor="#000000" style="max-width:600px;">
+  <tr>
+  <td>
+
+  {% assign tubi = "https://tubitv.com/home" %}
+  {% assign utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=component_qa" %}
+
+
+  {% comment %} ============================================================
+     1. HERO (default portrait)
+  ============================================================ {% endcomment %}
+  {% assign hero_variant = "1" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_url = "https://raw.githubusercontent.com/htran-tech/assest-for-braze/main/Hero1p.png" %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = tubi %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/qXdai7PLD6OVTw==/e851289f-48f6-4ca9-87c6-6533dd63a91e/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = tubi | append: utm %}
+  {% assign hero_title = "Featured Title" %}
+  {% assign hero_banner_text = "Picked For You" %}
+  {{content_blocks.${hero_single_title}}}
+
+
+  {% comment %} ============================================================
+     2. IMAGE ONLY (default full-bleed)
+  ============================================================ {% endcomment %}
+  {% assign image_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/68aca50a84419b00649fddb4/original.png?1756144905" %}
+  {% assign image_link = tubi | append: utm %}
+  {% assign image_alt = "Tubi Promo" %}
+  {{content_blocks.${image_only}}}
+
+
+  {% comment %} ============================================================
+     3. HEADLINE + BODY (default)
+  ============================================================ {% endcomment %}
+  {% assign headline_copy = "Trending Now" %}
+  {{content_blocks.${headline_body}}}
+
+
+  {% comment %} ============================================================
+     4. FETCH ML RECOMMENDATIONS (single container)
+  ============================================================ {% endcomment %}
+  {% assign container = "cartoon_nostalgia" %}
+  {% assign limit = 3 %}
+  {% assign use_cache = "false" %}
+  {% connected_content https://crm.production-public.tubi.io/crm/external/ml-recommendations?container={{container}}&country={{${country} | default: 'US' }}&device_id={{device_id}}&user_id={{custom_attribute.${tubi_user_id}}}&tubi_id=null&limit={{limit}}&braze_id={{${braze_id}}}&platform={{platform}}&container_priority={{container_priority | default: 1 }}&variant_id={{campaign.${message_api_id}}}&campaign_id={{campaign_id}}&canvas_id={{canvas_id}}&channel=EMAIL&exclude_series=false&use_cache={{use_cache}}&rank_containers=false&region={{custom_attribute.${home_state}}}&language={{${language} | upcase }}&city={{${city} | url_escape }}&timezone={{${time_zone}}}&exclude_titles=&ranking_feature_flags=eyJlbmFibGVfY3Jvc3NfY2FtcGFpZ25fZGVkdXAiOiAidHJ1ZSIsImVuYWJsZV9ob21lX3NjcmVlbl9kZWR1cGVfbl9tXzQiOiAidHJ1ZSJ9 :basic_auth tubi :save result :retry :cache_max_age 60 %}
+
+
+  {% comment %} ============================================================
+     5. POSTER GRID — API mode (3v default)
+  ============================================================ {% endcomment %}
+  {% if result.containers[0] != blank %}
+  {% assign grid_api_items = result.containers[0].items %}
+  {% assign grid_utm_params = utm %}
+  {{content_blocks.${poster_grid}}}
+  {% endif %}
+
+
+  {% comment %} ============================================================
+     5. SINGLE CTA — Primary (default)
+  ============================================================ {% endcomment %}
+  {% assign cta_label = "Explore More" %}
+  {% assign cta_url = tubi | append: utm %}
+  {{content_blocks.${single_cta}}}
+
+
+  {% comment %} ============================================================
+     6. SINGLE CTA — Secondary (hollow)
+  ============================================================ {% endcomment %}
+  {% assign cta_label = "Set Reminder" %}
+  {% assign cta_url = tubi | append: utm %}
+  {% assign cta_style = "secondary" %}
+  {{content_blocks.${single_cta}}}
+
+
+  {% comment %} ============================================================
+     7. DOUBLE CTA — Primary + Secondary (default)
+  ============================================================ {% endcomment %}
+  {% assign cta_label = "Watch Now" %}
+  {% assign cta_url = tubi | append: utm %}
+  {% assign cta2_label = "Set Reminder" %}
+  {% assign cta2_url = tubi | append: utm %}
+  {{content_blocks.${double_cta}}}
+
+
+  {% comment %} ============================================================
+     8. POSTER GRID — Manual mode (2l, no metadata)
+  ============================================================ {% endcomment %}
+  {% assign headline_copy = "Coming Soon" %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign grid_layout = "2l" %}
+  {% assign grid_show_metadata = "false" %}
+  {% assign grid_item_1_img = "https://s3-us-west-1.amazonaws.com/img.adrise.tv/c179e907-cce2-4cee-b8f4-27f7b7fdad6f.jpg" %}
+  {% assign grid_item_1_url = "https://tubitv.com/movies/100039553" %}
+  {% assign grid_item_2_img = "https://s3-us-west-1.amazonaws.com/img.adrise.tv/9d27180c-a37e-49fa-9c37-baf69e7858e5.jpg" %}
+  {% assign grid_item_2_url = "https://tubitv.com/movies/100053682" %}
+  {{content_blocks.${poster_grid}}}
+
+  {% assign cta_label = "Set Reminders" %}
+  {% assign cta_url = tubi | append: utm %}
+  {% assign cta_style = "secondary" %}
+  {{content_blocks.${single_cta}}}
+
+
+  {% comment %} ============================================================
+     9. FOOTER (default US)
+  ============================================================ {% endcomment %}
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {{content_blocks.${footer}}}
+
+  </td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  </table>
+
+</body>
+</html>

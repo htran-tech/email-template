@@ -1,0 +1,454 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Unified Poster Grid — Comprehensive QA</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+  {{content_blocks.${css_global}}}
+
+  {% comment %}
+    Unified Poster Grid QA
+    Tests all 3 modes, all 4 layout types, mixed rows,
+    metadata, headline/CTA, dark/light, and edge cases.
+  {% endcomment %}
+
+  {% assign tubi_link = "https://tubitv.com/home" %}
+
+  {% assign p1 = "https://canvas-lb.tubitv.com/opts/qXdai7PLD6OVTw==/e851289f-48f6-4ca9-87c6-6533dd63a91e/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign p2 = "https://canvas-lb.tubitv.com/opts/GAc_CKsJ8Xk5BA==/28e38f44-cb12-4651-9b76-7431653342a9/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign p3 = "https://canvas-lb.tubitv.com/opts/QNODmZsxW4t5Wg==/9b1b9c1a-38eb-4e60-bcc8-04069a071245/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign p4 = "https://canvas-lb.tubitv.com/opts/BVE3okZuWovNwg==/c0efa766-81ec-4c37-96e8-31c128ad7bae/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign p5 = "https://canvas-lb.tubitv.com/opts/HpOFQhmcKCH6AQ==/f6957784-8def-4fbf-a47e-82bd8d4ce711/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign p6 = "https://canvas-lb.tubitv.com/opts/5M3AhiTClO__8w==/42fb6439-bb0a-46ae-b9e3-3fef523f01c4/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign p7 = "https://canvas-lb.tubitv.com/opts/Qw6HxiBYKCBLKg==/49cd8b05-c330-4fe1-a98a-f2e492316463/CJgDEMcEOgUxLjEuOQ==" %}
+
+  {% assign l1 = "https://canvas-lb.tubitv.com/opts/ZQfFHz1ggRx0nA==/1fbe6bf9-0d22-4e70-bff7-f1b06c3cf8fe/CNcHEKgEOgUxLjEuOQ==" %}
+  {% assign l2 = "https://canvas-lb.tubitv.com/opts/XYAaoJ_DXdRqUg==/c9e1d46d-7f60-460c-9a21-526c62b83ae5/CNcHEKgEOgUxLjEuOQ==" %}
+  {% assign l3 = "https://canvas-lb.tubitv.com/opts/-rbW6215_4hp5g==/07d6b14f-c02b-4ff6-9ef4-b7831b07ef9a/CNcHEKgEOgUxLjEuOQ==" %}
+  {% assign l4 = "https://canvas-lb.tubitv.com/opts/Ob4jXhNjqy2Wuw==/fca2bc10-9d23-4423-ba42-5a4009868696/CNcHEKgEOgUxLjEuOQ==" %}
+  {% assign l5 = "https://canvas-lb.tubitv.com/opts/Uv8ZPNIgNVB6Vw==/83bff463-b0b9-46d8-8a89-f3dda95ba001/CNcHEKgEOgUxLjEuOQ==" %}
+  {% assign l6 = "https://canvas-lb.tubitv.com/opts/oDpPm-LLF3sF5Q==/b3c71511-40e7-40be-877b-4bcda03a8f8e/CNcHEKgEOgUxLjEuOQ==" %}
+
+  {% assign n1 = "Get Active" %}
+  {% assign n2 = "The 51st State" %}
+  {% assign n3 = "Ninja the Immovable Heart" %}
+  {% assign n4 = "Lionheart" %}
+  {% assign n5 = "The Dallas Connection" %}
+  {% assign n6 = "Chain of Command" %}
+  {% assign n7 = "Overrun" %}
+
+
+  {% comment %} ============================================================
+     SECTION 1: MODE 1 — MIXED ROWS (grid_rows)
+     ============================================================ {% endcomment %}
+
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "MODE 1: MIXED ROWS" %}
+  {% assign body_copy = "grid_rows controls per-row layout types. Items consumed sequentially." %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- 1a: "1l,3v,2l" (Figma 3I) --- {% endcomment %}
+  {% assign headline_copy = "1L + 3V + 2L" %}{% assign body_copy = 'grid_rows="1l,3v,2l" — 6 items' %}{{content_blocks.${headline_body}}}
+  {% assign grid_rows = "1l,3v,2l" %}
+  {% assign grid_headline = "FEATURED TONIGHT" %}
+  {% assign grid_cta_label = "SEE ALL" %}{% assign grid_cta_url = tubi_link %}{% assign grid_cta_style = "primary" %}
+  {% assign grid_show_metadata = "true" %}{% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = l1 %}{% assign grid_item_1_url = tubi_link %}{% assign grid_item_1_subhead = n1 %}{% assign grid_item_1_genre = "Movie" %}
+  {% assign grid_item_2_img = p2 %}{% assign grid_item_2_url = tubi_link %}{% assign grid_item_2_subhead = n2 %}{% assign grid_item_2_genre = "Action" %}
+  {% assign grid_item_3_img = p3 %}{% assign grid_item_3_url = tubi_link %}{% assign grid_item_3_subhead = n3 %}{% assign grid_item_3_genre = "Drama" %}
+  {% assign grid_item_4_img = p4 %}{% assign grid_item_4_url = tubi_link %}{% assign grid_item_4_subhead = n4 %}{% assign grid_item_4_genre = "Comedy" %}
+  {% assign grid_item_5_img = l5 %}{% assign grid_item_5_url = tubi_link %}{% assign grid_item_5_subhead = n5 %}{% assign grid_item_5_genre = "Thriller" %}
+  {% assign grid_item_6_img = l6 %}{% assign grid_item_6_url = tubi_link %}{% assign grid_item_6_subhead = n6 %}{% assign grid_item_6_genre = "Action" %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- 1b: "2v,3v" (Figma 2H) --- {% endcomment %}
+  {% assign headline_copy = "2V + 3V" %}{% assign body_copy = 'grid_rows="2v,3v" — 5 items' %}{{content_blocks.${headline_body}}}
+  {% assign grid_rows = "2v,3v" %}
+  {% assign grid_headline = "TRENDING NOW" %}
+  {% assign grid_cta_label = "WATCH NOW" %}{% assign grid_cta_url = tubi_link %}{% assign grid_cta_style = "secondary" %}
+  {% assign grid_show_metadata = "false" %}{% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = p1 %}{% assign grid_item_1_url = tubi_link %}
+  {% assign grid_item_2_img = p2 %}{% assign grid_item_2_url = tubi_link %}
+  {% assign grid_item_3_img = p3 %}{% assign grid_item_3_url = tubi_link %}
+  {% assign grid_item_4_img = p4 %}{% assign grid_item_4_url = tubi_link %}
+  {% assign grid_item_5_img = p5 %}{% assign grid_item_5_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- 1c: "1l,2l,3v,2v" (4 mixed rows) --- {% endcomment %}
+  {% assign headline_copy = "1L + 2L + 3V + 2V" %}{% assign body_copy = 'grid_rows="1l,2l,3v,2v" — 8 items, all layout types' %}{{content_blocks.${headline_body}}}
+  {% assign grid_rows = "1l,2l,3v,2v" %}
+  {% assign grid_cta_label = "EXPLORE MORE" %}{% assign grid_cta_url = tubi_link %}{% assign grid_cta_style = "secondary-brand" %}
+  {% assign grid_show_metadata = "true" %}{% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = l1 %}{% assign grid_item_1_url = tubi_link %}{% assign grid_item_1_subhead = n1 %}{% assign grid_item_1_genre = "Movie" %}{% assign grid_item_1_badge = "New" %}
+  {% assign grid_item_2_img = l2 %}{% assign grid_item_2_url = tubi_link %}{% assign grid_item_2_subhead = n2 %}{% assign grid_item_2_genre = "Action" %}{% assign grid_item_2_year = "2024" %}
+  {% assign grid_item_3_img = l3 %}{% assign grid_item_3_url = tubi_link %}{% assign grid_item_3_subhead = n3 %}{% assign grid_item_3_genre = "Drama" %}{% assign grid_item_3_year = "2022" %}
+  {% assign grid_item_4_img = p4 %}{% assign grid_item_4_url = tubi_link %}{% assign grid_item_4_subhead = n4 %}{% assign grid_item_4_genre = "Comedy" %}{% assign grid_item_4_badge = "Trending" %}
+  {% assign grid_item_5_img = p5 %}{% assign grid_item_5_url = tubi_link %}{% assign grid_item_5_subhead = n5 %}{% assign grid_item_5_genre = "Thriller" %}
+  {% assign grid_item_6_img = p6 %}{% assign grid_item_6_url = tubi_link %}{% assign grid_item_6_subhead = n6 %}{% assign grid_item_6_genre = "Action" %}{% assign grid_item_6_year = "2019" %}
+  {% assign grid_item_7_img = p1 %}{% assign grid_item_7_url = tubi_link %}{% assign grid_item_7_subhead = n7 %}{% assign grid_item_7_genre = "Horror" %}
+  {% assign grid_item_8_img = p2 %}{% assign grid_item_8_url = tubi_link %}{% assign grid_item_8_subhead = n1 %}{% assign grid_item_8_genre = "Sci-Fi" %}{% assign grid_item_8_year = "2023" %}
+  {{content_blocks.${poster_grid}}}
+
+
+  {% comment %} ============================================================
+     SECTION 2: MODE 2 — UNIFORM ROWS (grid_layout)
+     ============================================================ {% endcomment %}
+
+  {% assign headline_copy = "MODE 2: UNIFORM ROWS" %}
+  {% assign body_copy = "grid_layout sets one layout for all rows. Rows auto-fill from items." %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- 2a: 3V uniform, 9 items = 3 rows --- {% endcomment %}
+  {% assign headline_copy = "3V UNIFORM" %}{% assign body_copy = 'grid_layout="3v" — 9 items = 3 rows' %}{{content_blocks.${headline_body}}}
+  {% assign grid_layout = "3v" %}
+  {% assign grid_headline = "POPULAR MOVIES" %}
+  {% assign grid_cta_label = "SEE ALL TITLES" %}{% assign grid_cta_url = tubi_link %}{% assign grid_cta_style = "primary" %}
+  {% assign grid_show_metadata = "true" %}{% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = p1 %}{% assign grid_item_1_url = tubi_link %}{% assign grid_item_1_subhead = n1 %}{% assign grid_item_1_genre = "Movie" %}
+  {% assign grid_item_2_img = p2 %}{% assign grid_item_2_url = tubi_link %}{% assign grid_item_2_subhead = n2 %}{% assign grid_item_2_genre = "Action" %}
+  {% assign grid_item_3_img = p3 %}{% assign grid_item_3_url = tubi_link %}{% assign grid_item_3_subhead = n3 %}{% assign grid_item_3_genre = "Drama" %}
+  {% assign grid_item_4_img = p4 %}{% assign grid_item_4_url = tubi_link %}{% assign grid_item_4_subhead = n4 %}{% assign grid_item_4_genre = "Comedy" %}
+  {% assign grid_item_5_img = p5 %}{% assign grid_item_5_url = tubi_link %}{% assign grid_item_5_subhead = n5 %}{% assign grid_item_5_genre = "Thriller" %}
+  {% assign grid_item_6_img = p6 %}{% assign grid_item_6_url = tubi_link %}{% assign grid_item_6_subhead = n6 %}{% assign grid_item_6_genre = "Action" %}
+  {% assign grid_item_7_img = p7 %}{% assign grid_item_7_url = tubi_link %}{% assign grid_item_7_subhead = n7 %}{% assign grid_item_7_genre = "Horror" %}
+  {% assign grid_item_8_img = p1 %}{% assign grid_item_8_url = tubi_link %}{% assign grid_item_8_subhead = n1 %}{% assign grid_item_8_genre = "Sci-Fi" %}
+  {% assign grid_item_9_img = p2 %}{% assign grid_item_9_url = tubi_link %}{% assign grid_item_9_subhead = n2 %}{% assign grid_item_9_genre = "Romance" %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- 2b: 2V uniform, 6 items = 3 rows --- {% endcomment %}
+  {% assign headline_copy = "2V UNIFORM" %}{% assign body_copy = 'grid_layout="2v" — 6 items = 3 rows' %}{{content_blocks.${headline_body}}}
+  {% assign grid_layout = "2v" %}
+  {% assign grid_cta_label = "SET REMINDER" %}{% assign grid_cta_url = tubi_link %}{% assign grid_cta_style = "secondary-brand" %}
+  {% assign grid_show_metadata = "false" %}{% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = p1 %}{% assign grid_item_1_url = tubi_link %}
+  {% assign grid_item_2_img = p2 %}{% assign grid_item_2_url = tubi_link %}
+  {% assign grid_item_3_img = p3 %}{% assign grid_item_3_url = tubi_link %}
+  {% assign grid_item_4_img = p4 %}{% assign grid_item_4_url = tubi_link %}
+  {% assign grid_item_5_img = p5 %}{% assign grid_item_5_url = tubi_link %}
+  {% assign grid_item_6_img = p6 %}{% assign grid_item_6_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- 2c: 2L uniform, 4 items = 2 rows --- {% endcomment %}
+  {% assign headline_copy = "2L UNIFORM" %}{% assign body_copy = 'grid_layout="2l" — 4 items = 2 rows' %}{{content_blocks.${headline_body}}}
+  {% assign grid_layout = "2l" %}
+  {% assign grid_headline = "LANDSCAPE PICKS" %}
+  {% assign grid_show_metadata = "false" %}{% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = l1 %}{% assign grid_item_1_url = tubi_link %}
+  {% assign grid_item_2_img = l2 %}{% assign grid_item_2_url = tubi_link %}
+  {% assign grid_item_3_img = l3 %}{% assign grid_item_3_url = tubi_link %}
+  {% assign grid_item_4_img = l4 %}{% assign grid_item_4_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- 2d: 1L uniform, 3 items = 3 rows --- {% endcomment %}
+  {% assign headline_copy = "1L UNIFORM" %}{% assign body_copy = 'grid_layout="1l" — 3 items = 3 rows' %}{{content_blocks.${headline_body}}}
+  {% assign grid_layout = "1l" %}
+  {% assign grid_headline = "MUST-SEE TITLES" %}
+  {% assign grid_cta_label = "BROWSE ALL" %}{% assign grid_cta_url = tubi_link %}{% assign grid_cta_style = "primary" %}
+  {% assign grid_show_metadata = "true" %}{% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = l1 %}{% assign grid_item_1_url = tubi_link %}{% assign grid_item_1_subhead = n1 %}{% assign grid_item_1_genre = "Movie" %}{% assign grid_item_1_year = "2024" %}
+  {% assign grid_item_2_img = l2 %}{% assign grid_item_2_url = tubi_link %}{% assign grid_item_2_subhead = n2 %}{% assign grid_item_2_genre = "Action" %}{% assign grid_item_2_year = "2023" %}
+  {% assign grid_item_3_img = l3 %}{% assign grid_item_3_url = tubi_link %}{% assign grid_item_3_subhead = n3 %}{% assign grid_item_3_genre = "Drama" %}{% assign grid_item_3_badge = "New" %}
+  {{content_blocks.${poster_grid}}}
+
+
+  {% comment %} ============================================================
+     SECTION 3: MODE 3 — AUTO (no layout config)
+     ============================================================ {% endcomment %}
+
+  {% assign headline_copy = "MODE 3: AUTO" %}
+  {% assign body_copy = "No grid_layout or grid_rows set. Defaults to 3v, auto-fills rows." %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- 3a: 3 items → auto 1 row of 3v --- {% endcomment %}
+  {% assign headline_copy = "AUTO — 3 ITEMS" %}{% assign body_copy = "Should render as 1 row of 3v" %}{{content_blocks.${headline_body}}}
+  {% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = p1 %}{% assign grid_item_1_url = tubi_link %}
+  {% assign grid_item_2_img = p2 %}{% assign grid_item_2_url = tubi_link %}
+  {% assign grid_item_3_img = p3 %}{% assign grid_item_3_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- 3b: 7 items → auto 3 rows of 3v (last row has 1 item) --- {% endcomment %}
+  {% assign headline_copy = "AUTO — 7 ITEMS" %}{% assign body_copy = "Should render as 3 rows of 3v (last row partial)" %}{{content_blocks.${headline_body}}}
+  {% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = p1 %}{% assign grid_item_1_url = tubi_link %}
+  {% assign grid_item_2_img = p2 %}{% assign grid_item_2_url = tubi_link %}
+  {% assign grid_item_3_img = p3 %}{% assign grid_item_3_url = tubi_link %}
+  {% assign grid_item_4_img = p4 %}{% assign grid_item_4_url = tubi_link %}
+  {% assign grid_item_5_img = p5 %}{% assign grid_item_5_url = tubi_link %}
+  {% assign grid_item_6_img = p6 %}{% assign grid_item_6_url = tubi_link %}
+  {% assign grid_item_7_img = p7 %}{% assign grid_item_7_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+
+  {% comment %} ============================================================
+     SECTION 4: LIGHT MODE
+     ============================================================ {% endcomment %}
+
+  {% assign content_bg_color = "#ffffff" %}{% assign hb_text_color = "#000000" %}
+  {% assign headline_copy = "LIGHT MODE GRIDS" %}
+  {% assign body_copy = "Testing light background with dark text." %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- 4a: Light 3v with metadata --- {% endcomment %}
+  {% assign grid_layout = "3v" %}
+  {% assign grid_headline = "TOP PICKS FOR YOU" %}{% assign grid_headline_url = tubi_link %}
+  {% assign grid_cta_label = "VIEW ALL" %}{% assign grid_cta_url = tubi_link %}{% assign grid_cta_style = "primary" %}
+  {% assign grid_show_metadata = "true" %}{% assign grid_text_color = "#000000" %}
+  {% assign grid_item_1_img = p1 %}{% assign grid_item_1_url = tubi_link %}{% assign grid_item_1_subhead = n1 %}{% assign grid_item_1_genre = "Movie" %}{% assign grid_item_1_year = "2024" %}{% assign grid_item_1_badge = "New" %}
+  {% assign grid_item_2_img = p2 %}{% assign grid_item_2_url = tubi_link %}{% assign grid_item_2_subhead = n2 %}{% assign grid_item_2_genre = "Action" %}{% assign grid_item_2_year = "2023" %}
+  {% assign grid_item_3_img = p3 %}{% assign grid_item_3_url = tubi_link %}{% assign grid_item_3_subhead = n3 %}{% assign grid_item_3_genre = "Drama" %}{% assign grid_item_3_year = "2022" %}
+  {% assign grid_item_4_img = p4 %}{% assign grid_item_4_url = tubi_link %}{% assign grid_item_4_subhead = n4 %}{% assign grid_item_4_genre = "Comedy" %}{% assign grid_item_4_badge = "Trending" %}
+  {% assign grid_item_5_img = p5 %}{% assign grid_item_5_url = tubi_link %}{% assign grid_item_5_subhead = n5 %}{% assign grid_item_5_genre = "Thriller" %}
+  {% assign grid_item_6_img = p6 %}{% assign grid_item_6_url = tubi_link %}{% assign grid_item_6_subhead = n6 %}{% assign grid_item_6_genre = "Action" %}{% assign grid_item_6_year = "2019" %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- 4b: Light mixed "1l,2v" --- {% endcomment %}
+  {% assign grid_rows = "1l,2v" %}
+  {% assign grid_headline = "EDITOR'S CHOICE" %}
+  {% assign grid_show_metadata = "false" %}{% assign grid_text_color = "#000000" %}
+  {% assign grid_item_1_img = l1 %}{% assign grid_item_1_url = tubi_link %}
+  {% assign grid_item_2_img = p1 %}{% assign grid_item_2_url = tubi_link %}
+  {% assign grid_item_3_img = p2 %}{% assign grid_item_3_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+
+  {% comment %} ============================================================
+     SECTION 5: EDGE CASES
+     ============================================================ {% endcomment %}
+
+  {% assign content_bg_color = "#000000" %}{% assign hb_text_color = "#ffffff" %}
+  {% assign headline_copy = "EDGE CASES" %}
+  {% assign body_copy = "Single items, no headline, no CTA, headline-only grid." %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- 5a: Single item (auto → 1 row of 3v with 1 poster) --- {% endcomment %}
+  {% assign headline_copy = "EDGE: 1 ITEM" %}{% assign body_copy = "Single item, no headline, no CTA" %}{{content_blocks.${headline_body}}}
+  {% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = p1 %}{% assign grid_item_1_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- 5b: 2 items as 2v --- {% endcomment %}
+  {% assign headline_copy = "EDGE: 2 ITEMS AS 2V" %}{% assign body_copy = 'grid_layout="2v" — fills 1 row' %}{{content_blocks.${headline_body}}}
+  {% assign grid_layout = "2v" %}
+  {% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = p1 %}{% assign grid_item_1_url = tubi_link %}
+  {% assign grid_item_2_img = p2 %}{% assign grid_item_2_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- 5c: Headline only, no CTA --- {% endcomment %}
+  {% assign headline_copy = "EDGE: HEADLINE ONLY" %}{% assign body_copy = "Grid with headline but no CTA button" %}{{content_blocks.${headline_body}}}
+  {% assign grid_layout = "3v" %}
+  {% assign grid_headline = "JUST A HEADLINE" %}
+  {% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = p1 %}{% assign grid_item_1_url = tubi_link %}
+  {% assign grid_item_2_img = p2 %}{% assign grid_item_2_url = tubi_link %}
+  {% assign grid_item_3_img = p3 %}{% assign grid_item_3_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- 5d: No headline, CTA only --- {% endcomment %}
+  {% assign headline_copy = "EDGE: CTA ONLY" %}{% assign body_copy = "Grid with CTA but no headline" %}{{content_blocks.${headline_body}}}
+  {% assign grid_layout = "2l" %}
+  {% assign grid_cta_label = "WATCH FREE" %}{% assign grid_cta_url = tubi_link %}{% assign grid_cta_style = "primary" %}
+  {% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = l1 %}{% assign grid_item_1_url = tubi_link %}
+  {% assign grid_item_2_img = l2 %}{% assign grid_item_2_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- 5e: Full metadata fields (badge + genre + title + year) --- {% endcomment %}
+  {% assign headline_copy = "EDGE: FULL METADATA" %}{% assign body_copy = "All metadata fields: badge, genre, title, year" %}{{content_blocks.${headline_body}}}
+  {% assign grid_layout = "3v" %}
+  {% assign grid_show_metadata = "true" %}{% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = p1 %}{% assign grid_item_1_url = tubi_link %}{% assign grid_item_1_subhead = n1 %}{% assign grid_item_1_genre = "Movie" %}{% assign grid_item_1_year = "2024" %}{% assign grid_item_1_badge = "New" %}
+  {% assign grid_item_2_img = p2 %}{% assign grid_item_2_url = tubi_link %}{% assign grid_item_2_subhead = n2 %}{% assign grid_item_2_genre = "Action" %}{% assign grid_item_2_year = "2023" %}{% assign grid_item_2_badge = "Trending" %}
+  {% assign grid_item_3_img = p3 %}{% assign grid_item_3_url = tubi_link %}{% assign grid_item_3_subhead = n3 %}{% assign grid_item_3_genre = "Drama" %}{% assign grid_item_3_year = "2022" %}
+  {{content_blocks.${poster_grid}}}
+
+
+  {% comment %} ============================================================
+     SECTION 6: FIGMA LAYOUT REFERENCE EXAMPLES
+     ============================================================ {% endcomment %}
+
+  {% assign headline_copy = "FIGMA LAYOUT EXAMPLES" %}
+  {% assign body_copy = "Reproducing specific Figma layout IDs." %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- Figma 2E: 1L + 2L --- {% endcomment %}
+  {% assign headline_copy = "FIGMA 2E: 1L + 2L" %}{{content_blocks.${headline_body}}}
+  {% assign grid_rows = "1l,2l" %}
+  {% assign grid_headline = "HEADLINE HERE" %}
+  {% assign grid_cta_label = "LABEL" %}{% assign grid_cta_url = tubi_link %}{% assign grid_cta_style = "primary" %}
+  {% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = l1 %}{% assign grid_item_1_url = tubi_link %}
+  {% assign grid_item_2_img = l2 %}{% assign grid_item_2_url = tubi_link %}
+  {% assign grid_item_3_img = l3 %}{% assign grid_item_3_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- Figma 2F: 1L + 2V --- {% endcomment %}
+  {% assign headline_copy = "FIGMA 2F: 1L + 2V" %}{{content_blocks.${headline_body}}}
+  {% assign grid_rows = "1l,2v" %}
+  {% assign grid_headline = "HEADLINE HERE" %}
+  {% assign grid_cta_label = "LABEL" %}{% assign grid_cta_url = tubi_link %}{% assign grid_cta_style = "primary" %}
+  {% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = l1 %}{% assign grid_item_1_url = tubi_link %}
+  {% assign grid_item_2_img = p1 %}{% assign grid_item_2_url = tubi_link %}
+  {% assign grid_item_3_img = p2 %}{% assign grid_item_3_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- Figma 3H: 1L + 2L + 3V --- {% endcomment %}
+  {% assign headline_copy = "FIGMA 3H: 1L + 2L + 3V" %}{{content_blocks.${headline_body}}}
+  {% assign grid_rows = "1l,2l,3v" %}
+  {% assign grid_headline = "HEADLINE HERE" %}
+  {% assign grid_cta_label = "LABEL" %}{% assign grid_cta_url = tubi_link %}{% assign grid_cta_style = "primary" %}
+  {% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = l1 %}{% assign grid_item_1_url = tubi_link %}
+  {% assign grid_item_2_img = l2 %}{% assign grid_item_2_url = tubi_link %}
+  {% assign grid_item_3_img = l3 %}{% assign grid_item_3_url = tubi_link %}
+  {% assign grid_item_4_img = p4 %}{% assign grid_item_4_url = tubi_link %}
+  {% assign grid_item_5_img = p5 %}{% assign grid_item_5_url = tubi_link %}
+  {% assign grid_item_6_img = p6 %}{% assign grid_item_6_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- Figma 4H: 1L + 3V + 2L + 3V --- {% endcomment %}
+  {% assign headline_copy = "FIGMA 4H: 1L + 3V + 2L + 3V" %}{{content_blocks.${headline_body}}}
+  {% assign grid_rows = "1l,3v,2l,3v" %}
+  {% assign grid_headline = "HEADLINE HERE" %}
+  {% assign grid_cta_label = "LABEL" %}{% assign grid_cta_url = tubi_link %}{% assign grid_cta_style = "primary" %}
+  {% assign grid_text_color = "#ffffff" %}
+  {% assign grid_item_1_img = l1 %}{% assign grid_item_1_url = tubi_link %}
+  {% assign grid_item_2_img = p1 %}{% assign grid_item_2_url = tubi_link %}
+  {% assign grid_item_3_img = p2 %}{% assign grid_item_3_url = tubi_link %}
+  {% assign grid_item_4_img = p3 %}{% assign grid_item_4_url = tubi_link %}
+  {% assign grid_item_5_img = l4 %}{% assign grid_item_5_url = tubi_link %}
+  {% assign grid_item_6_img = l5 %}{% assign grid_item_6_url = tubi_link %}
+  {% assign grid_item_7_img = p4 %}{% assign grid_item_7_url = tubi_link %}
+  {% assign grid_item_8_img = p5 %}{% assign grid_item_8_url = tubi_link %}
+  {% assign grid_item_9_img = p6 %}{% assign grid_item_9_url = tubi_link %}
+  {{content_blocks.${poster_grid}}}
+
+
+  {% comment %} ============================================================
+     SECTION 7: API-POWERED GRIDS (Braze Connected Content)
+     ============================================================
+     These examples show how to populate the poster grid from API calls
+     using Braze Connected Content. They won't render in local preview
+     but serve as campaign templates for the CRM team.
+     ============================================================ {% endcomment %}
+
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "API-POWERED GRIDS" %}
+  {% assign body_copy = "Braze Connected Content patterns for dynamic content." %}
+  {{content_blocks.${headline_body}}}
+
+
+  {% comment %} --- 7a: Single API container → 3v uniform grid ---
+       Fetches titles from one API endpoint and maps them into grid items.
+       The grid auto-fills rows from the item count.
+  {% endcomment %}
+
+  {% assign headline_copy = "SINGLE API CONTAINER" %}
+  {% assign body_copy = "One connected_content call → items mapped to grid_item_N variables" %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} === BRAZE CAMPAIGN CODE (paste into Braze) ===
+
+  {% connected_content {{api_url}} :save api %}
+
+  {% assign grid_layout = "3v" %}
+  {% assign grid_headline = "RECOMMENDED FOR YOU" %}
+  {% assign grid_cta_label = "SEE ALL TITLES" %}
+  {% assign grid_cta_url = "https://tubitv.com/home" %}
+  {% assign grid_show_metadata = "true" %}
+  {% assign grid_text_color = "#ffffff" %}
+
+  {% if api.items[0] %}{% assign grid_item_1_img = api.items[0].poster_url %}{% assign grid_item_1_url = api.items[0].deeplink %}{% assign grid_item_1_subhead = api.items[0].title %}{% assign grid_item_1_genre = api.items[0].genre %}{% endif %}
+  {% if api.items[1] %}{% assign grid_item_2_img = api.items[1].poster_url %}{% assign grid_item_2_url = api.items[1].deeplink %}{% assign grid_item_2_subhead = api.items[1].title %}{% assign grid_item_2_genre = api.items[1].genre %}{% endif %}
+  {% if api.items[2] %}{% assign grid_item_3_img = api.items[2].poster_url %}{% assign grid_item_3_url = api.items[2].deeplink %}{% assign grid_item_3_subhead = api.items[2].title %}{% assign grid_item_3_genre = api.items[2].genre %}{% endif %}
+  {% if api.items[3] %}{% assign grid_item_4_img = api.items[3].poster_url %}{% assign grid_item_4_url = api.items[3].deeplink %}{% assign grid_item_4_subhead = api.items[3].title %}{% assign grid_item_4_genre = api.items[3].genre %}{% endif %}
+  {% if api.items[4] %}{% assign grid_item_5_img = api.items[4].poster_url %}{% assign grid_item_5_url = api.items[4].deeplink %}{% assign grid_item_5_subhead = api.items[4].title %}{% assign grid_item_5_genre = api.items[4].genre %}{% endif %}
+  {% if api.items[5] %}{% assign grid_item_6_img = api.items[5].poster_url %}{% assign grid_item_6_url = api.items[5].deeplink %}{% assign grid_item_6_subhead = api.items[5].title %}{% assign grid_item_6_genre = api.items[5].genre %}{% endif %}
+  {% if api.items[6] %}{% assign grid_item_7_img = api.items[6].poster_url %}{% assign grid_item_7_url = api.items[6].deeplink %}{% assign grid_item_7_subhead = api.items[6].title %}{% assign grid_item_7_genre = api.items[6].genre %}{% endif %}
+  {% if api.items[7] %}{% assign grid_item_8_img = api.items[7].poster_url %}{% assign grid_item_8_url = api.items[7].deeplink %}{% assign grid_item_8_subhead = api.items[7].title %}{% assign grid_item_8_genre = api.items[7].genre %}{% endif %}
+  {% if api.items[8] %}{% assign grid_item_9_img = api.items[8].poster_url %}{% assign grid_item_9_url = api.items[8].deeplink %}{% assign grid_item_9_subhead = api.items[8].title %}{% assign grid_item_9_genre = api.items[8].genre %}{% endif %}
+
+  {{content_blocks.${poster_grid}}}
+
+  === END BRAZE CAMPAIGN CODE === {% endcomment %}
+
+
+  {% comment %} --- 7b: Multi-container API → mixed layout grid ---
+       Fetches from multiple API containers and maps into a mixed-row grid.
+       Container A provides featured (landscape), Container B provides titles (portrait).
+       Each container independently controls its item count.
+  {% endcomment %}
+
+  {% assign headline_copy = "MULTI-CONTAINER API" %}
+  {% assign body_copy = "Two connected_content calls → mixed grid_rows layout" %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} === BRAZE CAMPAIGN CODE (paste into Braze) ===
+
+  {% connected_content {{api_url_featured}} :save featured %}
+  {% connected_content {{api_url_titles}} :save titles %}
+
+  {% assign grid_rows = "1l,3v,2l" %}
+  {% assign grid_headline = "TONIGHT ON TUBI" %}
+  {% assign grid_cta_label = "EXPLORE MORE" %}
+  {% assign grid_cta_url = "https://tubitv.com/home" %}
+  {% assign grid_show_metadata = "true" %}
+  {% assign grid_text_color = "#ffffff" %}
+
+  {% comment %} Row 1 (1l): 1 featured landscape from container A {% endcomment %}
+  {% if featured.items[0] %}{% assign grid_item_1_img = featured.items[0].poster_landscape %}{% assign grid_item_1_url = featured.items[0].deeplink %}{% assign grid_item_1_subhead = featured.items[0].title %}{% assign grid_item_1_genre = featured.items[0].genre %}{% endif %}
+
+  {% comment %} Row 2 (3v): 3 portrait titles from container B {% endcomment %}
+  {% if titles.items[0] %}{% assign grid_item_2_img = titles.items[0].poster_portrait %}{% assign grid_item_2_url = titles.items[0].deeplink %}{% assign grid_item_2_subhead = titles.items[0].title %}{% assign grid_item_2_genre = titles.items[0].genre %}{% endif %}
+  {% if titles.items[1] %}{% assign grid_item_3_img = titles.items[1].poster_portrait %}{% assign grid_item_3_url = titles.items[1].deeplink %}{% assign grid_item_3_subhead = titles.items[1].title %}{% assign grid_item_3_genre = titles.items[1].genre %}{% endif %}
+  {% if titles.items[2] %}{% assign grid_item_4_img = titles.items[2].poster_portrait %}{% assign grid_item_4_url = titles.items[2].deeplink %}{% assign grid_item_4_subhead = titles.items[2].title %}{% assign grid_item_4_genre = titles.items[2].genre %}{% endif %}
+
+  {% comment %} Row 3 (2l): 2 landscape titles from container B (continued) {% endcomment %}
+  {% if titles.items[3] %}{% assign grid_item_5_img = titles.items[3].poster_landscape %}{% assign grid_item_5_url = titles.items[3].deeplink %}{% assign grid_item_5_subhead = titles.items[3].title %}{% assign grid_item_5_genre = titles.items[3].genre %}{% endif %}
+  {% if titles.items[4] %}{% assign grid_item_6_img = titles.items[4].poster_landscape %}{% assign grid_item_6_url = titles.items[4].deeplink %}{% assign grid_item_6_subhead = titles.items[4].title %}{% assign grid_item_6_genre = titles.items[4].genre %}{% endif %}
+
+  {{content_blocks.${poster_grid}}}
+
+  === END BRAZE CAMPAIGN CODE === {% endcomment %}
+
+
+  {% comment %} --- 7c: API with per-user personalization ---
+       Shows how the grid integrates with Braze user attributes
+       for personalized recommendations. The API endpoint accepts
+       user-specific parameters.
+  {% endcomment %}
+
+  {% assign headline_copy = "PERSONALIZED API" %}
+  {% assign body_copy = "Connected Content with user attributes for personalization" %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} === BRAZE CAMPAIGN CODE (paste into Braze) ===
+
+  {% connected_content https://api.tubi.com/crm/recommendations?user_id={{${user_id}}}&count=6 :save recs %}
+
+  {% assign grid_layout = "3v" %}
+  {% assign grid_headline = "PICKED FOR {{${first_name} | default: 'YOU'}}" %}
+  {% assign grid_cta_label = "SEE ALL PICKS" %}
+  {% assign grid_cta_url = "https://tubitv.com/home" %}
+  {% assign grid_cta_style = "primary" %}
+  {% assign grid_show_metadata = "true" %}
+  {% assign grid_text_color = "#ffffff" %}
+
+  {% if recs.items[0] %}{% assign grid_item_1_img = recs.items[0].poster_url %}{% assign grid_item_1_url = recs.items[0].deeplink %}{% assign grid_item_1_subhead = recs.items[0].title %}{% assign grid_item_1_genre = recs.items[0].genre %}{% assign grid_item_1_badge = recs.items[0].badge %}{% endif %}
+  {% if recs.items[1] %}{% assign grid_item_2_img = recs.items[1].poster_url %}{% assign grid_item_2_url = recs.items[1].deeplink %}{% assign grid_item_2_subhead = recs.items[1].title %}{% assign grid_item_2_genre = recs.items[1].genre %}{% assign grid_item_2_badge = recs.items[1].badge %}{% endif %}
+  {% if recs.items[2] %}{% assign grid_item_3_img = recs.items[2].poster_url %}{% assign grid_item_3_url = recs.items[2].deeplink %}{% assign grid_item_3_subhead = recs.items[2].title %}{% assign grid_item_3_genre = recs.items[2].genre %}{% assign grid_item_3_badge = recs.items[2].badge %}{% endif %}
+  {% if recs.items[3] %}{% assign grid_item_4_img = recs.items[3].poster_url %}{% assign grid_item_4_url = recs.items[3].deeplink %}{% assign grid_item_4_subhead = recs.items[3].title %}{% assign grid_item_4_genre = recs.items[3].genre %}{% assign grid_item_4_badge = recs.items[3].badge %}{% endif %}
+  {% if recs.items[4] %}{% assign grid_item_5_img = recs.items[4].poster_url %}{% assign grid_item_5_url = recs.items[4].deeplink %}{% assign grid_item_5_subhead = recs.items[4].title %}{% assign grid_item_5_genre = recs.items[4].genre %}{% assign grid_item_5_badge = recs.items[4].badge %}{% endif %}
+  {% if recs.items[5] %}{% assign grid_item_6_img = recs.items[5].poster_url %}{% assign grid_item_6_url = recs.items[5].deeplink %}{% assign grid_item_6_subhead = recs.items[5].title %}{% assign grid_item_6_genre = recs.items[5].genre %}{% assign grid_item_6_badge = recs.items[5].badge %}{% endif %}
+
+  {{content_blocks.${poster_grid}}}
+
+  === END BRAZE CAMPAIGN CODE === {% endcomment %}
+
+</body>
+</html>

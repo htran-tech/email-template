@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Campaign — Hero V4 Test</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+  {{content_blocks.${css_global}}}
+
+  {% assign tubi = "https://tubitv.com/home" %}
+  {% assign utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=v4_test" %}
+
+
+  {% comment %} --- Hero V4: Portrait --- {% endcomment %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/qXdai7PLD6OVTw==/e851289f-48f6-4ca9-87c6-6533dd63a91e/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = tubi | append: utm %}
+  {% assign hero_title = "Get Active" %}
+  {% assign hero_orientation = "portrait" %}
+  {{content_blocks.${hero_v4}}}
+
+
+  {% comment %} --- Hero V4: Landscape --- {% endcomment %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/ZQfFHz1ggRx0nA==/1fbe6bf9-0d22-4e70-bff7-f1b06c3cf8fe/CNcHEKgEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = tubi | append: utm %}
+  {% assign hero_title = "Featured Title" %}
+  {% assign hero_orientation = "landscape" %}
+  {{content_blocks.${hero_v4}}}
+
+
+  {% comment %} --- Hero V4: Portrait, no border --- {% endcomment %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/qXdai7PLD6OVTw==/e851289f-48f6-4ca9-87c6-6533dd63a91e/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = tubi | append: utm %}
+  {% assign hero_title = "No Border Test" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_border = "false" %}
+  {{content_blocks.${hero_v4}}}
+
+
+  {% comment %} --- Headline --- {% endcomment %}
+  {% assign headline_copy = "TRENDING NOW" %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- CTA --- {% endcomment %}
+  {% assign cta_label = "Watch Now" %}
+  {% assign cta_url = tubi | append: utm %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- Footer --- {% endcomment %}
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {{content_blocks.${footer}}}
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Campaign — Sesame Street</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+  {{content_blocks.${css_global}}}
+
+  {% assign tubi = "https://tubitv.com/home" %}
+  {% assign p1 = "https://canvas-lb.tubitv.com/opts/qXdai7PLD6OVTw==/e851289f-48f6-4ca9-87c6-6533dd63a91e/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign p2 = "https://canvas-lb.tubitv.com/opts/GAc_CKsJ8Xk5BA==/28e38f44-cb12-4651-9b76-7431653342a9/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign p3 = "https://canvas-lb.tubitv.com/opts/QNODmZsxW4t5Wg==/9b1b9c1a-38eb-4e60-bcc8-04069a071245/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign p4 = "https://canvas-lb.tubitv.com/opts/BVE3okZuWovNwg==/c0efa766-81ec-4c37-96e8-31c128ad7bae/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign p5 = "https://canvas-lb.tubitv.com/opts/HpOFQhmcKCH6AQ==/f6957784-8def-4fbf-a47e-82bd8d4ce711/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign p6 = "https://canvas-lb.tubitv.com/opts/5M3AhiTClO__8w==/42fb6439-bb0a-46ae-b9e3-3fef523f01c4/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign p7 = "https://canvas-lb.tubitv.com/opts/Qw6HxiBYKCBLKg==/49cd8b05-c330-4fe1-a98a-f2e492316463/CJgDEMcEOgUxLjEuOQ==" %}
+
+
+  {% comment %} --- Hero image --- {% endcomment %}
+  {% assign image_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/69cacbe10728c00063b9da38/original.png?1774898144" %}
+  {% assign image_link = "https://tubitv.com/series/300019823/sesame-street" %}
+  {% assign image_alt = "Sesame Street on Tubi" %}
+  {{content_blocks.${image_only}}}
+
+  {% comment %} --- CTA: Watch Now --- {% endcomment %}
+  {% assign cta_label = "Watch Now" %}
+  {% assign cta_url = "https://tubitv.com/series/300019823/sesame-street" %}
+  {% assign cta_padding_top = 20 %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- Section 1: Family Movies --- {% endcomment %}
+  {% assign headline_copy = "Family Movies" %}
+  {% assign hb_headline_transform = "none" %}
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign grid_layout = "3v" %}
+  {% assign grid_show_metadata = "false" %}
+  {% assign grid_item_1_img = p1 %}{% assign grid_item_1_url = tubi %}
+  {% assign grid_item_2_img = p2 %}{% assign grid_item_2_url = tubi %}
+  {% assign grid_item_3_img = p3 %}{% assign grid_item_3_url = tubi %}
+  {{content_blocks.${poster_grid}}}
+
+  {% assign cta_label = "Explore More" %}
+  {% assign cta_url = "https://tubitv.com/category/family_movies" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- Section 2: Kid Shows --- {% endcomment %}
+  {% assign headline_copy = "Kid Shows" %}
+  {% assign hb_headline_transform = "none" %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign grid_layout = "3v" %}
+  {% assign grid_show_metadata = "false" %}
+  {% assign grid_item_1_img = p4 %}{% assign grid_item_1_url = tubi %}
+  {% assign grid_item_2_img = p5 %}{% assign grid_item_2_url = tubi %}
+  {% assign grid_item_3_img = p6 %}{% assign grid_item_3_url = tubi %}
+  {{content_blocks.${poster_grid}}}
+
+  {% assign cta_label = "Explore More" %}
+  {% assign cta_url = "https://tubitv.com/category/kids_shows" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- Section 3: Kid Friendly Classics --- {% endcomment %}
+  {% assign headline_copy = "Kid Friendly Classics" %}
+  {% assign hb_headline_transform = "none" %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign grid_layout = "3v" %}
+  {% assign grid_show_metadata = "false" %}
+  {% assign grid_item_1_img = p7 %}{% assign grid_item_1_url = tubi %}
+  {% assign grid_item_2_img = p1 %}{% assign grid_item_2_url = tubi %}
+  {% assign grid_item_3_img = p2 %}{% assign grid_item_3_url = tubi %}
+  {{content_blocks.${poster_grid}}}
+
+  {% assign cta_label = "Explore More" %}
+  {% assign cta_url = "https://tubitv.com/category/kid_classics" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- Footer --- {% endcomment %}
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {{content_blocks.${footer}}}
+
+</body>
+</html>

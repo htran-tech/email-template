@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="format-detection" content="telephone=no">
+  <title>Continue Watching on Tubi</title>
+
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+
+  <!-- CSS Content Block Reference -->
+  {{content_blocks.${css_styles}}}
+
+</head>
+<body style="margin: 0; padding: 0; width: 100%; background-color: #000000;">
+
+  <!-- Preview Text (hidden) -->
+  <div style="display: none; max-height: 0px; overflow: hidden; font-size: 1px; line-height: 1px; color: #000000;">
+    Pick up where you left off and discover new recommendations just for you
+  </div>
+
+  <!-- Email Container -->
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0; padding: 0; background-color: #000000;">
+    <tr>
+      <td align="center" style="padding: 0;">
+
+        <!-- Main Content Wrapper (600px max width) -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" class="email-container" style="max-width: 600px; margin: 0 auto; background-color: #000000;">
+
+          <!-- Content Blocks -->
+          <tr>
+            <td style="padding: 0;">
+
+              <!-- PERSONALIZED GREETING -->
+              {% comment %} Personalized headline with user's first name {% endcomment %}
+              {% assign headline_copy = "Welcome back, {{${first_name}}}!" %}
+              {% assign body_copy = "We've got some great content waiting for you" %}
+              {% assign text_align = "center" %}
+
+              {{content_blocks.${headline_body}}}
+
+              <!-- SECTION 1: CONTINUE WATCHING -->
+              {% comment %} Continue watching section {% endcomment %}
+              {% assign headline_copy = "Continue Watching" %}
+              {% assign body_copy = "Pick up right where you left off" %}
+              {% assign text_align = "center" %}
+
+              {{content_blocks.${headline_body}}}
+
+              {% comment %} API-powered continue watching grid {% endcomment %}
+              {% assign api_endpoint = "https://api.tubitv.com/user/continue-watching" %}
+              {% assign container_id = "continue_watching" %}
+              {% assign item_count = 3 %}
+              {% assign show_metadata = true %}
+              {% assign utm_campaign = "behavioral_continue_watching" %}
+              {% assign enable_tracking = true %}
+
+              {% content_block poster_grid_3col %}
+
+              <!-- SECTION 2: BECAUSE YOU WATCHED -->
+              {% comment %} Personalized recommendations {% endcomment %}
+              {% assign headline_copy = "Because You Watched \"{{custom_attribute.${last_watched_title}}}\"" %}
+              {% assign body_copy = "More titles we think you'll love" %}
+              {% assign text_align = "center" %}
+
+              {{content_blocks.${headline_body}}}
+
+              {% comment %} API-powered recommendations grid {% endcomment %}
+              {% assign api_endpoint = "https://api.tubitv.com/user/recommendations" %}
+              {% assign container_id = "personalized_recs" %}
+              {% assign item_count = 6 %}
+              {% assign show_metadata = true %}
+              {% assign cta_label = "See More Recommendations" %}
+              {% assign cta_url = "https://tubitv.com/recommendations" %}
+              {% assign utm_campaign = "behavioral_continue_watching" %}
+
+              {% content_block poster_grid_3col %}
+
+              <!-- SECTION 3: TRENDING IN YOUR FAVORITE GENRE -->
+              {% comment %} Genre-based recommendations {% endcomment %}
+              {% assign headline_copy = "Trending in {{custom_attribute.${favorite_genre}}}" %}
+              {% assign body_copy = "Popular {{custom_attribute.${favorite_genre}}} movies right now" %}
+              {% assign text_align = "center" %}
+
+              {{content_blocks.${headline_body}}}
+
+              {% comment %} Genre-based trending content {% endcomment %}
+              {% assign api_endpoint = "https://api.tubitv.com/trending/genre" %}
+              {% assign container_id = "genre_trending" %}
+              {% assign item_count = 6 %}
+              {% assign show_metadata = true %}
+              {% assign utm_campaign = "behavioral_continue_watching" %}
+
+              {% content_block poster_grid_3col %}
+
+              <!-- DOUBLE CTA -->
+              {% comment %} Primary and secondary actions {% endcomment %}
+              {% assign cta_label = "Browse All Movies" %}
+              {% assign cta_url = "https://tubitv.com/movies" %}
+              {% assign cta_style = "primary" %}
+
+              {% assign cta2_label = "Explore TV Shows" %}
+              {% assign cta2_url = "https://tubitv.com/tv-shows" %}
+              {% assign cta2_style = "secondary" %}
+
+              {% assign utm_campaign = "behavioral_continue_watching" %}
+
+              {{content_blocks.${cta_double}}}
+
+            </td>
+          </tr>
+
+          <!-- Footer Block -->
+          <tr>
+            <td style="padding: 0;">
+              {% assign language = "en" %}
+              {% assign country = "US" %}
+              {{content_blocks.${footer}}}
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

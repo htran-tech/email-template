@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hero Litmus — V4 Badge Portrait</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+  {{content_blocks.${css_global}}}
+
+  {% comment %} V4 portrait + "New on Tubi" banner + yellow border + collage bg {% endcomment %}
+  {% assign hero_variant = "4" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/65c6c1f7c27ffc004c2e55b1/original.png?1707524598" %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = "https://tubitv.com/home" %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/HpOFQhmcKCH6AQ==/f6957784-8def-4fbf-a47e-82bd8d4ce711/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = "https://tubitv.com/home" %}
+  {% assign hero_title = "The Dallas Connection" %}
+  {% assign hero_banner_text = "New on Tubi" %}
+  {% assign hero_show_fade = "true" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "THE DALLAS CONNECTION" %}
+  {% assign body_copy = "Stream free. No subscription needed." %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign cta_label = "WATCH NOW" %}
+  {% assign cta_url = "https://tubitv.com/home" %}
+  {{content_blocks.${single_cta}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {{content_blocks.${footer}}}
+
+</body>
+</html>

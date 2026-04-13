@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>API Response Debug</title>
+</head>
+<body style="margin:0;padding:20px;background:#000000;color:#00ff00;font-family:monospace;font-size:12px;">
+
+{% assign container = 'black_cinema' %}
+{% assign limit = 3 %}
+
+{% assign device_id = {{custom_attribute.${preferred_device_id}}} %}
+{% assign platform = {{custom_attribute.${preferred_user_platform} | downcase }} | default: 'web' %}
+
+{% if {{canvas.${api_id}}} != null %}
+{% assign campaign_id = '' %}
+{% assign canvas_id = {{canvas.${api_id}}} %}
+{% else %}
+{% assign campaign_id = {{campaign.${api_id}}} %}
+{% assign canvas_id = '' %}
+{% endif %}
+
+{% assign channel = 'EMAIL' %}
+
+{% connected_content https://crm.production-public.tubi.io/crm/external/ml-recommendations?container={{container}}&country={{${country} | default: 'US' }}&device_id={{device_id}}&user_id={{custom_attribute.${tubi_user_id}}}&tubi_id=null&limit={{limit}}&braze_id={{${braze_id}}}&platform={{platform}}&container_priority={{container_priority | default: 1 }}&variant_id={{campaign.${message_api_id}}}&campaign_id={{campaign_id}}&canvas_id={{canvas_id}}&channel={{channel}}&exclude_series=false&use_cache=false&rank_containers=false&region={{custom_attribute.${home_state}}}&language={{${language} | upcase }}&city={{${city} | url_escape }}&timezone={{${time_zone}}}&exclude_titles=&ranking_feature_flags=eyJlbmFibGVfY3Jvc3NfY2FtcGFpZ25fZGVkdXAiOiAidHJ1ZSIsImVuYWJsZV9ob21lX3NjcmVlbl9kZWR1cGVfbl9tXzQiOiAidHJ1ZSJ9 :basic_auth tubi :save result :retry :cache_max_age 60 %}
+
+<h2>RAW RESULT</h2>
+<pre>{{result}}</pre>
+
+<h2>TOP-LEVEL FIELDS</h2>
+<pre>
+result.count = {{result.count}}
+result.containers[0] exists? = {% if result.containers[0] != blank %}YES{% else %}NO{% endif %}
+</pre>
+
+<h2>FIRST ITEM (result.items[0] or result.containers[0].items[0])</h2>
+{% if result.containers[0] != blank %}
+  {% assign _debug_item = result.containers[0].items[0] %}
+{% else %}
+  {% assign _debug_item = result.items[0] %}
+{% endif %}
+
+<pre>
+FULL ITEM: {{_debug_item}}
+
+--- KNOWN FIELDS ---
+.url = {{_debug_item.url}}
+.title = {{_debug_item.title}}
+.type = {{_debug_item.type}}
+.posterarts_large[0].url = {{_debug_item.posterarts_large[0].url}}
+.landscape_images[0].url = {{_debug_item.landscape_images[0].url}}
+.posterarts_large_large[0].url = {{_debug_item.posterarts_large_large[0].url}}
+
+--- POSSIBLE METADATA FIELDS ---
+.year = {{_debug_item.year}}
+.release_year = {{_debug_item.release_year}}
+.genre = {{_debug_item.genre}}
+.genres = {{_debug_item.genres}}
+.tags = {{_debug_item.tags}}
+.badge = {{_debug_item.badge}}
+.badges = {{_debug_item.badges}}
+.description = {{_debug_item.description}}
+.rating = {{_debug_item.rating}}
+.duration = {{_debug_item.duration}}
+.id = {{_debug_item.id}}
+.content_id = {{_debug_item.content_id}}
+.series_id = {{_debug_item.series_id}}
+</pre>
+
+</body>
+</html>

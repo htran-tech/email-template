@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Headline + Body Copy QA — All Permutations</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+  {{content_blocks.${css_global}}}
+
+
+  {% comment %} ============ TEST 1: DEFAULT (headline + body, centered, dark) ============ {% endcomment %}
+  {% assign headline_copy = "TEST 1: DEFAULT" %}
+  {% assign body_copy = "Headline + body, centered, dark background. Default font sizes (32px headline, 16px body on mobile)." %}
+  {{content_blocks.${headline_body}}}
+
+
+  {% comment %} ============ TEST 2: HEADLINE ONLY ============ {% endcomment %}
+  {% assign headline_copy = "TEST 2: HEADLINE ONLY" %}
+  {{content_blocks.${headline_body}}}
+
+
+  {% comment %} ============ TEST 3: BODY ONLY ============ {% endcomment %}
+  {% assign body_copy = "TEST 3: Body only, no headline. Body copy should render independently when headline_copy is not set." %}
+  {{content_blocks.${headline_body}}}
+
+
+  {% comment %} ============ TEST 4: LEFT-ALIGNED ============ {% endcomment %}
+  {% assign hb_align = "left" %}
+  {% assign headline_copy = "TEST 4: LEFT-ALIGNED" %}
+  {% assign body_copy = "Both headline and body left-aligned. hb_align='left'." %}
+  {{content_blocks.${headline_body}}}
+
+
+  {% comment %} ============ TEST 5: CUSTOM FONT SIZES ============ {% endcomment %}
+  {% assign hb_headline_size = 48 %}
+  {% assign hb_body_size = 20 %}
+  {% assign headline_copy = "TEST 5: BIG" %}
+  {% assign body_copy = "Custom font sizes. hb_headline_size=48, hb_body_size=20. Headline should be noticeably larger than default." %}
+  {{content_blocks.${headline_body}}}
+
+
+  {% comment %} ============ TEST 6: LIGHT MODE ============ {% endcomment %}
+  {% assign content_bg_color = "#ffffff" %}
+  {% assign hb_text_color = "#000000" %}
+  {% assign headline_copy = "TEST 6: LIGHT MODE" %}
+  {% assign body_copy = "White background, black text. content_bg_color=#ffffff, hb_text_color=#000000." %}
+  {{content_blocks.${headline_body}}}
+
+
+  {% comment %} ============ TEST 7: SEPARATE HEADLINE/BODY COLORS ============ {% endcomment %}
+  {% assign content_bg_color = "#000000" %}
+  {% assign hb_headline_color = "#FFFF13" %}
+  {% assign hb_body_color = "#cccccc" %}
+  {% assign headline_copy = "TEST 7: YELLOW HEADLINE" %}
+  {% assign body_copy = "Headline is Tubi yellow (#FFFF13), body is light gray (#cccccc). hb_headline_color and hb_body_color set independently." %}
+  {{content_blocks.${headline_body}}}
+
+
+  {% comment %} ============ TEST 8: WITH HEADLINE LINK ============ {% endcomment %}
+  {% assign headline_copy = "TEST 8: CLICKABLE HEADLINE" %}
+  {% assign headline_url = "https://tubitv.com/home" %}
+  {% assign body_copy = "The headline above should be wrapped in a link. headline_url set to tubitv.com." %}
+  {{content_blocks.${headline_body}}}
+
+
+  {% comment %} ============ TEST 9: CUSTOM SPACING ============ {% endcomment %}
+  {% assign hb_padding_top = 40 %}
+  {% assign hb_padding_bottom = 40 %}
+  {% assign hb_padding_side = 40 %}
+  {% assign hb_gap = 24 %}
+  {% assign headline_copy = "TEST 9: CUSTOM SPACING" %}
+  {% assign body_copy = "Extra padding on all sides (40px) and large gap between headline and body (24px)." %}
+  {{content_blocks.${headline_body}}}
+
+
+  {% comment %} ============ TEST 10: NO TEXT-TRANSFORM ============ {% endcomment %}
+  {% assign hb_headline_transform = "none" %}
+  {% assign headline_copy = "Test 10: Mixed Case Headline" %}
+  {% assign body_copy = "hb_headline_transform='none'. Headline should preserve original casing, not force uppercase." %}
+  {{content_blocks.${headline_body}}}
+
+
+  {% comment %} ============ TEST 11: FULL OVERRIDE ============ {% endcomment %}
+  {% assign content_bg_color = "#1a1a2e" %}
+  {% assign hb_text_color = "#ffffff" %}
+  {% assign hb_headline_color = "#e94560" %}
+  {% assign hb_body_color = "#a0a0b0" %}
+  {% assign hb_align = "left" %}
+  {% assign hb_padding_top = 30 %}
+  {% assign hb_padding_bottom = 30 %}
+  {% assign hb_padding_side = 30 %}
+  {% assign hb_gap = 16 %}
+  {% assign hb_headline_size = 40 %}
+  {% assign hb_body_size = 18 %}
+  {% assign hb_headline_transform = "capitalize" %}
+  {% assign headline_copy = "Test 11: every variable overridden" %}
+  {% assign headline_url = "https://example.com/full-override" %}
+  {% assign body_copy = "All variables explicitly set. Dark navy bg, red headline (40px capitalize), muted body (18px), left-aligned, 30px padding, 16px gap, clickable headline." %}
+  {{content_blocks.${headline_body}}}
+
+</body>
+</html>

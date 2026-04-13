@@ -1,0 +1,94 @@
+<!--
+  Image Only Content Block
+
+  Features:
+  - Standalone clickable image
+  - Configurable margins
+  - Full width or contained
+  - Alt text support
+  - Optional link
+-->
+
+{% comment %} Initialize variables with defaults {% endcomment %}
+{% assign image_url = image_url | default: "" %}
+{% assign image_link = image_link | default: "" %}
+{% assign image_alt = image_alt | default: "" %}
+{% assign image_width = image_width | default: "full" %}
+{% assign margin_top = margin_top | default: 0 %}
+{% assign margin_bottom = margin_bottom | default: 0 %}
+{% assign enable_tracking = enable_tracking | default: true %}
+
+{% comment %} UTM parameters {% endcomment %}
+{% assign utm_source = utm_source | default: "braze" %}
+{% assign utm_medium = utm_medium | default: "email" %}
+{% assign utm_campaign = utm_campaign | default: "email_campaign" %}
+
+{% comment %} Only render if image URL exists {% endcomment %}
+{% if image_url != "" %}
+
+{% comment %} Add UTM tracking to link if enabled {% endcomment %}
+{% assign image_link_final = image_link %}
+{% if image_link != "" and enable_tracking %}
+  {% if image_link contains "?" %}
+    {% assign image_link_final = image_link | append: "&utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign %}
+  {% else %}
+    {% assign image_link_final = image_link | append: "?utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign %}
+  {% endif %}
+{% endif %}
+
+{% comment %} Width styling {% endcomment %}
+{% if image_width == "full" %}
+  {% assign img_width = "600" %}
+  {% assign img_style = "width: 100%; height: auto; display: block; border: 0;" %}
+{% elsif image_width == "contained" %}
+  {% assign img_width = "560" %}
+  {% assign img_style = "width: 100%; max-width: 560px; height: auto; display: block; border: 0; margin: 0 auto;" %}
+{% else %}
+  {% assign img_width = image_width %}
+  {% assign img_style = "width: 100%; max-width: " | append: image_width | append: "px; height: auto; display: block; border: 0; margin: 0 auto;" %}
+{% endif %}
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0; padding: 0;">
+
+  {% comment %} Top Margin {% endcomment %}
+  {% if margin_top > 0 %}
+  <tr>
+    <td style="height: {{margin_top}}px; line-height: {{margin_top}}px; font-size: 1px;">&nbsp;</td>
+  </tr>
+  {% endif %}
+
+  {% comment %} Image {% endcomment %}
+  <tr>
+    <td style="padding: 0;" align="center">
+      {% if image_link_final != "" %}
+        <a href="{{image_link_final}}" style="display: block; text-decoration: none;">
+          <img src="{{image_url}}" alt="{{image_alt}}" width="{{img_width}}" style="{{img_style}}" />
+        </a>
+      {% else %}
+        <img src="{{image_url}}" alt="{{image_alt}}" width="{{img_width}}" style="{{img_style}}" />
+      {% endif %}
+    </td>
+  </tr>
+
+  {% comment %} Bottom Margin {% endcomment %}
+  {% if margin_bottom > 0 %}
+  <tr>
+    <td style="height: {{margin_bottom}}px; line-height: {{margin_bottom}}px; font-size: 1px;">&nbsp;</td>
+  </tr>
+  {% endif %}
+
+</table>
+
+{% endif %}
+
+{% comment %} Reset variables {% endcomment %}
+{% assign image_url = nil %}
+{% assign image_link = nil %}
+{% assign image_alt = nil %}
+{% assign image_width = nil %}
+{% assign margin_top = nil %}
+{% assign margin_bottom = nil %}
+{% assign enable_tracking = nil %}
+{% assign utm_source = nil %}
+{% assign utm_medium = nil %}
+{% assign utm_campaign = nil %}

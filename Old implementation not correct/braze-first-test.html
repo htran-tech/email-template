@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <title>Braze First Test - Hero Variants</title>
+
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+
+  <!-- CSS Content Block - MUST UPLOAD THIS FIRST -->
+  {% content_block css_styles %}
+
+</head>
+<body style="margin: 0; padding: 0; width: 100%; background-color: #000000;">
+
+  <!-- Preview Text (hidden in email) -->
+  <div style="display: none; max-height: 0px; overflow: hidden;">
+    Testing new hero variants with dual CTA support
+  </div>
+
+  <!-- Email Container -->
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0; padding: 0; background-color: #000000;">
+    <tr>
+      <td align="center" style="padding: 0;">
+
+        <!-- Main Content Wrapper (600px max width) -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" class="email-container" style="max-width: 600px; margin: 0 auto; background-color: #000000;">
+          <tr>
+            <td style="padding: 0;">
+
+              <!-- ============================================ -->
+              <!-- TEST 1: STANDARD HERO WITH DUAL CTA -->
+              <!-- ============================================ -->
+              {% comment %} Hero Variant 1: Text overlaid on image {% endcomment %}
+              {% assign hero_image_url = "https://picsum.photos/600/390" %}
+              {% assign hero_variant = "standard" %}
+              {% assign hero_orientation = "landscape" %}
+              {% assign hero_layout = "center" %}
+              {% assign headline_copy = "New This Week" %}
+              {% assign body_copy = "Stream thousands of movies and shows for free" %}
+              {% assign cta_label = "Watch Now" %}
+              {% assign cta_url = "https://tubitv.com" %}
+              {% assign cta2_label = "Browse All" %}
+              {% assign cta2_url = "https://tubitv.com/browse" %}
+              {% assign utm_campaign = "hero_test_standard" %}
+              {% content_block hero_basic %}
+
+              <!-- Spacer -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td style="height: 40px;">&nbsp;</td>
+                </tr>
+              </table>
+
+              <!-- ============================================ -->
+              <!-- TEST 2: SIMPLE OVERLAY HERO -->
+              <!-- ============================================ -->
+              {% comment %} Hero Variant 2: Minimal status label only {% endcomment %}
+              {% assign hero_image_url = "https://picsum.photos/600/600" %}
+              {% assign hero_variant = "simple-overlay" %}
+              {% assign hero_orientation = "portrait" %}
+              {% assign status_label = "Coming Soon" %}
+              {% assign show_backdrop_blur = true %}
+              {% content_block hero_basic %}
+
+              <!-- Spacer -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td style="height: 40px;">&nbsp;</td>
+                </tr>
+              </table>
+
+              <!-- ============================================ -->
+              <!-- TEST 3: GRADIENT METADATA HERO -->
+              <!-- ============================================ -->
+              {% comment %} Hero Variant 3: Content below hero image {% endcomment %}
+              {% assign hero_image_url = "https://picsum.photos/600/390" %}
+              {% assign hero_variant = "gradient-metadata" %}
+              {% assign hero_orientation = "landscape" %}
+              {% assign headline_copy = "Featured Collection" %}
+              {% assign body_copy = "Curated content handpicked just for you" %}
+              {% assign cta_label = "Explore Now" %}
+              {% assign cta_url = "https://tubitv.com/featured" %}
+              {% assign cta2_label = "See All" %}
+              {% assign cta2_url = "https://tubitv.com/browse" %}
+              {% assign utm_campaign = "hero_test_gradient" %}
+              {% content_block hero_basic %}
+
+              <!-- Spacer -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td style="height: 40px;">&nbsp;</td>
+                </tr>
+              </table>
+
+              <!-- ============================================ -->
+              <!-- TEST 4: SINGLE TITLE HERO (DUAL CTA) -->
+              <!-- ============================================ -->
+              {% comment %} Single title spotlight with dual CTA {% endcomment %}
+              {% assign title_image_url = "https://picsum.photos/600/800" %}
+              {% assign hero_orientation = "portrait" %}
+              {% assign title_name = "The Amazing Adventure" %}
+              {% assign title_year = "2024" %}
+              {% assign title_genre = "Action, Adventure, Sci-Fi" %}
+              {% assign title_rating = "PG-13" %}
+              {% assign title_description = "An epic journey that will take you to the edge of your imagination. A must-watch film that combines breathtaking visuals with an unforgettable story." %}
+              {% assign cta_label = "Watch Now" %}
+              {% assign cta_url = "https://tubitv.com/movie/123" %}
+              {% assign cta2_label = "Add to My List" %}
+              {% assign cta2_url = "https://tubitv.com/my-list/add/123" %}
+              {% assign utm_campaign = "hero_test_title" %}
+              {% content_block single_title_hero %}
+
+              <!-- ============================================ -->
+              <!-- FOOTER -->
+              <!-- ============================================ -->
+              {% assign language = "en" %}
+              {% assign country = "US" %}
+              {% content_block footer %}
+
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

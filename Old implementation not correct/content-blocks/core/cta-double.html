@@ -1,0 +1,150 @@
+<!--
+  Double CTA Buttons Content Block
+  Priority: MEDIUM
+
+  Features:
+  - Two side-by-side buttons
+  - Individually configurable colors
+  - Mobile: stack vertically with equal width
+  - Equal spacing between buttons
+-->
+
+{% comment %} Initialize variables with defaults {% endcomment %}
+{% assign cta_label = cta_label | default: "" %}
+{% assign cta_url = cta_url | default: "" %}
+{% assign cta_style = cta_style | default: "primary" %}
+
+{% assign cta2_label = cta2_label | default: "" %}
+{% assign cta2_url = cta2_url | default: "" %}
+{% assign cta2_style = cta2_style | default: "secondary" %}
+
+{% assign enable_tracking = enable_tracking | default: true %}
+
+{% comment %} UTM parameters {% endcomment %}
+{% assign utm_source = utm_source | default: "braze" %}
+{% assign utm_medium = utm_medium | default: "email" %}
+{% assign utm_campaign = utm_campaign | default: "email_campaign" %}
+
+{% comment %} Only render if both buttons have labels and URLs {% endcomment %}
+{% if cta_label != "" and cta_url != "" and cta2_label != "" and cta2_url != "" %}
+
+{% comment %} Add UTM tracking to first button {% endcomment %}
+{% assign cta_url_final = cta_url %}
+{% if enable_tracking %}
+  {% if cta_url contains "?" %}
+    {% assign cta_url_final = cta_url | append: "&utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign | append: "&utm_content=cta1" %}
+  {% else %}
+    {% assign cta_url_final = cta_url | append: "?utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign | append: "&utm_content=cta1" %}
+  {% endif %}
+{% endif %}
+
+{% comment %} Add UTM tracking to second button {% endcomment %}
+{% assign cta2_url_final = cta2_url %}
+{% if enable_tracking %}
+  {% if cta2_url contains "?" %}
+    {% assign cta2_url_final = cta2_url | append: "&utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign | append: "&utm_content=cta2" %}
+  {% else %}
+    {% assign cta2_url_final = cta2_url | append: "?utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign | append: "&utm_content=cta2" %}
+  {% endif %}
+{% endif %}
+
+{% comment %} Button 1 styling {% endcomment %}
+{% if cta_style == "primary" %}
+  {% assign bg_color = "#00a8e1" %}
+  {% assign text_color = "#000000" %}
+  {% assign border_style = "" %}
+{% elsif cta_style == "secondary" %}
+  {% assign bg_color = "#ffffff" %}
+  {% assign text_color = "#000000" %}
+  {% assign border_style = "" %}
+{% elsif cta_style == "dark" %}
+  {% assign bg_color = "#1a1a1a" %}
+  {% assign text_color = "#ffffff" %}
+  {% assign border_style = "border: 1px solid #333333;" %}
+{% else %}
+  {% assign bg_color = cta_style %}
+  {% assign text_color = "#ffffff" %}
+  {% assign border_style = "" %}
+{% endif %}
+
+{% comment %} Button 2 styling {% endcomment %}
+{% if cta2_style == "primary" %}
+  {% assign bg_color2 = "#00a8e1" %}
+  {% assign text_color2 = "#000000" %}
+  {% assign border_style2 = "" %}
+{% elsif cta2_style == "secondary" %}
+  {% assign bg_color2 = "#ffffff" %}
+  {% assign text_color2 = "#000000" %}
+  {% assign border_style2 = "" %}
+{% elsif cta2_style == "dark" %}
+  {% assign bg_color2 = "#1a1a1a" %}
+  {% assign text_color2 = "#ffffff" %}
+  {% assign border_style2 = "border: 1px solid #333333;" %}
+{% else %}
+  {% assign bg_color2 = cta2_style %}
+  {% assign text_color2 = "#ffffff" %}
+  {% assign border_style2 = "" %}
+{% endif %}
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0; padding: 0;">
+  <tr>
+    <td style="padding: 20px;">
+
+      <!--[if mso]>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+      <tr>
+      <td width="50%" style="padding-right: 8px;">
+      <![endif]-->
+
+      <div style="display: inline-block; width: 48%; min-width: 180px; vertical-align: top;" class="cta-button">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+          <tr>
+            <td style="border-radius: 4px; background-color: {{bg_color}}; {{border_style}}">
+              <a href="{{cta_url_final}}" style="display: block; padding: 14px 20px; font-size: 16px; font-weight: 700; text-align: center; text-decoration: none; border-radius: 4px; background-color: {{bg_color}}; color: {{text_color}}; min-height: 44px; line-height: 1.2; box-sizing: border-box;">
+                {{cta_label}}
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!--[if mso]>
+      </td>
+      <td width="50%" style="padding-left: 8px;">
+      <![endif]-->
+
+      <div style="display: inline-block; width: 48%; min-width: 180px; vertical-align: top; margin-left: 3%;" class="cta-button">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+          <tr>
+            <td style="border-radius: 4px; background-color: {{bg_color2}}; {{border_style2}}">
+              <a href="{{cta2_url_final}}" style="display: block; padding: 14px 20px; font-size: 16px; font-weight: 700; text-align: center; text-decoration: none; border-radius: 4px; background-color: {{bg_color2}}; color: {{text_color2}}; min-height: 44px; line-height: 1.2; box-sizing: border-box;">
+                {{cta2_label}}
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!--[if mso]>
+      </td>
+      </tr>
+      </table>
+      <![endif]-->
+
+    </td>
+  </tr>
+</table>
+
+{% endif %}
+
+{% comment %} Reset variables to prevent carryover {% endcomment %}
+{% assign cta_label = nil %}
+{% assign cta_url = nil %}
+{% assign cta_style = nil %}
+{% assign cta2_label = nil %}
+{% assign cta2_url = nil %}
+{% assign cta2_style = nil %}
+{% assign enable_tracking = nil %}
+{% assign utm_source = nil %}
+{% assign utm_medium = nil %}
+{% assign utm_campaign = nil %}

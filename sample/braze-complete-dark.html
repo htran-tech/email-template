@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Braze Complete Sample - Dark</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+  {{content_blocks.${css_global}}}
+
+  {% comment %} HERO - explicit assets (no fallback) {% endcomment %}
+  {% assign hero_variant = "2a" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#000000" %}
+  {% assign hero_bg_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/65c6c1f7c27ffc004c2e55b1/original.png?1707524598" %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = "https://tubitv.com/home" %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/qXdai7PLD6OVTw==/e851289f-48f6-4ca9-87c6-6533dd63a91e/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = "https://tubitv.com/home" %}
+  {% assign hero_title = "Get Active" %}
+  {% assign hero_headline = "Get Active" %}
+  {% assign hero_body = "Action-packed picks to stream tonight." %}
+  {% assign hero_cta_label = "WATCH NOW" %}
+  {% assign hero_cta_url = "https://tubitv.com/home" %}
+  {% assign hero_show_fade = "true" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% assign headline_copy = "TOP ACTION MOVIES" %}
+  {% assign body_copy = "A complete dark mode sample using production-style hero assets and mock title posters." %}
+  {% assign hb_text_color = "#ffffff" %}
+  {% assign hb_align = "center" %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} POSTER GRID {% endcomment %}
+  {% assign grid_layout = "3v" %}
+  {% assign grid_headline = "FEATURED TITLES" %}
+  {% assign grid_cta_label = "SEE ALL TITLES" %}
+  {% assign grid_cta_url = "https://tubitv.com/home" %}
+  {% assign grid_cta_style = "primary" %}
+  {% assign grid_show_metadata = "true" %}
+
+  {% assign grid_item_1_subhead = "Get Active" %}
+  {% assign grid_item_1_genre = "Movie" %}
+  {% assign grid_item_1_img = "https://canvas-lb.tubitv.com/opts/qXdai7PLD6OVTw==/e851289f-48f6-4ca9-87c6-6533dd63a91e/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_1_url = "https://tubitv.com/home" %}
+
+  {% assign grid_item_2_subhead = "The 51st State" %}
+  {% assign grid_item_2_genre = "Movie" %}
+  {% assign grid_item_2_img = "https://canvas-lb.tubitv.com/opts/GAc_CKsJ8Xk5BA==/28e38f44-cb12-4651-9b76-7431653342a9/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_2_url = "https://tubitv.com/home" %}
+
+  {% assign grid_item_3_subhead = "Ninja the Immovable Heart" %}
+  {% assign grid_item_3_genre = "Movie" %}
+  {% assign grid_item_3_img = "https://canvas-lb.tubitv.com/opts/QNODmZsxW4t5Wg==/9b1b9c1a-38eb-4e60-bcc8-04069a071245/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_3_url = "https://tubitv.com/home" %}
+
+  {% assign grid_item_4_subhead = "Lionheart" %}
+  {% assign grid_item_4_genre = "Movie" %}
+  {% assign grid_item_4_img = "https://canvas-lb.tubitv.com/opts/BVE3okZuWovNwg==/c0efa766-81ec-4c37-96e8-31c128ad7bae/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_4_url = "https://tubitv.com/home" %}
+
+  {% assign grid_item_5_subhead = "The Dallas Connection" %}
+  {% assign grid_item_5_genre = "Movie" %}
+  {% assign grid_item_5_img = "https://canvas-lb.tubitv.com/opts/HpOFQhmcKCH6AQ==/f6957784-8def-4fbf-a47e-82bd8d4ce711/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_5_url = "https://tubitv.com/home" %}
+
+  {% assign grid_item_6_subhead = "Chain of Command" %}
+  {% assign grid_item_6_genre = "Movie" %}
+  {% assign grid_item_6_img = "https://canvas-lb.tubitv.com/opts/5M3AhiTClO__8w==/42fb6439-bb0a-46ae-b9e3-3fef523f01c4/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_6_url = "https://tubitv.com/home" %}
+
+  {% assign grid_item_7_subhead = "Overrun" %}
+  {% assign grid_item_7_genre = "Movie" %}
+  {% assign grid_item_7_img = "https://canvas-lb.tubitv.com/opts/Qw6HxiBYKCBLKg==/49cd8b05-c330-4fe1-a98a-f2e492316463/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_7_url = "https://tubitv.com/home" %}
+  {{content_blocks.${poster_grid}}}
+
+  {% assign cta_label = "SINGLE CTA TEST" %}
+  {% assign cta_url = "https://tubitv.com/home" %}
+  {% assign cta_style = "primary" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% assign cta_label = "SET REMINDER" %}
+  {% assign cta_url = "https://tubitv.com/home" %}
+  {% assign cta_style = "primary" %}
+  {% assign cta2_label = "WATCH TRAILER" %}
+  {% assign cta2_url = "https://tubitv.com/home" %}
+  {% assign cta2_style = "secondary" %}
+  {{content_blocks.${double_cta}}}
+
+  {% assign image_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/65c6c256eb5b85004d396fef/original.png?1707524694" %}
+  {% assign image_link = "https://tubitv.com/home" %}
+  {% assign image_alt = "Hero fade asset sample" %}
+  {% assign image_width = 600 %}
+  {% assign image_margin_top = 12 %}
+  {% assign image_margin_bottom = 12 %}
+  {% assign image_margin_side = 0 %}
+  {{content_blocks.${image_only}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {% assign footer_unsubscribe = "https://example.com/unsubscribe" %}
+  {{content_blocks.${footer}}}
+
+</body>
+</html>

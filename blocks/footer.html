@@ -1,0 +1,339 @@
+<!-- FOOTER CONTENT BLOCK — Override-with-Fallback
+     Every variable can be set by the caller before including this block.
+     Unset variables receive locale-aware defaults, then universal fallbacks.
+
+     Locale:
+       footer_lang              — "en" | "es" | "pt" | "fr"  (auto-detected from Braze {{${language}}}; override by setting before include; fallback: "en")
+       footer_country           — "US" | "CA" | "AU" | "GB" | "NZ" | "MX" | "BR"  (auto-detected from Braze {{${country}}}; override by setting before include; fallback: "US")
+
+     Toggles:
+       footer_show_badges       — "true" | "false"  (default: "true")
+       footer_show_social       — "true" | "false"  (default: "true")
+
+     Assets / Links (all have built-in defaults):
+       footer_logo_url          — Tubi logo image
+       footer_logo_link         — Logo click-through
+
+     App Store Badges — slot-based, fully customizable:
+       footer_badge_stores      — Comma-separated slot list (default: "appstore,gplay")
+                                  Each slot N reads: footer_badge_N_img, footer_badge_N_link, footer_badge_N_alt
+                                  The 2 defaults have built-in images/links (country-aware). Custom slots need img+link+alt.
+                                  Example: "appstore,gplay,amazon" or just "appstore"
+       footer_badge_appstore_img / footer_badge_appstore_link / footer_badge_appstore_alt
+       footer_badge_gplay_img / footer_badge_gplay_link / footer_badge_gplay_alt
+       (add any custom slot: footer_badge_amazon_img, footer_badge_amazon_link, etc.)
+
+     Social — slot-based, fully customizable:
+       footer_social_heading    — e.g. "Let's be social"
+       footer_social_icons      — Comma-separated slot list (default: "tiktok,instagram,x,facebook")
+                                  Each slot N reads: footer_social_N_url, footer_social_N_icon, footer_social_N_alt
+                                  The 4 defaults have built-in URLs/icons. Custom slots just need url+icon+alt.
+                                  Example: "tiktok,instagram,youtube,threads"
+       footer_social_tiktok_url / footer_social_tiktok_icon / footer_social_tiktok_alt
+       footer_social_instagram_url / footer_social_instagram_icon / footer_social_instagram_alt
+       footer_social_x_url / footer_social_x_icon / footer_social_x_alt
+       footer_social_facebook_url / footer_social_facebook_icon / footer_social_facebook_alt
+       (add any custom slot: footer_social_youtube_url, footer_social_youtube_icon, etc.)
+
+     Legal / Copy:
+       footer_unsub_text        — Unsubscribe blurb
+       footer_unsub_link_text   — Unsubscribe link label
+       footer_unsubscribe       — Unsubscribe URL (Braze default)
+       footer_sent_from         — "Sent from Tubi Inc."
+       footer_address           — Company address
+       footer_copyright         — "Copyright"
+       footer_rights            — "All Rights Reserved."
+     Background:
+       footer_content_bg        — Card background (default: "rgba(45,45,45,0.85)")
+                                   Single-layer equivalent of Figma's two-layer composite
+                                   (50% white + 70% black). Produces a dark card on any body color.
+       footer_content_bg_fallback — Solid hex fallback for Outlook/Word (default: "#262626")
+-->
+
+{% comment %} ===== 1. LOCALE DEFAULTS ===== {% endcomment %}
+{% unless footer_lang %}
+  {% assign footer_lang = {{${language}}} %}
+  {% unless footer_lang %}{% assign footer_lang = "en" %}{% endunless %}
+{% endunless %}
+{% unless footer_country %}
+  {% assign footer_country = {{${country}}} %}
+  {% unless footer_country %}{% assign footer_country = "US" %}{% endunless %}
+{% endunless %}
+{% unless footer_show_badges %}{% assign footer_show_badges = "true" %}{% endunless %}
+{% unless footer_content_bg %}{% assign footer_content_bg = "rgba(45,45,45,0.85)" %}{% endunless %}
+{% unless footer_content_bg_fallback %}{% assign footer_content_bg_fallback = "#262626" %}{% endunless %}
+{% assign _footer_text_color = "rgba(255,255,255,0.5)" %}
+{% assign _footer_link_color = "rgba(255,255,255,0.5)" %}
+{% assign _footer_divider_color = "rgba(255,255,255,0.15)" %}
+{% unless footer_show_social %}{% assign footer_show_social = "true" %}{% endunless %}
+
+{% comment %} --- Language-driven copy (only set if caller hasn't overridden) --- {% endcomment %}
+{% if footer_lang == "es" %}
+  {% unless footer_social_heading %}{% assign footer_social_heading = "Síguenos" %}{% endunless %}
+  {% unless footer_unsub_text %}{% assign footer_unsub_text = "Estás recibiendo este correo porque eres un miembro valioso de la comunidad de Tubi. Para dejar de recibir correos de Tubi," %}{% endunless %}
+  {% unless footer_unsub_link_text %}{% assign footer_unsub_link_text = "cancela tu suscripción aquí" %}{% endunless %}
+  {% unless footer_sent_from %}{% assign footer_sent_from = "Enviado por Tubi Inc." %}{% endunless %}
+  {% unless footer_copyright %}{% assign footer_copyright = "Copyright" %}{% endunless %}
+  {% unless footer_rights %}{% assign footer_rights = "Todos los derechos reservados." %}{% endunless %}
+{% elsif footer_lang == "pt" %}
+  {% unless footer_social_heading %}{% assign footer_social_heading = "Siga-nos" %}{% endunless %}
+  {% unless footer_unsub_text %}{% assign footer_unsub_text = "Você está recebendo este e-mail porque é um membro valioso da comunidade Tubi. Para parar de receber e-mails da Tubi," %}{% endunless %}
+  {% unless footer_unsub_link_text %}{% assign footer_unsub_link_text = "cancele sua inscrição aqui" %}{% endunless %}
+  {% unless footer_sent_from %}{% assign footer_sent_from = "Enviado por Tubi Inc." %}{% endunless %}
+  {% unless footer_copyright %}{% assign footer_copyright = "Copyright" %}{% endunless %}
+  {% unless footer_rights %}{% assign footer_rights = "Todos os direitos reservados." %}{% endunless %}
+{% elsif footer_lang == "fr" %}
+  {% unless footer_social_heading %}{% assign footer_social_heading = "Soyons sociaux" %}{% endunless %}
+  {% unless footer_unsub_text %}{% assign footer_unsub_text = "Vous recevez ce courriel parce que vous êtes un membre important de la communauté Tubi. Pour ne plus recevoir de courriels de Tubi," %}{% endunless %}
+  {% unless footer_unsub_link_text %}{% assign footer_unsub_link_text = "désabonnez-vous de cette liste" %}{% endunless %}
+  {% unless footer_sent_from %}{% assign footer_sent_from = "Envoyé par Tubi Inc." %}{% endunless %}
+  {% unless footer_copyright %}{% assign footer_copyright = "Copyright" %}{% endunless %}
+  {% unless footer_rights %}{% assign footer_rights = "Tous droits réservés." %}{% endunless %}
+{% else %}
+  {% unless footer_social_heading %}{% assign footer_social_heading = "Let's be social" %}{% endunless %}
+  {% unless footer_unsub_text %}{% assign footer_unsub_text = "You're receiving this email because you're a valued member of the Tubi Community. To stop receiving emails from Tubi," %}{% endunless %}
+  {% unless footer_unsub_link_text %}{% assign footer_unsub_link_text = "unsubscribe from this list" %}{% endunless %}
+  {% unless footer_sent_from %}{% assign footer_sent_from = "Sent from Tubi Inc." %}{% endunless %}
+  {% unless footer_copyright %}{% assign footer_copyright = "Copyright" %}{% endunless %}
+  {% unless footer_rights %}{% assign footer_rights = "All Rights Reserved." %}{% endunless %}
+{% endif %}
+
+{% comment %} --- Universal fallbacks --- {% endcomment %}
+{% unless footer_unsubscribe %}{% assign footer_unsubscribe = "{{${set_user_to_unsubscribed_url}}}" %}{% endunless %}
+{% unless footer_address %}{% assign footer_address = "201 3rd Street, Suite 1200, San Francisco, CA 94103" %}{% endunless %}
+
+{% unless footer_logo_url %}{% assign footer_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}{% endunless %}
+{% unless footer_logo_link %}{% assign footer_logo_link = "https://tubitv.com/home" %}{% endunless %}
+
+{% comment %} --- Badge slots: defaults for the 2 built-in stores (country-aware links) --- {% endcomment %}
+{% unless footer_badge_stores %}{% assign footer_badge_stores = "appstore,gplay" %}{% endunless %}
+
+{% unless footer_badge_appstore_img %}{% assign footer_badge_appstore_img = "https://braze-images.com/appboy/communication/assets/image_assets/images/689e7a585bd40b00647a2b1e/original.png?1755216471" %}{% endunless %}
+{% unless footer_badge_appstore_alt %}{% assign footer_badge_appstore_alt = "Download on the App Store" %}{% endunless %}
+{% unless footer_badge_appstore_link %}
+  {% if footer_country == "CA" %}{% assign footer_badge_appstore_link = "https://itunes.apple.com/ca/app/tubi-tv-watch-movies-tv-shows/id886445756?mt=8" %}
+  {% elsif footer_country == "AU" %}{% assign footer_badge_appstore_link = "https://apps.apple.com/au/app/tubi-movies-live-tv/id886445756" %}
+  {% elsif footer_country == "GB" %}{% assign footer_badge_appstore_link = "https://apps.apple.com/gb/app/tubi-movies-live-tv/id886445756" %}
+  {% elsif footer_country == "NZ" %}{% assign footer_badge_appstore_link = "https://apps.apple.com/nz/app/tubi-movies-live-tv/id886445756" %}
+  {% elsif footer_country == "MX" %}{% assign footer_badge_appstore_link = "https://apps.apple.com/mx/app/tubi-movies-live-tv/id886445756" %}
+  {% elsif footer_country == "BR" %}{% assign footer_badge_appstore_link = "https://apps.apple.com/br/app/tubi-movies-live-tv/id886445756" %}
+  {% else %}{% assign footer_badge_appstore_link = "https://apps.apple.com/us/app/tubi-movies-live-tv/id886445756" %}
+  {% endif %}
+{% endunless %}
+
+{% unless footer_badge_gplay_img %}{% assign footer_badge_gplay_img = "https://braze-images.com/appboy/communication/assets/image_assets/images/689e7a56fd5d480064330404/original.png?1755216470" %}{% endunless %}
+{% unless footer_badge_gplay_alt %}{% assign footer_badge_gplay_alt = "Get it on Google Play" %}{% endunless %}
+{% unless footer_badge_gplay_link %}
+  {% if footer_country == "CA" %}{% assign footer_badge_gplay_link = "https://play.google.com/store/apps/details?id=com.tubitv&hl=en_CA" %}
+  {% elsif footer_country == "AU" %}{% assign footer_badge_gplay_link = "https://play.google.com/store/apps/details?id=com.tubitv&hl=en_AU" %}
+  {% elsif footer_country == "GB" %}{% assign footer_badge_gplay_link = "https://play.google.com/store/apps/details?id=com.tubitv&hl=en_GB" %}
+  {% elsif footer_country == "NZ" %}{% assign footer_badge_gplay_link = "https://play.google.com/store/apps/details?id=com.tubitv&hl=en_NZ" %}
+  {% elsif footer_country == "MX" %}{% assign footer_badge_gplay_link = "https://play.google.com/store/apps/details?id=com.tubitv&hl=es_MX" %}
+  {% elsif footer_country == "BR" %}{% assign footer_badge_gplay_link = "https://play.google.com/store/apps/details?id=com.tubitv&hl=pt_BR" %}
+  {% else %}{% assign footer_badge_gplay_link = "https://play.google.com/store/apps/details?id=com.tubitv&hl=en_US&gl=US" %}
+  {% endif %}
+{% endunless %}
+
+{% assign _footer_badge_slots = footer_badge_stores | split: "," %}
+
+{% comment %} --- Social icon slots: defaults for the 4 built-in platforms --- {% endcomment %}
+{% unless footer_social_icons %}{% assign footer_social_icons = "tiktok,instagram,x,facebook" %}{% endunless %}
+
+{% unless footer_social_tiktok_url %}{% assign footer_social_tiktok_url = "https://www.tiktok.com/@tubi" %}{% endunless %}
+{% unless footer_social_tiktok_icon %}{% assign footer_social_tiktok_icon = "https://braze-images.com/appboy/communication/assets/image_assets/images/689a5d1d9334950064594f49/original.png?1754946845" %}{% endunless %}
+{% unless footer_social_tiktok_alt %}{% assign footer_social_tiktok_alt = "TikTok" %}{% endunless %}
+
+{% unless footer_social_instagram_url %}{% assign footer_social_instagram_url = "https://www.instagram.com/tubi/" %}{% endunless %}
+{% unless footer_social_instagram_icon %}{% assign footer_social_instagram_icon = "https://braze-images.com/appboy/communication/assets/image_assets/images/689a5d1df1c54f006428aaac/original.png?1754946845" %}{% endunless %}
+{% unless footer_social_instagram_alt %}{% assign footer_social_instagram_alt = "Instagram" %}{% endunless %}
+
+{% unless footer_social_x_url %}{% assign footer_social_x_url = "https://x.com/Tubi" %}{% endunless %}
+{% unless footer_social_x_icon %}{% assign footer_social_x_icon = "https://braze-images.com/appboy/communication/assets/image_assets/images/689a5d1df1ffd0006494f50c/original.png?1754946845" %}{% endunless %}
+{% unless footer_social_x_alt %}{% assign footer_social_x_alt = "X" %}{% endunless %}
+
+{% unless footer_social_facebook_url %}{% assign footer_social_facebook_url = "https://www.facebook.com/tubitv/" %}{% endunless %}
+{% unless footer_social_facebook_icon %}{% assign footer_social_facebook_icon = "https://braze-images.com/appboy/communication/assets/image_assets/images/689a5d1c5498c400643f5ab4/original.png?1754946844" %}{% endunless %}
+{% unless footer_social_facebook_alt %}{% assign footer_social_facebook_alt = "Facebook" %}{% endunless %}
+
+{% assign _footer_icon_slots = footer_social_icons | split: "," %}
+
+{% comment %} ===== 2. RENDER ===== {% endcomment %}
+
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
+  <tr>
+    <td align="center" style="padding: 32px 20px 40px;" class="content-pad">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" class="img-full-width" bgcolor="{{footer_content_bg_fallback}}" style="max-width: 560px; background-color: {{footer_content_bg}}; border-radius: 8px; border: none; mso-border-alt: none;">
+
+        <!-- Tubi Logo -->
+        <tr>
+          <td align="center" style="padding: 36px 20px 20px;">
+            <a href="{{footer_logo_link}}" target="_blank" style="text-decoration: none;">
+              <img src="{{footer_logo_url}}" alt="Tubi" width="114" height="34" style="display: block; width: 114px; height: 34px;" />
+            </a>
+          </td>
+        </tr>
+
+        {% if footer_show_badges == "true" %}
+        <!-- App Store Badges -->
+        <tr>
+          <td align="center" style="padding: 2px 20px 20px; text-align: center;">
+            {% for _badge in _footer_badge_slots %}{% assign _b = _badge | strip %}{% if _b == "appstore" %}
+            <a href="{{footer_badge_appstore_link}}" target="_blank" style="text-decoration: none; margin-right: 10px; margin-left: 10px;">
+              <img src="{{footer_badge_appstore_img}}" alt="{{footer_badge_appstore_alt}}" width="114" height="39" border="0" />
+            </a>
+            {% elsif _b == "gplay" %}
+            <a href="{{footer_badge_gplay_link}}" target="_blank" style="text-decoration: none; margin-right: 10px; margin-left: 10px;">
+              <img src="{{footer_badge_gplay_img}}" alt="{{footer_badge_gplay_alt}}" width="114" height="39" border="0" />
+            </a>
+            {% else %}
+            {% assign _cb_img_key = "footer_badge_" | append: _b | append: "_img" %}
+            {% assign _cb_link_key = "footer_badge_" | append: _b | append: "_link" %}
+            {% assign _cb_alt_key = "footer_badge_" | append: _b | append: "_alt" %}
+            <a href="{{[_cb_link_key]}}" target="_blank" style="text-decoration: none; margin-right: 10px; margin-left: 10px;">
+              <img src="{{[_cb_img_key]}}" alt="{{[_cb_alt_key] | default: _b | capitalize}}" width="114" height="39" border="0" />
+            </a>
+            {% endif %}{% endfor %}
+          </td>
+        </tr>
+        {% endif %}
+
+        {% if footer_show_social == "true" %}
+        <!-- Social Heading -->
+        <tr>
+          <td align="center" style="padding-bottom: 20px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 29px; line-height: 100%; color: {{_footer_text_color}};" class="t-footer-social dm-text-muted">
+            {{footer_social_heading}}
+          </td>
+        </tr>
+
+        <!-- Social Icons (slot-based) -->
+        <tr>
+          <td align="center" style="padding-bottom: 20px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                {% for _slot in _footer_icon_slots %}{% assign _s = _slot | strip %}{% if _s == "tiktok" %}
+                <td style="padding: 0 17px;">
+                  <a href="{{footer_social_tiktok_url}}" target="_blank" style="text-decoration: none;">
+                    <img src="{{footer_social_tiktok_icon}}" alt="{{footer_social_tiktok_alt}}" width="32" height="32" style="display: block; width: 32px; height: 32px;" />
+                  </a>
+                </td>
+                {% elsif _s == "instagram" %}
+                <td style="padding: 0 17px;">
+                  <a href="{{footer_social_instagram_url}}" target="_blank" style="text-decoration: none;">
+                    <img src="{{footer_social_instagram_icon}}" alt="{{footer_social_instagram_alt}}" width="32" height="32" style="display: block; width: 32px; height: 32px;" />
+                  </a>
+                </td>
+                {% elsif _s == "x" %}
+                <td style="padding: 0 17px;">
+                  <a href="{{footer_social_x_url}}" target="_blank" style="text-decoration: none;">
+                    <img src="{{footer_social_x_icon}}" alt="{{footer_social_x_alt}}" width="32" height="32" style="display: block; width: 32px; height: 32px;" />
+                  </a>
+                </td>
+                {% elsif _s == "facebook" %}
+                <td style="padding: 0 17px;">
+                  <a href="{{footer_social_facebook_url}}" target="_blank" style="text-decoration: none;">
+                    <img src="{{footer_social_facebook_icon}}" alt="{{footer_social_facebook_alt}}" width="32" height="32" style="display: block; width: 32px; height: 32px;" />
+                  </a>
+                </td>
+                {% else %}
+                {% comment %} Custom slot — reads footer_social_{name}_url/icon/alt {% endcomment %}
+                {% assign _custom_url_key = "footer_social_" | append: _s | append: "_url" %}
+                {% assign _custom_icon_key = "footer_social_" | append: _s | append: "_icon" %}
+                {% assign _custom_alt_key = "footer_social_" | append: _s | append: "_alt" %}
+                <td style="padding: 0 17px;">
+                  <a href="{{[_custom_url_key]}}" target="_blank" style="text-decoration: none;">
+                    <img src="{{[_custom_icon_key]}}" alt="{{[_custom_alt_key] | default: _s | capitalize}}" width="32" height="32" style="display: block; width: 32px; height: 32px;" />
+                  </a>
+                </td>
+                {% endif %}{% endfor %}
+              </tr>
+            </table>
+          </td>
+        </tr>
+        {% endif %}
+
+        <!-- Unsubscribe Text -->
+        <tr>
+          <td align="center" style="padding-bottom: 20px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="320" style="max-width: 320px;">
+              <tr>
+                <td align="center" style="font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 13px; line-height: 136%; color: {{_footer_text_color}}; text-align: center;" class="t-footer dm-text-muted">
+                  {{footer_unsub_text}} <a href="{{footer_unsubscribe}}" style="color: {{_footer_link_color}}; text-decoration: underline;">{{footer_unsub_link_text}}</a>.
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Divider -->
+        <tr>
+          <td align="center" style="padding-bottom: 20px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+              <tr>
+                <td style="border-top: 1px solid {{_footer_divider_color}}; font-size: 0; line-height: 0; height: 1px;">&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Legal / Address -->
+        <tr>
+          <td align="center" style="padding-bottom: 36px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="504" style="max-width: 504px;">
+              <tr>
+                <td align="center" style="font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 13px; line-height: 136%; color: {{_footer_text_color}}; text-align: center;" class="t-footer dm-text-muted">
+                  {{footer_sent_from}}<br />
+                  {{footer_address}}<br />
+                  {{footer_copyright}} {{ "now" | date: "%Y" }}. {{footer_rights}}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+
+{% comment %} ===== 3. RESET ===== {% endcomment %}
+{% assign footer_lang = null %}
+{% assign footer_country = null %}
+{% assign footer_show_badges = null %}
+{% assign footer_show_social = null %}
+{% assign _footer_text_color = null %}
+{% assign _footer_link_color = null %}
+{% assign _footer_divider_color = null %}
+{% assign footer_content_bg = null %}
+{% assign footer_content_bg_fallback = null %}
+{% assign footer_logo_url = null %}
+{% assign footer_logo_link = null %}
+{% assign footer_badge_stores = null %}
+{% assign _footer_badge_slots = null %}
+{% assign footer_badge_appstore_img = null %}
+{% assign footer_badge_appstore_link = null %}
+{% assign footer_badge_appstore_alt = null %}
+{% assign footer_badge_gplay_img = null %}
+{% assign footer_badge_gplay_link = null %}
+{% assign footer_badge_gplay_alt = null %}
+{% assign footer_social_heading = null %}
+{% assign footer_social_icons = null %}
+{% assign _footer_icon_slots = null %}
+{% assign footer_social_tiktok_url = null %}
+{% assign footer_social_tiktok_icon = null %}
+{% assign footer_social_tiktok_alt = null %}
+{% assign footer_social_instagram_url = null %}
+{% assign footer_social_instagram_icon = null %}
+{% assign footer_social_instagram_alt = null %}
+{% assign footer_social_x_url = null %}
+{% assign footer_social_x_icon = null %}
+{% assign footer_social_x_alt = null %}
+{% assign footer_social_facebook_url = null %}
+{% assign footer_social_facebook_icon = null %}
+{% assign footer_social_facebook_alt = null %}
+{% assign footer_unsub_text = null %}
+{% assign footer_unsub_link_text = null %}
+{% assign footer_unsubscribe = null %}
+{% assign footer_sent_from = null %}
+{% assign footer_address = null %}
+{% assign footer_copyright = null %}
+{% assign footer_rights = null %}

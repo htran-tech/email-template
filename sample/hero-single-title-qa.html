@@ -1,0 +1,481 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hero Single Title QA — All Variants &amp; Permutations</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+  {{content_blocks.${css_global}}}
+
+  {% comment %} ===== SHARED ASSETS ===== {% endcomment %}
+  {% assign tubi_link = "https://tubitv.com/home" %}
+  {% assign tubi_logo = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign bg_collage = "https://braze-images.com/appboy/communication/assets/image_assets/images/65c6c1f7c27ffc004c2e55b1/original.png?1707524598" %}
+  {% assign bg_portrait = "https://raw.githubusercontent.com/htran-tech/assest-for-braze/main/Hero1p.png" %}
+  {% assign bg_landscape = "https://raw.githubusercontent.com/htran-tech/assest-for-braze/main/Hero1l.png" %}
+
+  {% assign t1_name = "Get Active" %}
+  {% assign t1_portrait = "https://canvas-lb.tubitv.com/opts/qXdai7PLD6OVTw==/e851289f-48f6-4ca9-87c6-6533dd63a91e/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign t1_landscape = "https://canvas-lb.tubitv.com/opts/ZQfFHz1ggRx0nA==/1fbe6bf9-0d22-4e70-bff7-f1b06c3cf8fe/CNcHEKgEOgUxLjEuOQ==" %}
+
+  {% assign t2_name = "The 51st State" %}
+  {% assign t2_portrait = "https://canvas-lb.tubitv.com/opts/GAc_CKsJ8Xk5BA==/28e38f44-cb12-4651-9b76-7431653342a9/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign t2_landscape = "https://canvas-lb.tubitv.com/opts/XYAaoJ_DXdRqUg==/c9e1d46d-7f60-460c-9a21-526c62b83ae5/CNcHEKgEOgUxLjEuOQ==" %}
+
+  {% assign t3_name = "Ninja the Immovable Heart" %}
+  {% assign t3_portrait = "https://canvas-lb.tubitv.com/opts/QNODmZsxW4t5Wg==/9b1b9c1a-38eb-4e60-bcc8-04069a071245/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign t3_landscape = "https://canvas-lb.tubitv.com/opts/-rbW6215_4hp5g==/07d6b14f-c02b-4ff6-9ef4-b7831b07ef9a/CNcHEKgEOgUxLjEuOQ==" %}
+
+  {% assign t4_name = "Lionheart" %}
+  {% assign t4_portrait = "https://canvas-lb.tubitv.com/opts/BVE3okZuWovNwg==/c0efa766-81ec-4c37-96e8-31c128ad7bae/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign t4_landscape = "https://canvas-lb.tubitv.com/opts/Ob4jXhNjqy2Wuw==/fca2bc10-9d23-4423-ba42-5a4009868696/CNcHEKgEOgUxLjEuOQ==" %}
+
+  {% assign t5_name = "The Dallas Connection" %}
+  {% assign t5_portrait = "https://canvas-lb.tubitv.com/opts/HpOFQhmcKCH6AQ==/f6957784-8def-4fbf-a47e-82bd8d4ce711/CJgDEMcEOgUxLjEuOQ==" %}
+
+  {% assign t6_name = "Chain of Command" %}
+  {% assign t6_portrait = "https://canvas-lb.tubitv.com/opts/5M3AhiTClO__8w==/42fb6439-bb0a-46ae-b9e3-3fef523f01c4/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign t6_landscape = "https://canvas-lb.tubitv.com/opts/oDpPm-LLF3sF5Q==/b3c71511-40e7-40be-877b-4bcda03a8f8e/CNcHEKgEOgUxLjEuOQ==" %}
+
+  {% assign t7_name = "Overrun" %}
+  {% assign t7_portrait = "https://canvas-lb.tubitv.com/opts/Qw6HxiBYKCBLKg==/49cd8b05-c330-4fe1-a98a-f2e492316463/CJgDEMcEOgUxLjEuOQ==" %}
+
+
+  {% comment %} ================================================================
+     SECTION A: DARK MODE — PORTRAIT (all 5 variants)
+  ================================================================ {% endcomment %}
+
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "A: DARK — PORTRAIT" %}
+  {% assign body_copy = "All 5 variants, portrait poster, dark mode. bg_portrait background." %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- V1: Portrait --- {% endcomment %}
+  {% assign headline_copy = "V1: PORTRAIT" %}{% assign body_copy = t1_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "1" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = bg_portrait %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t1_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t1_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V2A: Portrait --- {% endcomment %}
+  {% assign headline_copy = "V2A: PORTRAIT" %}{% assign body_copy = t2_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2a" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = bg_portrait %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t2_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t2_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V2B: Portrait + Banner --- {% endcomment %}
+  {% assign headline_copy = "V2B: PORTRAIT — BANNER" %}{% assign body_copy = t3_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2b" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = bg_portrait %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t3_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t3_name %}
+  {% assign hero_banner_text = "Picked For You" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V3: Portrait + Banner --- {% endcomment %}
+  {% assign headline_copy = "V3: PORTRAIT — BANNER" %}{% assign body_copy = t4_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "3" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = bg_portrait %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t4_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t4_name %}
+  {% assign hero_banner_text = "Leaving Soon" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V4: Portrait + Banner + Yellow border --- {% endcomment %}
+  {% assign headline_copy = "V4: PORTRAIT — BANNER + YELLOW BORDER" %}{% assign body_copy = t5_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "4" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = bg_collage %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t5_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t5_name %}
+  {% assign hero_banner_text = "New on Tubi" %}
+  {{content_blocks.${hero_single_title}}}
+
+
+  {% comment %} ================================================================
+     SECTION B: DARK MODE — LANDSCAPE (all 5 variants)
+  ================================================================ {% endcomment %}
+
+  {% assign headline_copy = "B: DARK — LANDSCAPE" %}
+  {% assign body_copy = "All 5 variants, landscape poster, dark mode. bg_landscape background." %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- V1: Landscape --- {% endcomment %}
+  {% assign headline_copy = "V1: LANDSCAPE" %}{% assign body_copy = t1_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "1" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = bg_landscape %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t1_landscape %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t1_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V2A: Landscape --- {% endcomment %}
+  {% assign headline_copy = "V2A: LANDSCAPE" %}{% assign body_copy = t2_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2a" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = bg_landscape %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t2_landscape %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t2_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V2B: Landscape + Banner --- {% endcomment %}
+  {% assign headline_copy = "V2B: LANDSCAPE — BANNER" %}{% assign body_copy = t3_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2b" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = bg_landscape %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t3_landscape %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t3_name %}
+  {% assign hero_banner_text = "Coming Soon" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V3: Landscape --- {% endcomment %}
+  {% assign headline_copy = "V3: LANDSCAPE" %}{% assign body_copy = t6_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "3" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = bg_landscape %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t6_landscape %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t6_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V4: Landscape + Yellow border --- {% endcomment %}
+  {% assign headline_copy = "V4: LANDSCAPE — YELLOW BORDER" %}{% assign body_copy = t4_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "4" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = bg_collage %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t4_landscape %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t4_name %}
+  {{content_blocks.${hero_single_title}}}
+
+
+  {% comment %} ================================================================
+     SECTION C: LIGHT MODE — PORTRAIT (all 5 variants)
+  ================================================================ {% endcomment %}
+
+  {% assign content_bg_color = "#f5f5f5" %}{% assign hb_text_color = "#000000" %}
+  {% assign headline_copy = "C: LIGHT — PORTRAIT" %}
+  {% assign body_copy = "All 5 variants, portrait poster, light mode." %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- V1: Light Portrait --- {% endcomment %}
+  {% assign headline_copy = "V1: LIGHT PORTRAIT" %}{% assign body_copy = t1_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "1" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_mode = "light" %}
+  {% assign hero_bg_url = bg_portrait %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t1_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t1_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V2A: Light Portrait --- {% endcomment %}
+  {% assign headline_copy = "V2A: LIGHT PORTRAIT" %}{% assign body_copy = t3_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2a" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_mode = "light" %}
+  {% assign hero_bg_url = bg_portrait %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t3_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t3_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V2B: Light Portrait + Banner --- {% endcomment %}
+  {% assign headline_copy = "V2B: LIGHT PORTRAIT — BANNER" %}{% assign body_copy = t5_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2b" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_mode = "light" %}
+  {% assign hero_banner_text = "Picked For You" %}
+  {% assign hero_bg_url = bg_portrait %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t5_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t5_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V3: Light Portrait + Banner --- {% endcomment %}
+  {% assign headline_copy = "V3: LIGHT PORTRAIT — BANNER" %}{% assign body_copy = t7_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "3" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_mode = "light" %}
+  {% assign hero_banner_text = "New on Tubi" %}
+  {% assign hero_bg_url = bg_portrait %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t7_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t7_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V4: Light Portrait + Banner + Collage bg --- {% endcomment %}
+  {% assign headline_copy = "V4: LIGHT PORTRAIT — BANNER + COLLAGE BG" %}{% assign body_copy = t2_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "4" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_mode = "light" %}
+  {% assign hero_banner_text = "Picked For You" %}
+  {% assign hero_bg_url = bg_collage %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t2_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t2_name %}
+  {{content_blocks.${hero_single_title}}}
+
+
+  {% comment %} ================================================================
+     SECTION D: LIGHT MODE — LANDSCAPE (all 5 variants)
+  ================================================================ {% endcomment %}
+
+  {% assign headline_copy = "D: LIGHT — LANDSCAPE" %}
+  {% assign body_copy = "All 5 variants, landscape poster, light mode." %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- V1: Light Landscape --- {% endcomment %}
+  {% assign headline_copy = "V1: LIGHT LANDSCAPE" %}{% assign body_copy = t2_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "1" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_mode = "light" %}
+  {% assign hero_bg_url = bg_landscape %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t2_landscape %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t2_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V2A: Light Landscape --- {% endcomment %}
+  {% assign headline_copy = "V2A: LIGHT LANDSCAPE" %}{% assign body_copy = t4_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2a" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_mode = "light" %}
+  {% assign hero_bg_url = bg_landscape %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t4_landscape %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t4_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V2B: Light Landscape + Banner --- {% endcomment %}
+  {% assign headline_copy = "V2B: LIGHT LANDSCAPE — BANNER" %}{% assign body_copy = t6_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2b" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_mode = "light" %}
+  {% assign hero_banner_text = "Leaving Soon" %}
+  {% assign hero_bg_url = bg_landscape %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t6_landscape %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t6_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V3: Light Landscape --- {% endcomment %}
+  {% assign headline_copy = "V3: LIGHT LANDSCAPE" %}{% assign body_copy = t1_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "3" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_mode = "light" %}
+  {% assign hero_bg_url = bg_landscape %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t1_landscape %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t1_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- V4: Light Landscape + Collage bg --- {% endcomment %}
+  {% assign headline_copy = "V4: LIGHT LANDSCAPE — COLLAGE BG" %}{% assign body_copy = t3_name %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "4" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_mode = "light" %}
+  {% assign hero_bg_url = bg_collage %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t3_landscape %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t3_name %}
+  {{content_blocks.${hero_single_title}}}
+
+
+  {% comment %} ================================================================
+     SECTION E: EDGE CASES
+  ================================================================ {% endcomment %}
+
+  {% assign content_bg_color = "#000000" %}{% assign hb_text_color = "#ffffff" %}
+  {% assign headline_copy = "E: EDGE CASES" %}
+  {% assign body_copy = "Fade toggle, no link, fallback bg color." %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- No fade (dark) --- {% endcomment %}
+  {% assign headline_copy = "NO FADE (DARK)" %}{% assign body_copy = "hero_show_fade='false'. Hard edge, no gradient." %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2a" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = bg_portrait %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t1_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t1_name %}
+  {% assign hero_show_fade = "false" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- No fade (light) --- {% endcomment %}
+  {% assign content_bg_color = "#f5f5f5" %}{% assign hb_text_color = "#000000" %}
+  {% assign headline_copy = "NO FADE (LIGHT)" %}{% assign body_copy = "hero_show_fade='false', light mode." %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "1" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_mode = "light" %}
+  {% assign hero_bg_url = bg_portrait %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t2_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t2_name %}
+  {% assign hero_show_fade = "false" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- No poster link (non-clickable) --- {% endcomment %}
+  {% assign content_bg_color = "#000000" %}{% assign hb_text_color = "#ffffff" %}
+  {% assign headline_copy = "NO POSTER LINK" %}{% assign body_copy = "Poster not wrapped in anchor." %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2a" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = bg_portrait %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t6_portrait %}
+  {% assign hero_title = t6_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} --- Fallback bg color (no bg image) --- {% endcomment %}
+  {% assign headline_copy = "FALLBACK BG COLOR (NO BG IMAGE)" %}{% assign body_copy = "hero_bg_url not set. Solid #0b0119 fallback." %}{{content_blocks.${headline_body}}}
+  {% assign hero_variant = "1" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t4_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t4_name %}
+  {{content_blocks.${hero_single_title}}}
+
+
+  {% comment %} ================================================================
+     SECTION F: FULL CAMPAIGN COMPOSITIONS
+  ================================================================ {% endcomment %}
+
+  {% assign content_bg_color = "#000000" %}{% assign hb_text_color = "#ffffff" %}
+  {% assign headline_copy = "F: FULL CAMPAIGNS" %}
+  {% assign body_copy = "Hero + headline + body + CTA + footer." %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- Dark campaign (portrait, V2A, banner) --- {% endcomment %}
+  {% assign hero_variant = "2a" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = bg_portrait %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t1_portrait %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t1_name %}
+  {% assign hero_banner_text = "Picked For You" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% assign content_bg_color = "#000000" %}{% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "GET ACTIVE" %}
+  {% assign body_copy = "Action-packed picks to stream tonight. Free on Tubi." %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign cta_label = "WATCH NOW" %}
+  {% assign cta_url = tubi_link %}
+  {{content_blocks.${single_cta}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} --- Light campaign (landscape, V1) --- {% endcomment %}
+  {% assign hero_variant = "1" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_mode = "light" %}
+  {% assign hero_bg_url = bg_landscape %}
+  {% assign hero_logo_url = tubi_logo %}
+  {% assign hero_logo_link = tubi_link %}
+  {% assign hero_poster_url = t2_landscape %}
+  {% assign hero_poster_link = tubi_link %}
+  {% assign hero_title = t2_name %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% assign content_bg_color = "#f5f5f5" %}{% assign hb_text_color = "#000000" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "THE 51ST STATE" %}
+  {% assign body_copy = "Don't miss this week's top pick. Streaming free." %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign cta_label = "WATCH FREE" %}
+  {% assign cta_url = tubi_link %}
+  {% assign cta_bg_color = "#000000" %}
+  {% assign cta_text_color = "#ffffff" %}
+  {% assign cta_border_color = "none" %}
+  {{content_blocks.${single_cta}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {{content_blocks.${footer}}}
+
+</body>
+</html>

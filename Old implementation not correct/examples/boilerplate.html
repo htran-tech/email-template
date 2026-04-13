@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="format-detection" content="telephone=no">
+  <title>{{email_subject}}</title>
+
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+
+  <!-- CSS Content Block Reference -->
+  {{content_blocks.${css_styles}}}
+
+</head>
+<body style="margin: 0; padding: 0; width: 100%; background-color: #000000;">
+
+  <!-- Preview Text (hidden) -->
+  <div style="display: none; max-height: 0px; overflow: hidden; font-size: 1px; line-height: 1px; color: #000000;">
+    {{preview_text}}
+  </div>
+
+  <!-- Email Container -->
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0; padding: 0; background-color: #000000;">
+    <tr>
+      <td align="center" style="padding: 0;">
+
+        <!-- Main Content Wrapper (600px max width) -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" class="email-container" style="max-width: 600px; margin: 0 auto; background-color: #000000;">
+
+          <!-- Content Blocks Go Here -->
+          <tr>
+            <td style="padding: 0;">
+
+              <!-- Example: Hero Block -->
+              {{content_blocks.${hero_basic}}}
+
+              <!-- Example: Headline + Body -->
+              {{content_blocks.${headline_body}}}
+
+              <!-- Example: 3-Column Poster Grid -->
+              {% content_block poster_grid_3col %}
+
+              <!-- Example: CTA Button -->
+              {{content_blocks.${cta_single}}}
+
+            </td>
+          </tr>
+
+          <!-- Footer Block -->
+          <tr>
+            <td style="padding: 0;">
+              {{content_blocks.${footer}}}
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

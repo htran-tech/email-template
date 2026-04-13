@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Footer QA — All Locales &amp; Overrides</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+  {{content_blocks.${css_global}}}
+
+  {% assign tubi_link = "https://tubitv.com/home" %}
+
+
+  {% comment %} ============ TEST 1: DEFAULT (en/US) — zero overrides ============ {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "TEST 1: DEFAULT (en/US)" %}
+  {% assign body_copy = "No variables set. Everything should use English copy, US app store links, full social row, Braze CDN icons." %}
+  {{content_blocks.${headline_body}}}
+
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 2: ENGLISH / CANADA (en/CA) ============ {% endcomment %}
+  {% assign headline_copy = "TEST 2: ENGLISH / CANADA (en/CA)" %}
+  {% assign body_copy = "Only footer_lang and footer_country set. App store links should point to CA stores." %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "CA" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 3: ENGLISH / AUSTRALIA (en/AU) ============ {% endcomment %}
+  {% assign headline_copy = "TEST 3: ENGLISH / AUSTRALIA (en/AU)" %}
+  {% assign body_copy = "Only footer_lang and footer_country set. App store links should point to AU stores." %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "AU" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 4: SPANISH / US (es/US) ============ {% endcomment %}
+  {% assign headline_copy = "TEST 4: SPANISH / US (es/US)" %}
+  {% assign body_copy = 'Spanish copy ("Síguenos", etc.), US app store links.' %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "es" %}
+  {% assign footer_country = "US" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 5: SPANISH / MEXICO (es/MX) ============ {% endcomment %}
+  {% assign headline_copy = "TEST 5: SPANISH / MEXICO (es/MX)" %}
+  {% assign body_copy = "Spanish copy, MX app store links." %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "es" %}
+  {% assign footer_country = "MX" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 6: PORTUGUESE / BRAZIL (pt/BR) ============ {% endcomment %}
+  {% assign headline_copy = "TEST 6: PORTUGUESE / BRAZIL (pt/BR)" %}
+  {% assign body_copy = 'Portuguese copy ("Siga-nos", etc.), BR app store links.' %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "pt" %}
+  {% assign footer_country = "BR" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 7: FRENCH / CANADA (fr/CA) ============ {% endcomment %}
+  {% assign headline_copy = "TEST 7: FRENCH / CANADA (fr/CA)" %}
+  {% assign body_copy = 'French copy ("Soyons sociaux", etc.), CA app store links.' %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "fr" %}
+  {% assign footer_country = "CA" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 8: FULL OVERRIDE ============ {% endcomment %}
+  {% assign headline_copy = "TEST 8: FULL OVERRIDE" %}
+  {% assign body_copy = "Every footer variable explicitly set to custom values. Nothing should use defaults." %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {% assign footer_logo_url = "https://placehold.co/114x34/222222/ffffff?text=CUSTOM+LOGO" %}
+  {% assign footer_logo_link = "https://example.com/custom-home" %}
+  {% assign footer_badge_appstore_img = "https://placehold.co/112x33/444444/ffffff?text=Custom+iOS" %}
+  {% assign footer_badge_appstore_link = "https://example.com/custom-appstore" %}
+  {% assign footer_badge_gplay_img = "https://placehold.co/112x33/444444/ffffff?text=Custom+Android" %}
+  {% assign footer_badge_gplay_link = "https://example.com/custom-gplay" %}
+  {% assign footer_social_heading = "CUSTOM SOCIAL HEADING" %}
+  {% assign footer_social_tiktok_url = "https://example.com/custom-tiktok" %}
+  {% assign footer_social_instagram_url = "https://example.com/custom-instagram" %}
+  {% assign footer_social_x_url = "https://example.com/custom-x" %}
+  {% assign footer_social_facebook_url = "https://example.com/custom-facebook" %}
+  {% assign footer_unsub_text = "Custom unsubscribe text goes here," %}
+  {% assign footer_unsub_link_text = "click here to unsub" %}
+  {% assign footer_unsubscribe = "https://example.com/custom-unsub" %}
+  {% assign footer_sent_from = "Sent from Custom Corp." %}
+  {% assign footer_address = "123 Custom St, Floor 1, Custom City, CC 00000" %}
+  {% assign footer_copyright = "Copyright" %}
+  {% assign footer_rights = "Custom Rights Reserved." %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 9: PARTIAL OVERRIDE ============ {% endcomment %}
+  {% assign headline_copy = "TEST 9: PARTIAL OVERRIDE (logo + address only)" %}
+  {% assign body_copy = "Only logo and address overridden. Everything else should use fr/CA locale defaults." %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "fr" %}
+  {% assign footer_country = "CA" %}
+  {% assign footer_logo_url = "https://placehold.co/114x34/222222/ffffff?text=ALT+LOGO" %}
+  {% assign footer_address = "999 Override Blvd, Montreal, QC H0H 0H0" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 10: NO BADGES ============ {% endcomment %}
+  {% assign headline_copy = "TEST 10: NO APP STORE BADGES" %}
+  {% assign body_copy = 'footer_show_badges="false". Logo, social, and legal should still appear.' %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {% assign footer_show_badges = "false" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 11: NO SOCIAL ============ {% endcomment %}
+  {% assign headline_copy = "TEST 11: NO SOCIAL SECTION" %}
+  {% assign body_copy = 'footer_show_social="false". Logo, badges, and legal should still appear.' %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {% assign footer_show_social = "false" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 12: MINIMAL (no badges, no social) ============ {% endcomment %}
+  {% assign headline_copy = "TEST 12: MINIMAL (no badges, no social)" %}
+  {% assign body_copy = "Both badges and social hidden. Only logo, unsubscribe, and legal should render." %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {% assign footer_show_badges = "false" %}
+  {% assign footer_show_social = "false" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 13: CUSTOM SOCIAL ICON ORDER (subset) ============ {% endcomment %}
+  {% assign headline_copy = "TEST 13: SOCIAL — ONLY INSTAGRAM + TIKTOK" %}
+  {% assign body_copy = 'footer_social_icons="instagram,tiktok". Only 2 icons in custom order.' %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {% assign footer_social_icons = "instagram,tiktok" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 14: CUSTOM SOCIAL ICONS WITH EXTRA PLATFORMS ============ {% endcomment %}
+  {% assign headline_copy = "TEST 14: SOCIAL — ADD YOUTUBE + THREADS" %}
+  {% assign body_copy = 'footer_social_icons="tiktok,instagram,youtube,threads". YouTube and Threads use custom icon/url vars.' %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {% assign footer_social_icons = "tiktok,instagram,youtube,threads" %}
+  {% assign footer_social_youtube_url = "https://www.youtube.com/@Tubi" %}
+  {% assign footer_social_youtube_icon = "https://placehold.co/32x32/333333/ffffff?text=YT" %}
+  {% assign footer_social_youtube_alt = "YouTube" %}
+  {% assign footer_social_threads_url = "https://www.threads.net/@tubi" %}
+  {% assign footer_social_threads_icon = "https://placehold.co/32x32/333333/ffffff?text=TH" %}
+  {% assign footer_social_threads_alt = "Threads" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 15: ALL 6 SOCIAL ICONS ============ {% endcomment %}
+  {% assign headline_copy = "TEST 15: SOCIAL — ALL 6 (defaults + youtube + threads)" %}
+  {% assign body_copy = 'All 4 defaults plus YouTube and Threads. 6 icons in a row.' %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {% assign footer_social_icons = "tiktok,instagram,x,facebook,youtube,threads" %}
+  {% assign footer_social_youtube_url = "https://www.youtube.com/@Tubi" %}
+  {% assign footer_social_youtube_icon = "https://placehold.co/32x32/333333/ffffff?text=YT" %}
+  {% assign footer_social_youtube_alt = "YouTube" %}
+  {% assign footer_social_threads_url = "https://www.threads.net/@tubi" %}
+  {% assign footer_social_threads_icon = "https://placehold.co/32x32/333333/ffffff?text=TH" %}
+  {% assign footer_social_threads_alt = "Threads" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 16: BADGES — ONLY APP STORE ============ {% endcomment %}
+  {% assign headline_copy = "TEST 16: BADGES — ONLY APP STORE" %}
+  {% assign body_copy = 'footer_badge_stores="appstore". Only the iOS badge should render.' %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {% assign footer_badge_stores = "appstore" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 17: BADGES — ADD AMAZON APPSTORE ============ {% endcomment %}
+  {% assign headline_copy = "TEST 17: BADGES — ADD AMAZON APPSTORE" %}
+  {% assign body_copy = 'footer_badge_stores="appstore,gplay,amazon". 3 badges with a custom Amazon slot.' %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {% assign footer_badge_stores = "appstore,gplay,amazon" %}
+  {% assign footer_badge_amazon_img = "https://placehold.co/112x33/333333/ffffff?text=Amazon" %}
+  {% assign footer_badge_amazon_link = "https://www.amazon.com/dp/B075NTCQMZ" %}
+  {% assign footer_badge_amazon_alt = "Get it on Amazon" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ============ TEST 18: BADGES — CUSTOM ORDER (gplay first) ============ {% endcomment %}
+  {% assign headline_copy = "TEST 18: BADGES — REVERSED ORDER" %}
+  {% assign body_copy = 'footer_badge_stores="gplay,appstore". Google Play first, then App Store.' %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "AU" %}
+  {% assign footer_badge_stores = "gplay,appstore" %}
+  {{content_blocks.${footer}}}
+
+</body>
+</html>

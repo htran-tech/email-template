@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hero Litmus — V3 Badge Portrait</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+  {{content_blocks.${css_global}}}
+
+  {% comment %} V3 portrait + "Coming Soon" banner + hero bg {% endcomment %}
+  {% assign hero_variant = "3" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#0b0119" %}
+  {% assign hero_bg_url = "https://raw.githubusercontent.com/htran-tech/assest-for-braze/main/Hero1p.png" %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = "https://tubitv.com/home" %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/BVE3okZuWovNwg==/c0efa766-81ec-4c37-96e8-31c128ad7bae/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = "https://tubitv.com/home" %}
+  {% assign hero_title = "Lionheart" %}
+  {% assign hero_banner_text = "Coming Soon" %}
+  {% assign hero_show_fade = "true" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "LIONHEART" %}
+  {% assign body_copy = "A story of courage. Coming soon to Tubi." %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign cta_label = "SET REMINDER" %}
+  {% assign cta_url = "https://tubitv.com/home" %}
+  {% assign cta_style = "secondary" %}
+  {{content_blocks.${single_cta}}}
+
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {{content_blocks.${footer}}}
+
+</body>
+</html>

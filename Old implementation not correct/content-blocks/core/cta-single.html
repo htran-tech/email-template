@@ -1,0 +1,100 @@
+<!--
+  Single CTA Button Content Block
+  Priority: HIGH
+
+  Features:
+  - Configurable label and URL
+  - Color variants: primary (blue), secondary (white), dark (black)
+  - Width options: full, fixed (200px), auto
+  - Mobile tap target: minimum 44px height
+  - Tracking toggle
+-->
+
+{% comment %} Initialize variables with defaults {% endcomment %}
+{% assign cta_label = cta_label | default: "" %}
+{% assign cta_url = cta_url | default: "" %}
+{% assign cta_style = cta_style | default: "primary" %}
+{% assign cta_width = cta_width | default: "fixed" %}
+{% assign enable_tracking = enable_tracking | default: true %}
+{% assign cta_align = cta_align | default: "center" %}
+
+{% comment %} UTM parameters {% endcomment %}
+{% assign utm_source = utm_source | default: "braze" %}
+{% assign utm_medium = utm_medium | default: "email" %}
+{% assign utm_campaign = utm_campaign | default: "email_campaign" %}
+
+{% comment %} Only render if label and URL exist {% endcomment %}
+{% if cta_label != "" and cta_url != "" %}
+
+{% comment %} Add UTM tracking if enabled {% endcomment %}
+{% assign cta_url_final = cta_url %}
+{% if enable_tracking %}
+  {% if cta_url contains "?" %}
+    {% assign cta_url_final = cta_url | append: "&utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign %}
+  {% else %}
+    {% assign cta_url_final = cta_url | append: "?utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign %}
+  {% endif %}
+{% endif %}
+
+{% comment %} Button styling based on style variant {% endcomment %}
+{% if cta_style == "primary" %}
+  {% assign bg_color = "#00a8e1" %}
+  {% assign text_color = "#000000" %}
+  {% assign border_style = "" %}
+{% elsif cta_style == "secondary" %}
+  {% assign bg_color = "#ffffff" %}
+  {% assign text_color = "#000000" %}
+  {% assign border_style = "" %}
+{% elsif cta_style == "dark" %}
+  {% assign bg_color = "#1a1a1a" %}
+  {% assign text_color = "#ffffff" %}
+  {% assign border_style = "border: 1px solid #333333;" %}
+{% else %}
+  {% comment %} Custom hex color {% endcomment %}
+  {% assign bg_color = cta_style %}
+  {% assign text_color = "#ffffff" %}
+  {% assign border_style = "" %}
+{% endif %}
+
+{% comment %} Width class {% endcomment %}
+{% if cta_width == "full" %}
+  {% assign width_style = "width: 100%; display: block;" %}
+  {% assign table_width = "100%" %}
+{% elsif cta_width == "fixed" %}
+  {% assign width_style = "min-width: 200px;" %}
+  {% assign table_width = "auto" %}
+{% else %}
+  {% assign width_style = "" %}
+  {% assign table_width = "auto" %}
+{% endif %}
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0; padding: 0;">
+  <tr>
+    <td style="padding: 20px;" align="{{cta_align}}">
+
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="{{table_width}}" style="margin: 0 auto;">
+        <tr>
+          <td style="border-radius: 4px; background-color: {{bg_color}}; {{border_style}}">
+            <a href="{{cta_url_final}}" class="cta-button" style="display: inline-block; padding: 14px 32px; font-size: 16px; font-weight: 700; text-align: center; text-decoration: none; border-radius: 4px; background-color: {{bg_color}}; color: {{text_color}}; min-height: 44px; line-height: 1.2; {{width_style}} box-sizing: border-box;">
+              {{cta_label}}
+            </a>
+          </td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+
+{% endif %}
+
+{% comment %} Reset variables to prevent carryover {% endcomment %}
+{% assign cta_label = nil %}
+{% assign cta_url = nil %}
+{% assign cta_style = nil %}
+{% assign cta_width = nil %}
+{% assign enable_tracking = nil %}
+{% assign cta_align = nil %}
+{% assign utm_source = nil %}
+{% assign utm_medium = nil %}
+{% assign utm_campaign = nil %}

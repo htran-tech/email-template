@@ -1,0 +1,186 @@
+<!--
+  2-Column Landscape Poster Grid Content Block
+
+  Features:
+  - Landscape orientation posters
+  - 2 per row
+  - API or manual content
+  - Optional headline, body, and CTA
+  - Show/hide metadata
+  - Mobile responsive (stacks to single column)
+-->
+
+{% comment %} Initialize variables with defaults {% endcomment %}
+{% assign api_endpoint = api_endpoint | default: "" %}
+{% assign container_id = container_id | default: "" %}
+{% assign item_count = item_count | default: 4 %}
+{% assign show_metadata = show_metadata | default: false %}
+{% assign headline_copy = headline_copy | default: "" %}
+{% assign body_copy = body_copy | default: "" %}
+{% assign cta_label = cta_label | default: "" %}
+{% assign cta_url = cta_url | default: "" %}
+{% assign enable_tracking = enable_tracking | default: true %}
+{% assign text_align = text_align | default: "center" %}
+
+{% comment %} UTM parameters {% endcomment %}
+{% assign utm_source = utm_source | default: "braze" %}
+{% assign utm_medium = utm_medium | default: "email" %}
+{% assign utm_campaign = utm_campaign | default: "email_campaign" %}
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0; padding: 0;">
+
+  {% comment %} Optional Headline {% endcomment %}
+  {% if headline_copy != "" %}
+  <tr>
+    <td style="padding: 24px 20px 16px 20px;">
+      <h2 style="margin: 0; font-size: 28px; font-weight: 700; color: #ffffff; text-align: {{text_align}}; line-height: 1.2;">
+        {{headline_copy}}
+      </h2>
+    </td>
+  </tr>
+  {% endif %}
+
+  {% comment %} Optional Body Copy {% endcomment %}
+  {% if body_copy != "" %}
+  <tr>
+    <td style="padding: 0 20px 20px 20px;">
+      <p style="margin: 0; font-size: 16px; color: #cccccc; text-align: {{text_align}}; line-height: 1.5;">
+        {{body_copy}}
+      </p>
+    </td>
+  </tr>
+  {% endif %}
+
+  {% comment %} Poster Grid {% endcomment %}
+  <tr>
+    <td style="padding: 16px 12px;">
+
+      {% comment %} Manual content using poster arrays {% endcomment %}
+      {% assign poster_images = poster_images | default: "" %}
+      {% assign poster_urls = poster_urls | default: "" %}
+      {% assign poster_titles = poster_titles | default: "" %}
+      {% assign poster_years = poster_years | default: "" %}
+      {% assign poster_genres = poster_genres | default: "" %}
+
+      {% if poster_images != "" %}
+        {% assign images_array = poster_images | split: "," %}
+        {% assign urls_array = poster_urls | split: "," %}
+        {% assign titles_array = poster_titles | split: "," %}
+        {% assign years_array = poster_years | split: "," %}
+        {% assign genres_array = poster_genres | split: "," %}
+
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" class="poster-grid">
+
+          {% comment %} Loop through posters in rows of 2 {% endcomment %}
+          {% assign row_count = item_count | divided_by: 2.0 | ceil %}
+          {% for row in (1..row_count) %}
+            <tr>
+              {% assign start_index = forloop.index0 | times: 2 %}
+              {% for col in (0..1) %}
+                {% assign index = start_index | plus: col %}
+                {% if index < item_count and index < images_array.size %}
+                  <td class="poster-cell" width="50%" style="padding: 12px; vertical-align: top;" valign="top">
+
+                    {% comment %} Landscape Poster Image {% endcomment %}
+                    {% assign poster_url = urls_array[index] | default: "#" %}
+                    {% assign poster_image = images_array[index] %}
+                    {% assign poster_title = titles_array[index] | default: "Watch Now" %}
+
+                    {% comment %} Add UTM parameters if tracking enabled {% endcomment %}
+                    {% if enable_tracking %}
+                      {% if poster_url contains "?" %}
+                        {% assign poster_url = poster_url | append: "&utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign %}
+                      {% else %}
+                        {% assign poster_url = poster_url | append: "?utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign %}
+                      {% endif %}
+                    {% endif %}
+
+                    <a href="{{poster_url}}" style="text-decoration: none; display: block;">
+                      <img src="{{poster_image}}" alt="{{poster_title}}" class="poster-image" width="276" style="width: 100%; height: auto; display: block; border-radius: 4px; border: 0; aspect-ratio: 16/9;" />
+                    </a>
+
+                    {% comment %} Optional Metadata {% endcomment %}
+                    {% if show_metadata %}
+                      <div class="poster-metadata" style="margin-top: 12px;">
+                        {% if poster_title != "" %}
+                          <div class="poster-title" style="font-size: 16px; font-weight: 600; color: #ffffff; margin-bottom: 6px;">
+                            {{poster_title}}
+                          </div>
+                        {% endif %}
+                        {% if years_array[index] or genres_array[index] %}
+                          <div style="font-size: 14px; color: #cccccc;">
+                            {% if years_array[index] %}{{years_array[index]}}{% endif %}
+                            {% if years_array[index] and genres_array[index] %} • {% endif %}
+                            {% if genres_array[index] %}{{genres_array[index]}}{% endif %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+
+                  </td>
+                {% else %}
+                  <td width="50%" style="padding: 12px;">&nbsp;</td>
+                {% endif %}
+              {% endfor %}
+            </tr>
+          {% endfor %}
+
+        </table>
+      {% endif %}
+
+    </td>
+  </tr>
+
+  {% comment %} Optional CTA Button {% endcomment %}
+  {% if cta_label != "" and cta_url != "" %}
+  <tr>
+    <td style="padding: 24px 20px;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: 0 auto;">
+        <tr>
+          <td style="border-radius: 4px; background-color: #00a8e1;">
+            {% assign cta_url_with_tracking = cta_url %}
+            {% if enable_tracking %}
+              {% if cta_url contains "?" %}
+                {% assign cta_url_with_tracking = cta_url | append: "&utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign %}
+              {% else %}
+                {% assign cta_url_with_tracking = cta_url | append: "?utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign %}
+              {% endif %}
+            {% endif %}
+            <a href="{{cta_url_with_tracking}}" class="cta-button cta-primary" style="display: inline-block; padding: 14px 32px; font-size: 16px; font-weight: 700; text-align: center; text-decoration: none; border-radius: 4px; background-color: #00a8e1; color: #000000; min-height: 44px; line-height: 1.2;">
+              {{cta_label}}
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  {% endif %}
+
+</table>
+
+{% comment %} Spacer {% endcomment %}
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+  <tr>
+    <td class="spacer-md" style="height: 24px; line-height: 24px;">&nbsp;</td>
+  </tr>
+</table>
+
+{% comment %} Reset all variables {% endcomment %}
+{% assign api_endpoint = nil %}
+{% assign container_id = nil %}
+{% assign item_count = nil %}
+{% assign show_metadata = nil %}
+{% assign headline_copy = nil %}
+{% assign body_copy = nil %}
+{% assign cta_label = nil %}
+{% assign cta_url = nil %}
+{% assign enable_tracking = nil %}
+{% assign text_align = nil %}
+{% assign poster_images = nil %}
+{% assign poster_urls = nil %}
+{% assign poster_titles = nil %}
+{% assign poster_years = nil %}
+{% assign poster_genres = nil %}
+{% assign utm_source = nil %}
+{% assign utm_medium = nil %}
+{% assign utm_campaign = nil %}

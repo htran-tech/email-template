@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Campaign: API-Powered Poster Grid</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+{{content_blocks.${css_global}}}
+
+{% comment %}
+  CAMPAIGN TEMPLATE: API-Powered Poster Grid
+  ============================================
+  Uses Braze Connected Content to fetch ML recommendations from the Tubi API,
+  then renders via the unified poster_grid Content Block.
+
+  The poster_grid block accepts grid_api_items directly and handles:
+    - Item mapping (posterarts_large, landscape_images, url, title, type)
+    - Smart auto-layout (count%3: 1→1L first, 2→2V first, 0→all 3V)
+    - UTM parameter appending
+    - All layout types (1L, 2L, 2V, 3V) and mixed rows
+
+  CAMPAIGN VARIABLES (set per section):
+    container            — API container slug (e.g. 'black_cinema')
+    exclude_titles       — Comma-separated title IDs to exclude
+    limit                — Max titles to fetch (max 15)
+    headline_N           — Headline per container section
+    headline_N_link      — Headline link
+    subhead_N            — Subheadline
+    cta_N                — CTA label
+    cta_N_link           — CTA link
+    cta_N_style          — CTA style (primary/secondary/secondary-brand)
+    bgcolor_N            — Background color per section
+    show_metadata_N      — Show metadata ("true"/"false")
+    grid_rows            — Optional: override auto-layout (e.g. "1l,3v,2l")
+{% endcomment %}
+
+
+{% comment %} ============================================================
+   SECTION 1: Manual Title Grid (no API)
+   Shows the block can still be used with manual items alongside API grids.
+   ============================================================ {% endcomment %}
+
+{% assign headline_img_1 = '' %}
+{% assign headline_1 = 'Just Added' %}
+{% assign subhead_1 = '' %}
+{% assign headline_1_link = 'https://tubitv.com/category/just_added' %}
+{% assign cta_1 = 'Watch Now' %}
+{% assign cta_1_link = 'https://tubitv.com/category/just_added' %}
+{% assign bgcolor_1 = '#000000' %}
+
+{% assign grid_headline = headline_1 %}
+{% assign grid_headline_url = headline_1_link %}
+{% assign grid_cta_label = cta_1 %}
+{% assign grid_cta_url = cta_1_link %}
+{% assign content_bg_color = bgcolor_1 | default: "#000000" %}
+{% assign grid_text_color = "#ffffff" %}
+{% assign grid_rows = "1l,3v" %}
+{% assign grid_item_1_img = "https://canvas-lb.tubitv.com/opts/TBzTFDgEksxPcQ==/ca90f2f7-71d3-4531-b335-8d0b013510c4/CLAJEJoFIghvcmlnaW5hbCoDdG9wMgRkYXJrOgUxLjEuOA==" %}
+{% assign grid_item_1_url = "https://tubitv.com/movies/100046434/woman-to-woman" %}
+{% assign grid_item_1_subhead = "Woman to Woman" %}
+{% assign grid_item_2_img = "https://canvas-lb.tubitv.com/opts/zWeuB_DoViYziw==/c2002e35-7b97-41b1-8c2d-9a5756ce29f7/CJADEL4EOgUxLjEuOQ==" %}
+{% assign grid_item_2_url = "https://tubitv.com/series/300019075" %}
+{% assign grid_item_2_subhead = "Courage the Cowardly Dog" %}
+{% assign grid_item_3_img = "https://canvas-lb.tubitv.com/opts/cAuYANSNZNIIIg==/fc4d083f-6a87-46f9-b29d-5331aa2b7e82/CJADEL4EOgUxLjEuOQ==" %}
+{% assign grid_item_3_url = "https://tubitv.com/series/300019090" %}
+{% assign grid_item_3_subhead = "Dexter's Laboratory" %}
+{% assign grid_item_4_img = "https://canvas-lb.tubitv.com/opts/xbqmLr-NjHm_cw==/23d3f40d-5238-4ac6-9033-1b701498dfc4/CJADEL4EOgUxLjEuOQ==" %}
+{% assign grid_item_4_url = "https://tubitv.com/series/300019078" %}
+{% assign grid_item_4_subhead = "The Powerpuff Girls" %}
+
+{{content_blocks.${poster_grid}}}
+
+
+{% comment %} ============================================================
+   SECTION 2: Single-Container API Grid
+   Fetches from one container, auto-layout based on item count.
+   ============================================================ {% endcomment %}
+
+{% assign container = 'black_cinema' %}
+{% assign exclude_titles = '' %}
+{% assign limit = 7 %}
+{% assign use_cache = 'false' %}
+
+{% assign device_id = {{custom_attribute.${preferred_device_id}}} %}
+{% assign platform = {{custom_attribute.${preferred_user_platform} | downcase }} | default: 'web' %}
+
+{% if {{canvas.${api_id}}} != null %}
+{% assign campaign_id = '' %}
+{% assign canvas_id = {{canvas.${api_id}}} %}
+{% else %}
+{% assign campaign_id = {{campaign.${api_id}}} %}
+{% assign canvas_id = '' %}
+{% endif %}
+
+{% if {{campaign.${name}}} contains 'Email' %}
+{% assign channel = 'EMAIL' %}
+{% elsif {{campaign.${name}}} contains 'Push' %}
+{% assign channel = 'PUSH' %}
+{% elsif {{campaign.${name}}} contains 'IAM' %}
+{% assign channel = 'IN_APP' %}
+{% elsif {{campaign.${name}}} contains 'Content_Card' %}
+{% assign channel = 'CONTENT_CARD' %}
+{% elsif {{canvas.${name}}} contains 'Email' %}
+{% assign channel = 'EMAIL' %}
+{% elsif {{canvas.${name}}} contains 'Push' %}
+{% assign channel = 'PUSH' %}
+{% endif %}
+
+{% connected_content https://crm.production-public.tubi.io/crm/external/ml-recommendations?container={{container}}&country={{${country} | default: 'US' }}&device_id={{device_id}}&user_id={{custom_attribute.${tubi_user_id}}}&tubi_id=null&limit={{limit}}&braze_id={{${braze_id}}}&platform={{platform}}&container_priority={{container_priority | default: 1 }}&variant_id={{campaign.${message_api_id}}}&campaign_id={{campaign_id}}&canvas_id={{canvas_id}}&channel={{channel}}&exclude_series=false&use_cache={{use_cache | default: 'true'}}&rank_containers={{rank_containers | default: 'false'}}&region={{custom_attribute.${home_state}}}&language={{${language} | upcase }}&city={{${city} | url_escape }}&timezone={{${time_zone}}}&exclude_titles={{exclude_titles}}&ranking_feature_flags=eyJlbmFibGVfY3Jvc3NfY2FtcGFpZ25fZGVkdXAiOiAidHJ1ZSIsImVuYWJsZV9ob21lX3NjcmVlbl9kZWR1cGVfbl9tXzQiOiAidHJ1ZSJ9 :basic_auth tubi :save result :retry :cache_max_age 60 %}
+
+{% if result.count == 0 %}
+{% abort_message('No content to show') %}
+{% endif %}
+
+{% assign grid_utm_params = '?utm_source=braze&utm_medium=crm_email&utm_campaign=' | append: {{campaign.${name}}} %}
+
+{% comment %} Detect single vs multi-container {% endcomment %}
+{% assign _has_containers = result.containers[0] | default: "__none__" %}
+{% if _has_containers == "__none__" %}
+
+  {% comment %} ---- SINGLE CONTAINER ---- {% endcomment %}
+  {% assign grid_api_items = result.items %}
+  {% assign grid_headline = "Black Storytelling" %}
+  {% assign grid_headline_url = "https://tubitv.com/category/black_cinema" %}
+  {% assign grid_cta_label = "Explore More" %}
+  {% assign grid_cta_url = "https://tubitv.com/category/black_cinema" %}
+  {% assign grid_cta_style = "primary" %}
+  {% assign grid_show_metadata = "false" %}
+  {% assign grid_text_color = "#ffffff" %}
+  {{content_blocks.${poster_grid}}}
+
+{% else %}
+
+  {% comment %} ---- MULTI-CONTAINER ---- {% endcomment %}
+
+  {% comment %} Container 1 {% endcomment %}
+  {% if result.containers[0] != blank %}
+    {% assign grid_api_items = result.containers[0].items %}
+    {% assign grid_headline = "Black Storytelling" %}
+    {% assign grid_headline_url = "https://tubitv.com/category/black_cinema" %}
+    {% assign grid_cta_label = "Explore More" %}
+    {% assign grid_cta_url = "https://tubitv.com/category/black_cinema" %}
+    {% assign grid_cta_style = "primary" %}
+    {% assign grid_show_metadata = "false" %}
+    {% assign grid_text_color = "#ffffff" %}
+    {{content_blocks.${poster_grid}}}
+  {% endif %}
+
+  {% comment %} Container 2 {% endcomment %}
+  {% if result.containers[1] != blank %}
+    {% assign grid_api_items = result.containers[1].items %}
+    {% assign grid_headline = "Black Storytelling By Tubi" %}
+    {% assign grid_headline_url = "https://tubitv.com/category/black_cinema_by_tubi" %}
+    {% assign grid_cta_label = "Explore More" %}
+    {% assign grid_cta_url = "https://tubitv.com/category/black_cinema_by_tubi" %}
+    {% assign grid_cta_style = "primary" %}
+    {% assign grid_show_metadata = "false" %}
+    {% assign grid_text_color = "#ffffff" %}
+    {{content_blocks.${poster_grid}}}
+  {% endif %}
+
+  {% comment %} Container 3 {% endcomment %}
+  {% if result.containers[2] != blank %}
+    {% assign grid_api_items = result.containers[2].items %}
+    {% assign grid_headline = headline_3 %}
+    {% assign grid_headline_url = headline_3_link %}
+    {% assign grid_cta_label = cta_3 %}
+    {% assign grid_cta_url = cta_3_link %}
+    {% assign grid_cta_style = cta_3_style | default: "primary" %}
+    {% assign grid_show_metadata = show_metadata_3 | default: "false" %}
+    {% assign content_bg_color = bgcolor_3 | default: "#000000" %}
+    {% assign grid_text_color = "#ffffff" %}
+    {{content_blocks.${poster_grid}}}
+  {% endif %}
+
+  {% comment %} Container 4 {% endcomment %}
+  {% if result.containers[3] != blank %}
+    {% assign grid_api_items = result.containers[3].items %}
+    {% assign grid_headline = headline_4 %}
+    {% assign grid_headline_url = headline_4_link %}
+    {% assign grid_cta_label = cta_4 %}
+    {% assign grid_cta_url = cta_4_link %}
+    {% assign grid_cta_style = cta_4_style | default: "primary" %}
+    {% assign grid_show_metadata = show_metadata_4 | default: "false" %}
+    {% assign content_bg_color = bgcolor_4 | default: "#000000" %}
+    {% assign grid_text_color = "#ffffff" %}
+    {{content_blocks.${poster_grid}}}
+  {% endif %}
+
+  {% comment %} Container 5 {% endcomment %}
+  {% if result.containers[4] != blank %}
+    {% assign grid_api_items = result.containers[4].items %}
+    {% assign grid_headline = headline_5 %}
+    {% assign grid_headline_url = headline_5_link %}
+    {% assign grid_cta_label = cta_5 %}
+    {% assign grid_cta_url = cta_5_link %}
+    {% assign grid_cta_style = cta_5_style | default: "primary" %}
+    {% assign grid_show_metadata = show_metadata_5 | default: "false" %}
+    {% assign content_bg_color = bgcolor_5 | default: "#000000" %}
+    {% assign grid_text_color = "#ffffff" %}
+    {{content_blocks.${poster_grid}}}
+  {% endif %}
+
+{% endif %}
+
+
+{% comment %} ============================================================
+   SECTION 3: Second API Call (different container)
+   Shows multiple API calls in the same campaign, each with its own grid.
+   ============================================================ {% endcomment %}
+
+{% assign container = 'black_cinema_by_tubi' %}
+{% assign exclude_titles = '' %}
+{% assign limit = 6 %}
+{% assign use_cache = 'false' %}
+
+{% connected_content https://crm.production-public.tubi.io/crm/external/ml-recommendations?container={{container}}&country={{${country} | default: 'US' }}&device_id={{device_id}}&user_id={{custom_attribute.${tubi_user_id}}}&tubi_id=null&limit={{limit}}&braze_id={{${braze_id}}}&platform={{platform}}&container_priority={{container_priority | default: 1 }}&variant_id={{campaign.${message_api_id}}}&campaign_id={{campaign_id}}&canvas_id={{canvas_id}}&channel={{channel}}&exclude_series=false&use_cache={{use_cache | default: 'true'}}&rank_containers={{rank_containers | default: 'false'}}&region={{custom_attribute.${home_state}}}&language={{${language} | upcase }}&city={{${city} | url_escape }}&timezone={{${time_zone}}}&exclude_titles={{exclude_titles}}&ranking_feature_flags=eyJlbmFibGVfY3Jvc3NfY2FtcGFpZ25fZGVkdXAiOiAidHJ1ZSIsImVuYWJsZV9ob21lX3NjcmVlbl9kZWR1cGVfbl9tXzQiOiAidHJ1ZSJ9 :basic_auth tubi :save result :retry :cache_max_age 60 %}
+
+{% if result.count > 0 %}
+  {% assign _has_containers = result.containers[0] | default: "__none__" %}
+  {% if _has_containers == "__none__" %}
+    {% assign grid_api_items = result.items %}
+  {% else %}
+    {% assign grid_api_items = result.containers[0].items %}
+  {% endif %}
+  {% assign grid_headline = "Black Storytelling By Tubi" %}
+  {% assign grid_headline_url = "https://tubitv.com/category/black_cinema_by_tubi" %}
+  {% assign grid_cta_label = "Explore More" %}
+  {% assign grid_cta_url = "https://tubitv.com/category/black_cinema_by_tubi" %}
+  {% assign grid_cta_style = "primary" %}
+  {% assign grid_show_metadata = "false" %}
+  {% assign grid_text_color = "#ffffff" %}
+  {{content_blocks.${poster_grid}}}
+{% endif %}
+
+
+</body>
+</html>

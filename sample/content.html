@@ -1,0 +1,30 @@
+{% assign device_id = {{custom_attribute.${preferred_device_id}}} %}
+{% assign platform = {{custom_attribute.${preferred_user_platform} | downcase }} | default: 'web' %}
+
+{% if {{canvas.${api_id}}} != null %}
+{% assign campaign_id = '' %}
+{% assign canvas_id = {{canvas.${api_id}}} %}
+{% else %}
+{% assign campaign_id = {{campaign.${api_id}}} %}
+{% assign canvas_id = '' %}
+{% endif %}
+
+{% if {{campaign.${name}}} contains 'Email' %}
+{% assign channel = 'EMAIL' %}
+{% elsif {{campaign.${name}}} contains 'Push' %}
+{% assign channel = 'PUSH' %}
+{% elsif {{campaign.${name}}} contains 'IAM' %}
+{% assign channel = 'IN_APP' %}
+{% elsif {{campaign.${name}}} contains 'Content_Card' %}
+{% assign channel = 'CONTENT_CARD' %}
+{% elsif {{canvas.${name}}} contains 'Email' %}
+{% assign channel = 'EMAIL' %}
+{% elsif {{canvas.${name}}} contains 'Push' %}
+{% assign channel = 'PUSH' %}
+{% endif %}
+
+{% connected_content https://crm.production-public.tubi.io/crm/external/ml-recommendations?container={{container}}&country={{${country} | default: 'US' }}&device_id={{device_id}}&user_id={{custom_attribute.${tubi_user_id}}}&tubi_id={{${user_id}}}&limit={{limit}}&braze_id={{${braze_id}}}&platform={{platform}}&container_priority={{container_priority | default: 1 }}&variant_id={{campaign.${message_api_id}}}&campaign_id={{campaign_id}}&canvas_id={{canvas_id}}&channel={{channel}}&exclude_series=false&use_cache={{use_cache | default: 'true'}}&rank_containers={{rank_containers | default: 'false'}}&region={{custom_attribute.${home_state}}}&language={{${language} | upcase }}&city={{${city} | url_escape }}&timezone={{${time_zone}}}&exclude_titles={{exclude_titles}}&ranking_feature_flags=eyJlbmFibGVfY3Jvc3NfY2FtcGFpZ25fZGVkdXAiOiAidHJ1ZSIsImVuYWJsZV9ob21lX3NjcmVlbl9kZWR1cGVfbl9tXzQiOiAidHJ1ZSJ9 :basic_auth tubi :save result :retry :cache_max_age 60 %}
+
+{% if result == null OR result.count == 0 %}
+{% abort_message('No content to show') %}
+{% endif %}

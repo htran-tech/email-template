@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gmail Dark Mode — CTA Border Color Test</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+  {% assign email_outer_bg = "#000000" %}
+  {% assign email_inner_bg = "#000000" %}
+
+  {{content_blocks.${css_global}}}
+
+  <table role="presentation" class="email-wrapper" cellpadding="0" cellspacing="0" border="0" width="100%">
+  <tr>
+  <td align="center">
+  <table role="presentation" class="email-container" cellpadding="0" cellspacing="0" border="0" width="600" bgcolor="#000000" style="max-width:600px;">
+  <tr>
+  <td>
+
+
+  {% comment %} ============================================================
+     GMAIL DARK MODE BORDER COLOR TEST
+     Testing which border colors survive Gmail's dark mode inversion.
+     Each button uses a different color strategy.
+  ============================================================ {% endcomment %}
+
+
+  {% comment %} --- HEADER --- {% endcomment %}
+  {% assign headline_copy = "Gmail Dark Mode Border Test" %}
+  {% assign hb_headline_transform = "none" %}
+  {% assign hb_align = "center" %}
+  {{content_blocks.${headline_body}}}
+
+
+  {% comment %} --- TEST 1: #cccccc (worked in round 1) --- {% endcomment %}
+  {% assign cta_label = "1. #cccccc (baseline)" %}
+  {% assign cta_url = "https://tubitv.com" %}
+  {% assign cta_style = "secondary" %}
+  {% assign cta_border_color = "#cccccc" %}
+  {% assign cta_text_color = "#cccccc" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- TEST 2: #d0d0d0 --- {% endcomment %}
+  {% assign cta_label = "2. #d0d0d0" %}
+  {% assign cta_url = "https://tubitv.com" %}
+  {% assign cta_style = "secondary" %}
+  {% assign cta_border_color = "#d0d0d0" %}
+  {% assign cta_text_color = "#d0d0d0" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- TEST 3: #d5d5d5 --- {% endcomment %}
+  {% assign cta_label = "3. #d5d5d5" %}
+  {% assign cta_url = "https://tubitv.com" %}
+  {% assign cta_style = "secondary" %}
+  {% assign cta_border_color = "#d5d5d5" %}
+  {% assign cta_text_color = "#d5d5d5" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- TEST 4: #dadada --- {% endcomment %}
+  {% assign cta_label = "4. #dadada" %}
+  {% assign cta_url = "https://tubitv.com" %}
+  {% assign cta_style = "secondary" %}
+  {% assign cta_border_color = "#dadada" %}
+  {% assign cta_text_color = "#dadada" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- TEST 5: #dddddd --- {% endcomment %}
+  {% assign cta_label = "5. #dddddd" %}
+  {% assign cta_url = "https://tubitv.com" %}
+  {% assign cta_style = "secondary" %}
+  {% assign cta_border_color = "#dddddd" %}
+  {% assign cta_text_color = "#dddddd" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- TEST 6: #e0e0e0 --- {% endcomment %}
+  {% assign cta_label = "6. #e0e0e0" %}
+  {% assign cta_url = "https://tubitv.com" %}
+  {% assign cta_style = "secondary" %}
+  {% assign cta_border_color = "#e0e0e0" %}
+  {% assign cta_text_color = "#e0e0e0" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- TEST 7: #e5e5e5 --- {% endcomment %}
+  {% assign cta_label = "7. #e5e5e5" %}
+  {% assign cta_url = "https://tubitv.com" %}
+  {% assign cta_style = "secondary" %}
+  {% assign cta_border_color = "#e5e5e5" %}
+  {% assign cta_text_color = "#e5e5e5" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- TEST 8: #eaeaea --- {% endcomment %}
+  {% assign cta_label = "8. #eaeaea" %}
+  {% assign cta_url = "https://tubitv.com" %}
+  {% assign cta_style = "secondary" %}
+  {% assign cta_border_color = "#eaeaea" %}
+  {% assign cta_text_color = "#eaeaea" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- TEST 9: #eeeeee --- {% endcomment %}
+  {% assign cta_label = "9. #eeeeee" %}
+  {% assign cta_url = "https://tubitv.com" %}
+  {% assign cta_style = "secondary" %}
+  {% assign cta_border_color = "#eeeeee" %}
+  {% assign cta_text_color = "#eeeeee" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- TEST 10: #f0f0f0 --- {% endcomment %}
+  {% assign cta_label = "10. #f0f0f0" %}
+  {% assign cta_url = "https://tubitv.com" %}
+  {% assign cta_style = "secondary" %}
+  {% assign cta_border_color = "#f0f0f0" %}
+  {% assign cta_text_color = "#f0f0f0" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- TEST 11: #f5f5f5 --- {% endcomment %}
+  {% assign cta_label = "11. #f5f5f5" %}
+  {% assign cta_url = "https://tubitv.com" %}
+  {% assign cta_style = "secondary" %}
+  {% assign cta_border_color = "#f5f5f5" %}
+  {% assign cta_text_color = "#f5f5f5" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- TEST 12: #fafafa --- {% endcomment %}
+  {% assign cta_label = "12. #fafafa" %}
+  {% assign cta_url = "https://tubitv.com" %}
+  {% assign cta_style = "secondary" %}
+  {% assign cta_border_color = "#fafafa" %}
+  {% assign cta_text_color = "#fafafa" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+
+  {% comment %} --- Footer --- {% endcomment %}
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {{content_blocks.${footer}}}
+
+  </td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  </table>
+
+</body>
+</html>

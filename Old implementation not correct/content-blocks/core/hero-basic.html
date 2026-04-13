@@ -1,0 +1,327 @@
+<!--
+  Hero Content Block (Enhanced)
+  Priority: MEDIUM
+
+  Features:
+  - Large hero image from CMS
+  - Three layout variants: standard, simple-overlay, gradient-metadata
+  - Portrait and landscape orientation support
+  - Single or dual CTA buttons
+  - Background image support with gradient overlay
+  - Backdrop blur effects (modern browsers)
+  - Fallback for Outlook
+  - Mobile responsive
+-->
+
+{% comment %} Initialize variables with defaults {% endcomment %}
+{% assign hero_image_url = hero_image_url | default: "" %}
+{% assign hero_layout = hero_layout | default: "center" %}
+{% assign hero_variant = hero_variant | default: "standard" %}
+{% assign hero_orientation = hero_orientation | default: "landscape" %}
+{% assign headline_copy = headline_copy | default: "" %}
+{% assign body_copy = body_copy | default: "" %}
+{% assign status_label = status_label | default: "" %}
+{% assign show_backdrop_blur = show_backdrop_blur | default: false %}
+{% assign cta_label = cta_label | default: "" %}
+{% assign cta_url = cta_url | default: "" %}
+{% assign cta2_label = cta2_label | default: "" %}
+{% assign cta2_url = cta2_url | default: "" %}
+{% assign enable_tracking = enable_tracking | default: true %}
+
+{% comment %} UTM parameters {% endcomment %}
+{% assign utm_source = utm_source | default: "braze" %}
+{% assign utm_medium = utm_medium | default: "email" %}
+{% assign utm_campaign = utm_campaign | default: "email_campaign" %}
+
+{% comment %} Only render if hero image exists {% endcomment %}
+{% if hero_image_url != "" %}
+
+{% comment %} Add UTM tracking to CTAs {% endcomment %}
+{% assign cta_url_final = cta_url %}
+{% if cta_url != "" and enable_tracking %}
+  {% if cta_url contains "?" %}
+    {% assign cta_url_final = cta_url | append: "&utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign | append: "&utm_content=cta1" %}
+  {% else %}
+    {% assign cta_url_final = cta_url | append: "?utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign | append: "&utm_content=cta1" %}
+  {% endif %}
+{% endif %}
+
+{% assign cta2_url_final = cta2_url %}
+{% if cta2_url != "" and enable_tracking %}
+  {% if cta2_url contains "?" %}
+    {% assign cta2_url_final = cta2_url | append: "&utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign | append: "&utm_content=cta2" %}
+  {% else %}
+    {% assign cta2_url_final = cta2_url | append: "?utm_source=" | append: utm_source | append: "&utm_medium=" | append: utm_medium | append: "&utm_campaign=" | append: utm_campaign | append: "&utm_content=cta2" %}
+  {% endif %}
+{% endif %}
+
+{% comment %} Set orientation-based spacer height {% endcomment %}
+{% if hero_orientation == "portrait" %}
+  {% assign spacer_height = "600px" %}
+{% else %}
+  {% assign spacer_height = "390px" %}
+{% endif %}
+
+{% comment %} Text alignment based on layout (for standard variant) {% endcomment %}
+{% if hero_layout == "left" %}
+  {% assign text_align = "left" %}
+  {% assign content_padding = "40px 40px 40px 40px" %}
+{% elsif hero_layout == "right" %}
+  {% assign text_align = "right" %}
+  {% assign content_padding = "40px 40px 40px 40px" %}
+{% else %}
+  {% assign text_align = "center" %}
+  {% assign content_padding = "60px 40px" %}
+{% endif %}
+
+{% comment %} ========== VARIANT 1: SIMPLE OVERLAY ========== {% endcomment %}
+{% if hero_variant == "simple-overlay" %}
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0; padding: 0;">
+  <tr>
+    <td style="padding: 0; position: relative; background-image: url('{{hero_image_url}}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        {% if status_label != "" %}
+        <tr>
+          <td style="padding: 24px 20px; text-align: center;">
+            <div class="hero-status-label{% if show_backdrop_blur %} backdrop-blur{% endif %}" style="background: rgba(0,0,0,0.9); padding: 8px 16px; border-radius: 4px; font-size: 18px; font-weight: 700; color: #ffffff; display: inline-block;{% if show_backdrop_blur %} backdrop-filter: blur(35.848px); -webkit-backdrop-filter: blur(35.848px);{% endif %}">
+              {{status_label}}
+            </div>
+          </td>
+        </tr>
+        {% endif %}
+
+        {% comment %} Spacer for aspect ratio {% endcomment %}
+        <tr>
+          <td style="height: {{spacer_height}}; line-height: 1px; font-size: 1px;">&nbsp;</td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+
+{% comment %} ========== VARIANT 2: GRADIENT METADATA ========== {% endcomment %}
+{% elsif hero_variant == "gradient-metadata" %}
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0; padding: 0;">
+  {% comment %} Hero Image with Gradient (No Text) {% endcomment %}
+  <tr>
+    <td style="padding: 0; position: relative; background-image: url('{{hero_image_url}}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td class="hero-overlay" style="padding: 40px 20px; background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));">
+            &nbsp;
+          </td>
+        </tr>
+
+        {% comment %} Spacer for aspect ratio {% endcomment %}
+        <tr>
+          <td style="height: {{spacer_height}}; line-height: 1px; font-size: 1px;">&nbsp;</td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+
+  {% comment %} Metadata Section Below Image {% endcomment %}
+  <tr>
+    <td style="padding: 24px 20px; background-color: #000000;">
+
+      {% if headline_copy != "" %}
+      <h2 style="margin: 0 0 16px 0; font-size: 28px; font-weight: 700; color: #ffffff; line-height: 1.2;">
+        {{headline_copy}}
+      </h2>
+      {% endif %}
+
+      {% if body_copy != "" %}
+      <p style="margin: 0 0 20px 0; font-size: 16px; color: #cccccc; line-height: 1.2;">
+        {{body_copy}}
+      </p>
+      {% endif %}
+
+      {% comment %} Dual CTA or Single CTA {% endcomment %}
+      {% if cta_label != "" and cta_url != "" %}
+        {% if cta2_label != "" and cta2_url != "" %}
+          {% comment %} Dual CTA Layout {% endcomment %}
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" class="dual-cta-container">
+            <tr>
+              <td class="dual-cta-cell" width="50%" style="padding-right: 5px;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tr>
+                    <td style="border-radius: 4px; background-color: #00a8e1;">
+                      <a href="{{cta_url_final}}" class="cta-button cta-primary cta-full" style="display: block; padding: 14px 32px; font-size: 16px; font-weight: 700; text-align: center; text-decoration: none; border-radius: 4px; background-color: #00a8e1; color: #000000; min-height: 44px; line-height: 1.2;">
+                        {{cta_label}}
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td class="dual-cta-cell" width="50%" style="padding-left: 5px;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tr>
+                    <td style="border-radius: 4px; background-color: #ffffff;">
+                      <a href="{{cta2_url_final}}" class="cta-button cta-secondary cta-full" style="display: block; padding: 14px 32px; font-size: 16px; font-weight: 700; text-align: center; text-decoration: none; border-radius: 4px; background-color: #ffffff; color: #000000; min-height: 44px; line-height: 1.2;">
+                        {{cta2_label}}
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        {% else %}
+          {% comment %} Single CTA {% endcomment %}
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr>
+              <td style="border-radius: 4px; background-color: #00a8e1;">
+                <a href="{{cta_url_final}}" class="cta-button cta-primary cta-full" style="display: block; padding: 14px 32px; font-size: 16px; font-weight: 700; text-align: center; text-decoration: none; border-radius: 4px; background-color: #00a8e1; color: #000000; min-height: 44px; line-height: 1.2;">
+                  {{cta_label}}
+                </a>
+              </td>
+            </tr>
+          </table>
+        {% endif %}
+      {% endif %}
+
+    </td>
+  </tr>
+</table>
+
+{% comment %} ========== VARIANT 3: STANDARD (Default) ========== {% endcomment %}
+{% else %}
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" class="hero-container" style="margin: 0; padding: 0;">
+  <tr>
+    <td style="padding: 0; position: relative; background-image: url('{{hero_image_url}}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+
+      <!--[if gte mso 9]>
+      <v:image xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="border: 0; display: inline-block; width: 600px; height: 400px;" src="{{hero_image_url}}" />
+      <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="border: 0; display: inline-block; position: absolute; width: 600px; height: 400px;">
+      <v:fill opacity="0%" color="#000000" />
+      <v:textbox inset="0,0,0,0">
+      <![endif]-->
+
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td class="hero-overlay" style="padding: {{content_padding}}; background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6)); text-align: {{text_align}};">
+
+            {% comment %} Headline {% endcomment %}
+            {% if headline_copy != "" %}
+            <h1 style="margin: 0 0 16px 0; font-size: 36px; font-weight: 700; color: #ffffff; text-align: {{text_align}}; line-height: 1.1; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
+              {{headline_copy}}
+            </h1>
+            {% endif %}
+
+            {% comment %} Body Copy {% endcomment %}
+            {% if body_copy != "" %}
+            <p style="margin: 0 0 24px 0; font-size: 18px; color: #ffffff; text-align: {{text_align}}; line-height: 1.4; text-shadow: 0 1px 2px rgba(0,0,0,0.8);">
+              {{body_copy}}
+            </p>
+            {% endif %}
+
+            {% comment %} Dual CTA or Single CTA {% endcomment %}
+            {% if cta_label != "" and cta_url != "" %}
+              {% if cta2_label != "" and cta2_url != "" %}
+                {% comment %} Dual CTA Layout {% endcomment %}
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: {% if text_align == 'center' %}0 auto{% elsif text_align == 'right' %}0 0 0 auto{% else %}0{% endif %}; max-width: 500px;">
+                  <tr>
+                    <td width="50%" style="padding-right: 5px;">
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td style="border-radius: 4px; background-color: #00a8e1;">
+                            <a href="{{cta_url_final}}" class="cta-button cta-primary" style="display: block; padding: 14px 24px; font-size: 16px; font-weight: 700; text-align: center; text-decoration: none; border-radius: 4px; background-color: #00a8e1; color: #000000; min-height: 44px; line-height: 1.2;">
+                              {{cta_label}}
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td width="50%" style="padding-left: 5px;">
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td style="border-radius: 4px; background-color: #ffffff;">
+                            <a href="{{cta2_url_final}}" class="cta-button cta-secondary" style="display: block; padding: 14px 24px; font-size: 16px; font-weight: 700; text-align: center; text-decoration: none; border-radius: 4px; background-color: #ffffff; color: #000000; min-height: 44px; line-height: 1.2;">
+                              {{cta2_label}}
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              {% else %}
+                {% comment %} Single CTA {% endcomment %}
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: {% if text_align == 'center' %}0 auto{% elsif text_align == 'right' %}0 0 0 auto{% else %}0{% endif %};">
+                  <tr>
+                    <td style="border-radius: 4px; background-color: #00a8e1;">
+                      <a href="{{cta_url_final}}" class="cta-button cta-primary" style="display: inline-block; padding: 16px 40px; font-size: 18px; font-weight: 700; text-align: center; text-decoration: none; border-radius: 4px; background-color: #00a8e1; color: #000000; min-height: 44px; line-height: 1.2;">
+                        {{cta_label}}
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              {% endif %}
+            {% endif %}
+
+          </td>
+        </tr>
+
+        {% comment %} Spacer for aspect ratio {% endcomment %}
+        <tr>
+          <td style="height: {{spacer_height}}; line-height: 1px; font-size: 1px;">&nbsp;</td>
+        </tr>
+
+      </table>
+
+      <!--[if gte mso 9]>
+      </v:textbox>
+      </v:rect>
+      <![endif]-->
+
+    </td>
+  </tr>
+
+  {% comment %} Fallback for email clients without background image support {% endcomment %}
+  <tr>
+    <td style="padding: 0;">
+      <!--[if !mso]><!-->
+      <div style="display: none;">
+        <img src="{{hero_image_url}}" alt="{{headline_copy}}" width="600" style="width: 100%; height: auto; display: block; border: 0;" />
+      </div>
+      <!--<![endif]-->
+    </td>
+  </tr>
+
+</table>
+
+{% endif %}
+
+{% comment %} Spacer {% endcomment %}
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+  <tr>
+    <td class="spacer-md" style="height: 24px; line-height: 24px;">&nbsp;</td>
+  </tr>
+</table>
+
+{% endif %}
+
+{% comment %} Reset variables to prevent carryover {% endcomment %}
+{% assign hero_image_url = nil %}
+{% assign hero_layout = nil %}
+{% assign hero_variant = nil %}
+{% assign hero_orientation = nil %}
+{% assign headline_copy = nil %}
+{% assign body_copy = nil %}
+{% assign status_label = nil %}
+{% assign show_backdrop_blur = nil %}
+{% assign cta_label = nil %}
+{% assign cta_url = nil %}
+{% assign cta2_label = nil %}
+{% assign cta2_url = nil %}
+{% assign enable_tracking = nil %}
+{% assign utm_source = nil %}
+{% assign utm_medium = nil %}
+{% assign utm_campaign = nil %}

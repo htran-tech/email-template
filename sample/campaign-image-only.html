@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sample Campaign — Image Only (Survey)</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+  {{content_blocks.${css_global}}}
+
+
+  {% comment %} ========================================
+     CAMPAIGN 1: SURVEY EMAIL
+     Hero image → headline → body copy → CTA → footer
+     Mirrors the legacy survey campaign pattern
+  ======================================== {% endcomment %}
+
+  {% comment %} --- Hero banner (full-bleed image) --- {% endcomment %}
+  {% assign image_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/69c6e73c2e2c3e0063fa774c/original.png?1774643003" %}
+  {% assign image_link = "https://tubitv.com/home" %}
+  {% assign image_alt = "Tubi" %}
+  {{content_blocks.${image_only}}}
+
+  {% comment %} --- Headline + body --- {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}
+  {% assign hb_align = "center" %}
+  {% assign headline_copy = "Hello!" %}
+  {% assign body_copy = "Thank you for your interest in participating in our survey!" %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- Body paragraph --- {% endcomment %}
+  {% assign headline_copy = "" %}
+  {% assign body_copy = "This survey should take less than 15 minutes to complete, and for responding to this survey in its entirety, you will be entered for a chance to win a $100 Visa gift card.<br><br>This study closes on Friday, April 13, 2026, so to be eligible for the $100 gift card, you need to complete the survey by that date.<br><br>Thanks for your help,<br>Tubi Research Team" %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- CTA button --- {% endcomment %}
+  {% assign cta_label = "TAKE SURVEY" %}
+  {% assign cta_url = "https://tubitv.com/home" %}
+  {% assign cta_style = "primary" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- Footer --- {% endcomment %}
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ========================================
+     CAMPAIGN 2: RECENTLY ADDED (MX / Spanish)
+     Hero image → ML title grid placeholder → footer
+     Mirrors the legacy MX recently-added campaign
+  ======================================== {% endcomment %}
+
+  {% comment %} --- Hero banner --- {% endcomment %}
+  {% assign image_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/68880c73716ab900642e257d/original.png?1753746547" %}
+  {% assign image_link = "https://tubitv.com/category/recently_added" %}
+  {% assign image_alt = "Tubi - Agregados Recientemente" %}
+  {{content_blocks.${image_only}}}
+
+  {% comment %} --- Section headline --- {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}
+  {% assign hb_align = "center" %}
+  {% assign headline_copy = "AGREGADOS RECIENTEMENTE" %}
+  {% assign body_copy = "" %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} --- Poster grid placeholder (would be API-driven in production) --- {% endcomment %}
+  {% assign grid_layout = "3v" %}
+  {% assign grid_show_metadata = "false" %}
+  {% assign grid_item_1_img = "https://canvas-lb.tubitv.com/opts/qXdai7PLD6OVTw==/e851289f-48f6-4ca9-87c6-6533dd63a91e/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_1_url = "https://tubitv.com/home" %}
+  {% assign grid_item_2_img = "https://canvas-lb.tubitv.com/opts/GAc_CKsJ8Xk5BA==/28e38f44-cb12-4651-9b76-7431653342a9/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_2_url = "https://tubitv.com/home" %}
+  {% assign grid_item_3_img = "https://canvas-lb.tubitv.com/opts/QNODmZsxW4t5Wg==/9b1b9c1a-38eb-4e60-bcc8-04069a071245/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_3_url = "https://tubitv.com/home" %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} --- CTA --- {% endcomment %}
+  {% assign cta_label = "EXPLORA MÁS" %}
+  {% assign cta_url = "https://tubitv.com/category/recently_added" %}
+  {% assign cta_style = "primary" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- Footer (Spanish / Mexico) --- {% endcomment %}
+  {% assign footer_lang = "es" %}
+  {% assign footer_country = "MX" %}
+  {{content_blocks.${footer}}}
+
+
+  {% comment %} ========================================
+     CAMPAIGN 3: UK MARKETING
+     Hero image → title grid → footer
+     Mirrors the legacy UK campaign pattern
+  ======================================== {% endcomment %}
+
+  {% comment %} --- Hero banner --- {% endcomment %}
+  {% assign image_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/68aca50a84419b00649fddb4/original.png?1756144905" %}
+  {% assign image_link = "https://tubitv.com/home" %}
+  {% assign image_alt = "Tubi - Recently Added" %}
+  {{content_blocks.${image_only}}}
+
+  {% comment %} --- Section: Recently Added --- {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}
+  {% assign hb_align = "center" %}
+  {% assign headline_copy = "RECENTLY ADDED" %}
+  {% assign body_copy = "" %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign grid_layout = "3v" %}
+  {% assign grid_show_metadata = "false" %}
+  {% assign grid_item_1_img = "https://canvas-lb.tubitv.com/opts/qXdai7PLD6OVTw==/e851289f-48f6-4ca9-87c6-6533dd63a91e/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_1_url = "https://tubitv.com/home" %}
+  {% assign grid_item_2_img = "https://canvas-lb.tubitv.com/opts/GAc_CKsJ8Xk5BA==/28e38f44-cb12-4651-9b76-7431653342a9/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_2_url = "https://tubitv.com/home" %}
+  {% assign grid_item_3_img = "https://canvas-lb.tubitv.com/opts/QNODmZsxW4t5Wg==/9b1b9c1a-38eb-4e60-bcc8-04069a071245/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_3_url = "https://tubitv.com/home" %}
+  {{content_blocks.${poster_grid}}}
+
+  {% assign cta_label = "EXPLORE MORE" %}
+  {% assign cta_url = "https://tubitv.com/category/recently_added" %}
+  {% assign cta_style = "primary" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- Section: Easter Streamathon --- {% endcomment %}
+  {% assign headline_copy = "EASTER STREAMATHON" %}
+  {% assign body_copy = "" %}
+  {{content_blocks.${headline_body}}}
+
+  {% assign grid_layout = "3v" %}
+  {% assign grid_show_metadata = "false" %}
+  {% assign grid_item_1_img = "https://canvas-lb.tubitv.com/opts/BVE3okZuWovNwg==/c0efa766-81ec-4c37-96e8-31c128ad7bae/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_1_url = "https://tubitv.com/home" %}
+  {% assign grid_item_2_img = "https://canvas-lb.tubitv.com/opts/HpOFQhmcKCH6AQ==/f6957784-8def-4fbf-a47e-82bd8d4ce711/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_2_url = "https://tubitv.com/home" %}
+  {% assign grid_item_3_img = "https://canvas-lb.tubitv.com/opts/5M3AhiTClO__8w==/42fb6439-bb0a-46ae-b9e3-3fef523f01c4/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_3_url = "https://tubitv.com/home" %}
+  {{content_blocks.${poster_grid}}}
+
+  {% assign cta_label = "EXPLORE MORE" %}
+  {% assign cta_url = "https://tubitv.com/category/easter_marathon_uk" %}
+  {% assign cta_style = "primary" %}
+  {% assign cta_bg_color = "#000000" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} --- Footer (English / GB) --- {% endcomment %}
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "GB" %}
+  {{content_blocks.${footer}}}
+
+</body>
+</html>

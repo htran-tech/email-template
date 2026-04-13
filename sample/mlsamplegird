@@ -1,0 +1,1982 @@
+<!-- 1 container-->
+{% if {{result.containers[1]}} == blank %}
+{% assign trigger-titles = {{result.items}} %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px; padding-left: 20px; padding-right: 20px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"   bgcolor="{{bgcolor_1}}">
+<!-- Spacer 50px -->
+<tr>
+<td class="mpb-24 mh-auto" height="30" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+</tr> 
+<!-- END Spacer 50px -->
+<!-- H3 -->
+{% if headline_1 != blank %}
+<tr>
+<td class="h2 mpb-5" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 10px;">
+<a href="{{headline_1_link}}" style="text-decoration:none;"><p class="h2" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;letter-spacing:-0.03em;">{{headline_1}}</p></a>
+</td>
+</tr>
+<tr>
+<td class="mpb-12 mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 20px;">
+<a href="{{headline_1_link}}" style="text-decoration:none;"><p class="mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;letter-spacing:-0.03em;">{{subhead_1}}</p></a>
+</td>
+</tr>
+{% endif %}
+<!-- END H3 -->
+<!-- ML title grid -->
+<tr>
+<td>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- 3, 6, 9, 12, 15 items -->
+{% if result.count == 3 or result.count == 6 or result.count == 9 or result.count == 12 or result.count ==15 %}
+{% for items in trigger-titles %}
+{% cycle "", "<!--", "<!--" %}
+<tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+{% cycle "", "-->", "-->" %}
+<td class="mw-32p" width="178" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+<a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+</td>
+</tr>
+</table>
+</td>
+{% cycle "", "", "<!--" %}
+<td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+{% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+</tr>
+ </table></td></tr>
+{% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 3, 6, 9, 12, 15 items -->
+ <!-- 2, 5, 8, 11, 14 items -->
+ {% elsif result.count == 2 or result.count == 5 or result.count == 8 or result.count == 11 or result.count == 14 %}
+ {% for items in trigger-titles limit:2 %}
+ {% cycle "group_1": "", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+{% cycle "group_2": "", "-->" %}
+ 
+ <td class="mw-50p mpr-6" valign="top" width="268">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large_large[0].url}}" style="border-radius: 8px;" width="268" height="383" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+</td>
+ {% cycle "group_3": "", "<!--" %}
+ <td class="m-hide" width="24">&nbsp;</td>
+ {% cycle "group_4": "", "-->" %}
+{% cycle "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "" %}
+ {% endfor %}
+ {% for items in trigger-titles offset:2 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 2, 5, 8, 11, 14 items -->
+ <!-- 1, 4, 7, 10, 13 items -->
+ {% elsif result.count == 1 or result.count == 4 or result.count == 7 or result.count == 10 or result.count == 13 %}
+ {% for items in trigger-titles limit:1 %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.landscape_images[0].url}}" style="border-radius: 8px;" width="560" height="315" border="0" alt="image" /></a>
+ </td>
+</tr>
+ </table></td></tr>
+{% endfor %}
+{% for items in trigger-titles offset:1 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 1, 4, 7, 10, 13 items -->
+ {% endif %}
+</table>
+ </td>
+</tr> 
+ <!-- END ML title grid -->
+ <!-- CTA -->
+{% if cta_1 != blank %}
+<tr>
+<td class="pt-16 mpb-24" align="center" style="padding-top: 16px; padding-bottom: 30px;">
+<table border="0" cellspacing="0" cellpadding="0" style="border-collapse: separate; border-radius: 8px;" bgcolor="#FFFF13">
+ <tr>
+ <td class="btn btnp-12-30 fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; mso-padding-alt:12px 30px; font-size: 20px; line-height: 24px; color:#0F011C;">
+ <p class="btn fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; font-size: 20px; line-height: 24px; color:#0F011C;">
+<a href="{{cta_1_link}}" target="_blank" class="btn-text link c-white" style="display: block; padding: 18px 42px; text-decoration:none; font-weight:bold; color:#0F011C;">
+{{cta_1}}
+</a>
+</p>
+</td>
+</tr>
+ </table>
+</td>
+ </tr>
+ {% endif %}
+ <!-- END CTA -->
+ </table>
+</td>
+ </tr>
+</table>
+<!-- END 1 container -->
+
+
+
+
+
+<!-- multi-container -->
+<!-- 1 container-->
+{% else %}
+{% assign trigger-titles = {{result.containers[0].items}} %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  bgcolor="{{bgcolor_1}}">
+{% if headline_img_1 != blank %}
+<!-- H3 -->
+<tr>
+<td class="fluid-img a-center" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom:15px;">
+<a href="{{headling_img_link_1}}" ><img src="{{headline_img_1}}" width="600" height="{{headline_img_height_1}}" border="0" alt="image" /></a>
+</td>
+</tr>
+<!-- END H3 -->
+{% elsif headline_1 != blank %}
+<!-- Spacer 50px -->
+<tr>
+<td class="mpb-24 mh-auto" height="30" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+</tr> 
+<!-- END Spacer 50px -->
+<tr>
+<td class="h2 mpb-5" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 10px;">
+<a href="{{headline_1_link}}" style="text-decoration:none;"><p class="h2" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{headline_1}}</p></a>
+</td>
+</tr>
+
+<tr>
+<td class="mpb-12 mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 20px;">
+<a href="{{headline_1_link}}" style="text-decoration:none;"><p class="mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{subhead_1}}</p></a>
+</td>
+</tr>
+{% endif %}
+<!-- ML title grid -->
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px; padding-left: 20px; padding-right: 20px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- 3, 6, 9, 12, 15 items -->
+{% if result.containers[0].count == 3 or result.containers[0].count == 6 or result.containers[0].count == 9 or result.containers[0].count == 12 or result.containers[0].count ==15 %}
+{% for items in trigger-titles %}
+{% cycle "", "<!--", "<!--" %}
+<tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+{% cycle "", "-->", "-->" %}
+<td class="mw-32p" width="178" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+<a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+</td>
+</tr>
+</table>
+</td>
+{% cycle "", "", "<!--" %}
+<td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+{% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+</tr>
+ </table></td></tr>
+{% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 3, 6, 9, 12, 15 items -->
+ <!-- 2, 5, 8, 11, 14 items -->
+ {% elsif result.containers[0].count == 2 or result.containers[0].count == 5 or result.containers[0].count == 8 or result.containers[0].count == 11 or result.containers[0].count == 14 %}
+ {% for items in trigger-titles limit:2 %}
+ {% cycle "group_1": "", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+{% cycle "group_2": "", "-->" %}
+ 
+ <td class="mw-50p mpr-6" valign="top" width="268">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="268" height="383" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+</td>
+ {% cycle "group_3": "", "<!--" %}
+ <td class="m-hide" width="24">&nbsp;</td>
+ {% cycle "group_4": "", "-->" %}
+{% cycle "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "" %}
+ {% endfor %}
+ {% for items in trigger-titles offset:2 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 2, 5, 8, 11, 14 items -->
+ <!-- 1, 4, 7, 10, 13 items -->
+ {% elsif result.containers[0].count == 1 or result.containers[0].count == 4 or result.containers[0].count == 7 or result.containers[0].count == 10 or result.containers[0].count == 13 %}
+ {% for items in trigger-titles limit:1 %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.landscape_images[0].url}}" style="border-radius: 8px;" width="560" height="315" border="0" alt="image" /></a>
+ </td>
+</tr>
+ </table></td></tr>
+{% endfor %}
+{% for items in trigger-titles offset:1 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 1, 4, 7, 10, 13 items -->
+ {% endif %}
+</table>
+ </td>
+</tr> 
+ <!-- END ML title grid -->
+ <!-- CTA -->
+{% if cta_1 != blank %}
+<tr>
+<td class="pt-16 mpb-24" align="center" style="padding-top: 16px; padding-bottom: 30px;">
+<table border="0" cellspacing="0" cellpadding="0" style="border-collapse: separate; border-radius: 8px;" bgcolor="#FFFF13">
+ <tr>
+ <td class="btn btnp-12-30 fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; mso-padding-alt:12px 30px; font-size: 20px; line-height: 24px; color:#0F011C;">
+ <p class="btn fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; font-size: 20px; line-height: 24px; color:#0F011C;">
+<a href="{{cta_1_link}}" target="_blank" class="btn-text link c-white" style="display: block; padding: 18px 42px; text-decoration:none; font-weight:bold; color:#0F011C;">
+{{cta_1}}
+</a>
+</p>
+</td>
+</tr>
+ </table>
+</td>
+ </tr>
+ {% endif %}
+ <!-- END CTA -->
+ </table>
+</td>
+ </tr>
+</table>
+<!-- END title grid -->
+<!-- END 1 container -->
+
+
+
+
+
+<!-- 2 containers-->
+{% if {{result.containers[1]}} != blank %}
+{% assign trigger-titles = {{result.containers[1].items}} %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  bgcolor="{{bgcolor_2}}">
+{% if headline_img_2 != blank %}
+<!-- H3 -->
+<tr>
+<td class="fluid-img a-center" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom:15px;">
+<a href="{{headling_img_link_2}}" ><img src="{{headline_img_2}}" width="600" height="{{headline_img_height_2}}" border="0" alt="image" /></a>
+</td>
+</tr>
+<!-- END H3 -->
+{% elsif headline_2 != blank %}
+<!-- Spacer 50px -->
+<tr>
+<td class="mpb-24 mh-auto" height="30" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+</tr> 
+<!-- END Spacer 50px -->
+<tr>
+<td class="h2 mpb-5" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 10px;">
+<a href="{{headline_2_link}}" style="text-decoration:none;"><p class="h2" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{headline_2}}</p></a>
+</td>
+</tr>
+<tr>
+<td class="mpb-12 mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 20px;">
+<a href="{{headline_2_link}}" style="text-decoration:none;"><p class="mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{subhead_2}}</p></a>
+</td>
+</tr>
+{% endif %}
+<!-- ML title grid -->
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px; padding-left: 20px; padding-right: 20px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- 3, 6, 9, 12, 15 items -->
+{% if result.containers[1].count == 3 or result.containers[1].count == 6 or result.containers[1].count == 9 or result.containers[1].count == 12 or result.containers[1].count ==15 %}
+{% for items in trigger-titles %}
+{% cycle "", "<!--", "<!--" %}
+<tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+{% cycle "", "-->", "-->" %}
+<td class="mw-32p" width="178" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+<a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+</td>
+</tr>
+</table>
+</td>
+{% cycle "", "", "<!--" %}
+<td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+{% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+</tr>
+ </table></td></tr>
+{% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 3, 6, 9, 12, 15 items -->
+ <!-- 2, 5, 8, 11, 14 items -->
+ {% elsif result.containers[1].count == 2 or result.containers[1].count == 5 or result.containers[1].count == 8 or result.containers[1].count == 11 or result.containers[1].count == 14 %}
+ {% for items in trigger-titles limit:2 %}
+ {% cycle "group_1": "", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+{% cycle "group_2": "", "-->" %}
+ <td class="mw-50p mpr-6" valign="top" width="268">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="268" height="383" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+</td>
+ {% cycle "group_3": "", "<!--" %}
+ <td class="m-hide" width="24">&nbsp;</td>
+ {% cycle "group_4": "", "-->" %}
+{% cycle "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "" %}
+ {% endfor %}
+ {% for items in trigger-titles offset:2 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 2, 5, 8, 11, 14 items -->
+ <!-- 1, 4, 7, 10, 13 items -->
+ {% elsif result.containers[1].count == 1 or result.containers[1].count == 4 or result.containers[1].count == 7 or result.containers[1].count == 10 or result.containers[1].count == 13 %}
+ {% for items in trigger-titles limit:1 %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.landscape_images[0].url}}" style="border-radius: 8px;" width="560" height="315" border="0" alt="image" /></a>
+ </td>
+</tr>
+ </table></td></tr>
+{% endfor %}
+{% for items in trigger-titles offset:1 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 1, 4, 7, 10, 13 items -->
+ {% endif %}
+</table>
+ </td>
+</tr> 
+ <!-- END ML title grid -->
+ <!-- CTA -->
+{% if cta_2 != blank %}
+<tr>
+<td class="pt-16 mpb-24" align="center" style="padding-top: 16px; padding-bottom: 30px;">
+<table border="0" cellspacing="0" cellpadding="0" style="border-collapse: separate; border-radius: 8px;" bgcolor="#FFFF13">
+ <tr>
+ <td class="btn btnp-12-30 fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; mso-padding-alt:12px 30px; font-size: 20px; line-height: 24px; color:#0F011C;">
+ <p class="btn fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; font-size: 20px; line-height: 24px; color:#0F011C;">
+<a href="{{cta_2_link}}" target="_blank" class="btn-text link c-white" style="display: block; padding: 18px 42px; text-decoration:none; font-weight:bold; color:#0F011C;">
+{{cta_2}}
+</a>
+</p>
+</td>
+</tr>
+ </table>
+</td>
+ </tr>
+ {% endif %}
+ <!-- END CTA -->
+ </table>
+</td>
+ </tr>
+</table>
+<!-- END title grid -->
+{% endif %}
+<!-- END 2 containers-->
+
+
+
+
+<!-- 3 containers-->
+{% if {{result.containers[2]}} != blank %}
+{% assign trigger-titles = {{result.containers[2].items}} %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  bgcolor="{{bgcolor_3}}">
+{% if headline_img_3 != blank %}
+<!-- H3 -->
+<tr>
+<td class="fluid-img a-center" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom:15px;">
+<a href="{{headling_img_link_3}}" ><img src="{{headline_img_3}}" width="600" height="{{headline_img_height_3}}" border="0" alt="image" /></a>
+</td>
+</tr>
+<!-- END H3 -->
+{% elsif headline_3 != blank %}
+<!-- Spacer 50px -->
+<tr>
+<td class="mpb-24 mh-auto" height="30" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+</tr> 
+<!-- END Spacer 50px -->
+<tr>
+<td class="h2 mpb-5" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 10px;">
+<a href="{{headline_3_link}}" style="text-decoration:none;"><p class="h2" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{headline_3}}</p></a>
+</td>
+</tr>
+<tr>
+<td class="mpb-12 mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 20px;">
+<a href="{{headline_3_link}}" style="text-decoration:none;"><p class="mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{subhead_3}}</p></a>
+</td>
+</tr>
+{% endif %}
+<!-- ML title grid -->
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px; padding-left: 20px; padding-right: 20px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- 3, 6, 9, 12, 15 items -->
+{% if result.containers[2].count == 3 or result.containers[2].count == 6 or result.containers[2].count == 9 or result.containers[2].count == 12 or result.containers[2].count ==15 %}
+{% for items in trigger-titles %}
+{% cycle "", "<!--", "<!--" %}
+<tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+{% cycle "", "-->", "-->" %}
+<td class="mw-32p" width="178" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+<a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+</td>
+</tr>
+</table>
+</td>
+{% cycle "", "", "<!--" %}
+<td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+{% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+</tr>
+ </table></td></tr>
+{% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 3, 6, 9, 12, 15 items -->
+ <!-- 2, 5, 8, 11, 14 items -->
+ {% elsif result.containers[2].count == 2 or result.containers[2].count == 5 or result.containers[2].count == 8 or result.containers[2].count == 11 or result.containers[2].count == 14 %}
+ {% for items in trigger-titles limit:2 %}
+ {% cycle "group_1": "", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+{% cycle "group_2": "", "-->" %}
+ <td class="mw-50p mpr-6" valign="top" width="268">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="268" height="383" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+</td>
+ {% cycle "group_3": "", "<!--" %}
+ <td class="m-hide" width="24">&nbsp;</td>
+ {% cycle "group_4": "", "-->" %}
+{% cycle "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "" %}
+ {% endfor %}
+ {% for items in trigger-titles offset:2 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 2, 5, 8, 11, 14 items -->
+ <!-- 1, 4, 7, 10, 13 items -->
+ {% elsif result.containers[2].count == 1 or result.containers[2].count == 4 or result.containers[2].count == 7 or result.containers[2].count == 10 or result.containers[2].count == 13 %}
+ {% for items in trigger-titles limit:1 %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.landscape_images[0].url}}" style="border-radius: 8px;" width="560" height="315" border="0" alt="image" /></a>
+ </td>
+</tr>
+ </table></td></tr>
+{% endfor %}
+{% for items in trigger-titles offset:1 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 1, 4, 7, 10, 13 items -->
+ {% endif %}
+</table>
+ </td>
+</tr> 
+ <!-- END ML title grid -->
+ <!-- CTA -->
+{% if cta_3 != blank %}
+<tr>
+<td class="pt-16 mpb-24" align="center" style="padding-top: 16px; padding-bottom: 30px;">
+<table border="0" cellspacing="0" cellpadding="0" style="border-collapse: separate; border-radius: 8px;" bgcolor="#FFFF13">
+ <tr>
+ <td class="btn btnp-12-30 fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; mso-padding-alt:12px 30px; font-size: 20px; line-height: 24px; color:#0F011C;">
+ <p class="btn fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; font-size: 20px; line-height: 24px; color:#0F011C;">
+<a href="{{cta_3_link}}" target="_blank" class="btn-text link c-white" style="display: block; padding: 18px 42px; text-decoration:none; font-weight:bold; color:#0F011C;">
+{{cta_3}}
+</a>
+</p>
+</td>
+</tr>
+ </table>
+</td>
+ </tr>
+ {% endif %}
+ <!-- END CTA -->
+ </table>
+</td>
+ </tr>
+</table>
+<!-- END title grid -->
+{% endif %}
+<!-- END 3 containers-->
+
+
+
+
+
+<!-- 4 containers-->
+{% if {{result.containers[3]}} != blank %}
+{% assign trigger-titles = {{result.containers[3].items}} %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  bgcolor="{{bgcolor_4}}"> 
+{% if headline_img_4 != blank %}
+<!-- H3 -->
+<tr>
+<td class="fluid-img a-center" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom:15px;">
+<a href="{{headling_img_link_4}}" ><img src="{{headline_img_4}}" width="600" height="{{headline_img_height_4}}" border="0" alt="image" /></a>
+</td>
+</tr>
+<!-- END H3 -->
+{% elsif headline_4 != blank %}
+<!-- Spacer 50px -->
+<tr>
+<td class="mpb-24 mh-auto" height="30" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+</tr> 
+<!-- END Spacer 50px -->
+<tr>
+<td class="h2 mpb-5" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 10px;">
+<a href="{{headline_4_link}}" style="text-decoration:none;"><p class="h2" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{headline_4}}</p></a>
+</td>
+</tr>
+
+<tr>
+<td class="mpb-12 mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 20px;">
+<a href="{{headline_4_link}}" style="text-decoration:none;"><p class="mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{subhead_4}}</p></a>
+</td>
+</tr>
+{% endif %}
+<!-- ML title grid -->
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px; padding-left: 20px; padding-right: 20px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- 3, 6, 9, 12, 15 items -->
+{% if result.containers[2].count == 3 or result.containers[2].count == 6 or result.containers[2].count == 9 or result.containers[2].count == 12 or result.containers[2].count ==15 %}
+{% for items in trigger-titles %}
+{% cycle "", "<!--", "<!--" %}
+<tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+{% cycle "", "-->", "-->" %}
+<td class="mw-32p" width="178" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+<a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+</td>
+</tr>
+</table>
+</td>
+{% cycle "", "", "<!--" %}
+<td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+{% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+</tr>
+ </table></td></tr>
+{% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 3, 6, 9, 12, 15 items -->
+ <!-- 2, 5, 8, 11, 14 items -->
+ {% elsif result.containers[2].count == 2 or result.containers[2].count == 5 or result.containers[2].count == 8 or result.containers[2].count == 11 or result.containers[2].count == 14 %}
+ {% for items in trigger-titles limit:2 %}
+ {% cycle "group_1": "", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+{% cycle "group_2": "", "-->" %}
+ <td class="mw-50p mpr-6" valign="top" width="268">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="268" height="383" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+</td>
+ {% cycle "group_3": "", "<!--" %}
+ <td class="m-hide" width="24">&nbsp;</td>
+ {% cycle "group_4": "", "-->" %}
+{% cycle "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "" %}
+ {% endfor %}
+ {% for items in trigger-titles offset:2 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 2, 5, 8, 11, 14 items -->
+ <!-- 1, 4, 7, 10, 13 items -->
+ {% elsif result.containers[2].count == 1 or result.containers[2].count == 4 or result.containers[2].count == 7 or result.containers[2].count == 10 or result.containers[2].count == 13 %}
+ {% for items in trigger-titles limit:1 %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.landscape_images[0].url}}" style="border-radius: 8px;" width="560" height="315" border="0" alt="image" /></a>
+ </td>
+</tr>
+ </table></td></tr>
+{% endfor %}
+{% for items in trigger-titles offset:1 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 1, 4, 7, 10, 13 items -->
+ {% endif %}
+</table>
+ </td>
+</tr> 
+ <!-- END ML title grid -->
+ <!-- CTA -->
+{% if cta_4 != blank %}
+<tr>
+<td class="pt-16 mpb-24" align="center" style="padding-top: 16px; padding-bottom: 30px;">
+<table border="0" cellspacing="0" cellpadding="0" style="border-collapse: separate; border-radius: 8px;" bgcolor="#FFFF13">
+ <tr>
+ <td class="btn btnp-12-30 fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; mso-padding-alt:12px 30px; font-size: 20px; line-height: 24px; color:#0F011C;">
+ <p class="btn fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; font-size: 20px; line-height: 24px; color:#0F011C;">
+<a href="{{cta_4_link}}" target="_blank" class="btn-text link c-white" style="display: block; padding: 18px 42px; text-decoration:none; font-weight:bold; color:#0F011C;">
+{{cta_4}}
+</a>
+</p>
+</td>
+</tr>
+ </table>
+</td>
+ </tr>
+ {% endif %}
+ <!-- END CTA -->
+ </table>
+</td>
+ </tr>
+</table>
+<!-- END title grid -->
+{% endif %}
+<!-- END 4 containers-->
+
+
+
+
+
+<!-- 5 containers-->
+{% if {{result.containers[4]}} != blank %}
+{% assign trigger-titles = {{result.containers[4].items}} %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  bgcolor="{{bgcolor_5}}">
+{% if headline_img_5 != blank %}
+<!-- H3 -->
+<tr>
+<td class="fluid-img a-center" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom:15px;">
+<a href="{{headling_img_link_5}}" ><img src="{{headline_img_5}}" width="600" height="{{headline_img_height_5}}" border="0" alt="image" /></a>
+</td>
+</tr>
+<!-- END H3 -->
+{% elsif headline_5 != blank %}
+<!-- Spacer 50px -->
+<tr>
+<td class="mpb-24 mh-auto" height="30" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+</tr> 
+<!-- END Spacer 50px -->
+<tr>
+<td class="h2 mpb-5" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 10px;">
+<a href="{{headline_5_link}}" style="text-decoration:none;"><p class="h2" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{headline_5}}</p></a>
+</td>
+</tr>
+<tr>
+<td class="mpb-12 mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 20px;">
+<a href="{{headline_5_link}}" style="text-decoration:none;"><p class="mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{subhead_5}}</p></a>
+</td>
+</tr>
+{% endif %}
+<!-- ML title grid -->
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px; padding-left: 20px; padding-right: 20px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- 3, 6, 9, 12, 15 items -->
+{% if result.containers[2].count == 3 or result.containers[2].count == 6 or result.containers[2].count == 9 or result.containers[2].count == 12 or result.containers[2].count ==15 %}
+{% for items in trigger-titles %}
+{% cycle "", "<!--", "<!--" %}
+<tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+{% cycle "", "-->", "-->" %}
+<td class="mw-32p" width="178" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+<a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+</td>
+</tr>
+</table>
+</td>
+{% cycle "", "", "<!--" %}
+<td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+{% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+</tr>
+ </table></td></tr>
+{% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 3, 6, 9, 12, 15 items -->
+ <!-- 2, 5, 8, 11, 14 items -->
+ {% elsif result.containers[2].count == 2 or result.containers[2].count == 5 or result.containers[2].count == 8 or result.containers[2].count == 11 or result.containers[2].count == 14 %}
+ {% for items in trigger-titles limit:2 %}
+ {% cycle "group_1": "", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+{% cycle "group_2": "", "-->" %}
+ <td class="mw-50p mpr-6" valign="top" width="268">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="268" height="383" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+</td>
+ {% cycle "group_3": "", "<!--" %}
+ <td class="m-hide" width="24">&nbsp;</td>
+ {% cycle "group_4": "", "-->" %}
+{% cycle "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "" %}
+ {% endfor %}
+ {% for items in trigger-titles offset:2 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 2, 5, 8, 11, 14 items -->
+ <!-- 1, 4, 7, 10, 13 items -->
+ {% elsif result.containers[2].count == 1 or result.containers[2].count == 4 or result.containers[2].count == 7 or result.containers[2].count == 10 or result.containers[2].count == 13 %}
+ {% for items in trigger-titles limit:1 %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.landscape_images[0].url}}" style="border-radius: 8px;" width="560" height="315" border="0" alt="image" /></a>
+ </td>
+</tr>
+ </table></td></tr>
+{% endfor %}
+{% for items in trigger-titles offset:1 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 1, 4, 7, 10, 13 items -->
+ {% endif %}
+</table>
+ </td>
+</tr> 
+ <!-- END ML title grid -->
+<!-- CTA -->
+{% if cta_5 != blank %}
+<tr>
+<td class="pt-16 mpb-24" align="center" style="padding-top: 16px; padding-bottom: 30px;">
+<table border="0" cellspacing="0" cellpadding="0" style="border-collapse: separate; border-radius: 8px;" bgcolor="#FFFF13">
+ <tr>
+ <td class="btn btnp-12-30 fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; mso-padding-alt:12px 30px; font-size: 20px; line-height: 24px; color:#0F011C;">
+ <p class="btn fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; font-size: 20px; line-height: 24px; color:#0F011C;">
+<a href="{{cta_5_link}}" target="_blank" class="btn-text link c-white" style="display: block; padding: 18px 42px; text-decoration:none; font-weight:bold; color:#0F011C;">
+{{cta_5}}
+</a>
+</p>
+</td>
+</tr>
+ </table>
+</td>
+ </tr>
+ {% endif %}
+ <!-- END CTA -->
+ </table>
+</td>
+ </tr>
+</table>
+<!-- END title grid -->
+{% endif %}
+<!-- END 4 containers-->
+
+
+
+
+{% endif %}
+<!-- END multi-container -->
+
+
+
+
+
+
+
+
+
+
+<!-- multi-container -->
+<!-- 1 container-->
+{% assign trigger-titles = {{result.containers[0].items}} %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  bgcolor="{{bgcolor_1}}">
+{% if headline_img_1 != blank %}
+<!-- H3 -->
+<tr>
+<td class="fluid-img a-center" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom:15px;">
+<a href="{{headling_img_link_1}}" ><img src="{{headline_img_1}}" width="600" height="{{headline_img_height_1}}" border="0" alt="image" /></a>
+</td>
+</tr>
+<!-- END H3 -->
+{% elsif headline_1 != blank %}
+<!-- Spacer 50px -->
+<tr>
+<td class="mpb-24 mh-auto" height="30" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+</tr> 
+<!-- END Spacer 50px -->
+<tr>
+<td class="h2 mpb-5" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 10px;">
+<a href="{{headline_1_link}}" style="text-decoration:none;"><p class="h2" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{headline_1}}</p></a>
+</td>
+</tr>
+
+<tr>
+<td class="mpb-12 mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 20px;">
+<a href="{{headline_1_link}}" style="text-decoration:none;"><p class="mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{subhead_1}}</p></a>
+</td>
+</tr>
+{% endif %}
+<!-- ML title grid -->
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px; padding-left: 20px; padding-right: 20px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- 3, 6, 9, 12, 15 items -->
+{% if result.containers[0].count == 3 or result.containers[0].count == 6 or result.containers[0].count == 9 or result.containers[0].count == 12 or result.containers[0].count ==15 %}
+{% for items in trigger-titles %}
+{% cycle "", "<!--", "<!--" %}
+<tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+{% cycle "", "-->", "-->" %}
+<td class="mw-32p" width="178" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+<a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+</td>
+</tr>
+</table>
+</td>
+{% cycle "", "", "<!--" %}
+<td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+{% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+</tr>
+ </table></td></tr>
+{% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 3, 6, 9, 12, 15 items -->
+ <!-- 2, 5, 8, 11, 14 items -->
+ {% elsif result.containers[0].count == 2 or result.containers[0].count == 5 or result.containers[0].count == 8 or result.containers[0].count == 11 or result.containers[0].count == 14 %}
+ {% for items in trigger-titles limit:2 %}
+ {% cycle "group_1": "", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+{% cycle "group_2": "", "-->" %}
+ 
+ <td class="mw-50p mpr-6" valign="top" width="268">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="268" height="383" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+</td>
+ {% cycle "group_3": "", "<!--" %}
+ <td class="m-hide" width="24">&nbsp;</td>
+ {% cycle "group_4": "", "-->" %}
+{% cycle "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "" %}
+ {% endfor %}
+ {% for items in trigger-titles offset:2 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 2, 5, 8, 11, 14 items -->
+ <!-- 1, 4, 7, 10, 13 items -->
+ {% elsif result.containers[0].count == 1 or result.containers[0].count == 4 or result.containers[0].count == 7 or result.containers[0].count == 10 or result.containers[0].count == 13 %}
+ {% for items in trigger-titles limit:1 %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.landscape_images[0].url}}" style="border-radius: 8px;" width="560" height="315" border="0" alt="image" /></a>
+ </td>
+</tr>
+ </table></td></tr>
+{% endfor %}
+{% for items in trigger-titles offset:1 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 1, 4, 7, 10, 13 items -->
+ {% endif %}
+</table>
+ </td>
+</tr> 
+ <!-- END ML title grid -->
+ <!-- CTA -->
+{% if cta_1 != blank %}
+<tr>
+<td class="pt-16 mpb-24" align="center" style="padding-top: 16px; padding-bottom: 30px;">
+<table border="0" cellspacing="0" cellpadding="0" style="border-collapse: separate; border-radius: 8px;" bgcolor="#FFFF13">
+ <tr>
+ <td class="btn btnp-12-30 fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; mso-padding-alt:12px 30px; font-size: 20px; line-height: 24px; color:#0F011C;">
+ <p class="btn fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; font-size: 20px; line-height: 24px; color:#0F011C;">
+<a href="{{cta_1_link}}" target="_blank" class="btn-text link c-white" style="display: block; padding: 18px 42px; text-decoration:none; font-weight:bold; color:#0F011C;">
+{{cta_1}}
+</a>
+</p>
+</td>
+</tr>
+ </table>
+</td>
+ </tr>
+ {% endif %}
+ <!-- END CTA -->
+ </table>
+</td>
+ </tr>
+</table>
+<!-- END title grid -->
+<!-- END 1 container -->
+
+
+
+
+
+
+
+
+<!-- 2 containers-->
+{% if {{result.containers[1]}} != blank %}
+{% assign trigger-titles = {{result.containers[1].items}} %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  bgcolor="{{bgcolor_2}}">
+{% if headline_img_2 != blank %}
+<!-- H3 -->
+<tr>
+<td class="fluid-img a-center" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom:15px;">
+<a href="{{headling_img_link_2}}" ><img src="{{headline_img_2}}" width="600" height="{{headline_img_height_2}}" border="0" alt="image" /></a>
+</td>
+</tr>
+<!-- END H3 -->
+{% elsif headline_2 != blank %}
+<!-- Spacer 50px -->
+<tr>
+<td class="mpb-24 mh-auto" height="30" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+</tr> 
+<!-- END Spacer 50px -->
+<tr>
+<td class="h2 mpb-5" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 10px;">
+<a href="{{headline_2_link}}" style="text-decoration:none;"><p class="h2" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{headline_2}}</p></a>
+</td>
+</tr>
+<tr>
+<td class="mpb-12 mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 20px;">
+<a href="{{headline_2_link}}" style="text-decoration:none;"><p class="mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{subhead_2}}</p></a>
+</td>
+</tr>
+{% endif %}
+<!-- ML title grid -->
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px; padding-left: 20px; padding-right: 20px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- 3, 6, 9, 12, 15 items -->
+{% if result.containers[1].count == 3 or result.containers[1].count == 6 or result.containers[1].count == 9 or result.containers[1].count == 12 or result.containers[1].count ==15 %}
+{% for items in trigger-titles %}
+{% cycle "", "<!--", "<!--" %}
+<tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+{% cycle "", "-->", "-->" %}
+<td class="mw-32p" width="178" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+<a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+</td>
+</tr>
+</table>
+</td>
+{% cycle "", "", "<!--" %}
+<td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+{% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+</tr>
+ </table></td></tr>
+{% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 3, 6, 9, 12, 15 items -->
+ <!-- 2, 5, 8, 11, 14 items -->
+ {% elsif result.containers[1].count == 2 or result.containers[1].count == 5 or result.containers[1].count == 8 or result.containers[1].count == 11 or result.containers[1].count == 14 %}
+ {% for items in trigger-titles limit:2 %}
+ {% cycle "group_1": "", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+{% cycle "group_2": "", "-->" %}
+ <td class="mw-50p mpr-6" valign="top" width="268">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="268" height="383" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+</td>
+ {% cycle "group_3": "", "<!--" %}
+ <td class="m-hide" width="24">&nbsp;</td>
+ {% cycle "group_4": "", "-->" %}
+{% cycle "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "" %}
+ {% endfor %}
+ {% for items in trigger-titles offset:2 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 2, 5, 8, 11, 14 items -->
+ <!-- 1, 4, 7, 10, 13 items -->
+ {% elsif result.containers[1].count == 1 or result.containers[1].count == 4 or result.containers[1].count == 7 or result.containers[1].count == 10 or result.containers[1].count == 13 %}
+ {% for items in trigger-titles limit:1 %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.landscape_images[0].url}}" style="border-radius: 8px;" width="560" height="315" border="0" alt="image" /></a>
+ </td>
+</tr>
+ </table></td></tr>
+{% endfor %}
+{% for items in trigger-titles offset:1 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 1, 4, 7, 10, 13 items -->
+ {% endif %}
+</table>
+ </td>
+</tr> 
+ <!-- END ML title grid -->
+ <!-- CTA -->
+{% if cta_2 != blank %}
+<tr>
+<td class="pt-16 mpb-24" align="center" style="padding-top: 16px; padding-bottom: 30px;">
+<table border="0" cellspacing="0" cellpadding="0" style="border-collapse: separate; border-radius: 8px;" bgcolor="#FFFF13">
+ <tr>
+ <td class="btn btnp-12-30 fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; mso-padding-alt:12px 30px; font-size: 20px; line-height: 24px; color:#0F011C;">
+ <p class="btn fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; font-size: 20px; line-height: 24px; color:#0F011C;">
+<a href="{{cta_2_link}}" target="_blank" class="btn-text link c-white" style="display: block; padding: 18px 42px; text-decoration:none; font-weight:bold; color:#0F011C;">
+{{cta_2}}
+</a>
+</p>
+</td>
+</tr>
+ </table>
+</td>
+ </tr>
+ {% endif %}
+ <!-- END CTA -->
+ </table>
+</td>
+ </tr>
+</table>
+<!-- END title grid -->
+{% endif %}
+<!-- END 2 containers-->
+
+
+
+
+
+<!-- 4 containers-->
+{% if {{result.containers[3]}} != blank %}
+{% assign trigger-titles = {{result.containers[3].items}} %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  bgcolor="{{bgcolor_4}}"> 
+{% if headline_img_4 != blank %}
+<!-- H3 -->
+<tr>
+<td class="fluid-img a-center" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom:15px;">
+<a href="{{headling_img_link_4}}" ><img src="{{headline_img_4}}" width="600" height="{{headline_img_height_4}}" border="0" alt="image" /></a>
+</td>
+</tr>
+<!-- END H3 -->
+{% elsif headline_4 != blank %}
+<!-- Spacer 50px -->
+<tr>
+<td class="mpb-24 mh-auto" height="30" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+</tr> 
+<!-- END Spacer 50px -->
+<tr>
+<td class="h2 mpb-5" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 10px;">
+<a href="{{headline_4_link}}" style="text-decoration:none;"><p class="h2" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{headline_4}}</p></a>
+</td>
+</tr>
+
+<tr>
+<td class="mpb-12 mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 20px;">
+<a href="{{headline_4_link}}" style="text-decoration:none;"><p class="mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{subhead_4}}</p></a>
+</td>
+</tr>
+{% endif %}
+<!-- ML title grid -->
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px; padding-left: 20px; padding-right: 20px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- 3, 6, 9, 12, 15 items -->
+{% if result.containers[2].count == 3 or result.containers[2].count == 6 or result.containers[2].count == 9 or result.containers[2].count == 12 or result.containers[2].count ==15 %}
+{% for items in trigger-titles %}
+{% cycle "", "<!--", "<!--" %}
+<tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+{% cycle "", "-->", "-->" %}
+<td class="mw-32p" width="178" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+<a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+</td>
+</tr>
+</table>
+</td>
+{% cycle "", "", "<!--" %}
+<td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+{% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+</tr>
+ </table></td></tr>
+{% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 3, 6, 9, 12, 15 items -->
+ <!-- 2, 5, 8, 11, 14 items -->
+ {% elsif result.containers[2].count == 2 or result.containers[2].count == 5 or result.containers[2].count == 8 or result.containers[2].count == 11 or result.containers[2].count == 14 %}
+ {% for items in trigger-titles limit:2 %}
+ {% cycle "group_1": "", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+{% cycle "group_2": "", "-->" %}
+ <td class="mw-50p mpr-6" valign="top" width="268">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="268" height="383" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+</td>
+ {% cycle "group_3": "", "<!--" %}
+ <td class="m-hide" width="24">&nbsp;</td>
+ {% cycle "group_4": "", "-->" %}
+{% cycle "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "" %}
+ {% endfor %}
+ {% for items in trigger-titles offset:2 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 2, 5, 8, 11, 14 items -->
+ <!-- 1, 4, 7, 10, 13 items -->
+ {% elsif result.containers[2].count == 1 or result.containers[2].count == 4 or result.containers[2].count == 7 or result.containers[2].count == 10 or result.containers[2].count == 13 %}
+ {% for items in trigger-titles limit:1 %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.landscape_images[0].url}}" style="border-radius: 8px;" width="560" height="315" border="0" alt="image" /></a>
+ </td>
+</tr>
+ </table></td></tr>
+{% endfor %}
+{% for items in trigger-titles offset:1 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 1, 4, 7, 10, 13 items -->
+ {% endif %}
+</table>
+ </td>
+</tr> 
+ <!-- END ML title grid -->
+ <!-- CTA -->
+{% if cta_4 != blank %}
+<tr>
+<td class="pt-16 mpb-24" align="center" style="padding-top: 16px; padding-bottom: 30px;">
+<table border="0" cellspacing="0" cellpadding="0" style="border-collapse: separate; border-radius: 8px;" bgcolor="#FFFF13">
+ <tr>
+ <td class="btn btnp-12-30 fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; mso-padding-alt:12px 30px; font-size: 20px; line-height: 24px; color:#0F011C;">
+ <p class="btn fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; font-size: 20px; line-height: 24px; color:#0F011C;">
+<a href="{{cta_4_link}}" target="_blank" class="btn-text link c-white" style="display: block; padding: 18px 42px; text-decoration:none; font-weight:bold; color:#0F011C;">
+{{cta_4}}
+</a>
+</p>
+</td>
+</tr>
+ </table>
+</td>
+ </tr>
+ {% endif %}
+ <!-- END CTA -->
+ </table>
+</td>
+ </tr>
+</table>
+<!-- END title grid -->
+{% endif %}
+<!-- END 4 containers-->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 3 containers-->
+{% if {{result.containers[2]}} != blank %}
+{% assign trigger-titles = {{result.containers[2].items}} %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  bgcolor="{{bgcolor_3}}">
+{% if headline_img_3 != blank %}
+<!-- H3 -->
+<tr>
+<td class="fluid-img a-center" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom:15px;">
+<a href="{{headling_img_link_3}}" ><img src="{{headline_img_3}}" width="600" height="{{headline_img_height_3}}" border="0" alt="image" /></a>
+</td>
+</tr>
+<!-- END H3 -->
+{% elsif headline_3 != blank %}
+<!-- Spacer 50px -->
+<tr>
+<td class="mpb-24 mh-auto" height="30" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+</tr> 
+<!-- END Spacer 50px -->
+<tr>
+<td class="h2 mpb-5" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 10px;">
+<a href="{{headline_3_link}}" style="text-decoration:none;"><p class="h2" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{headline_3}}</p></a>
+</td>
+</tr>
+<tr>
+<td class="mpb-12 mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 20px;">
+<a href="{{headline_3_link}}" style="text-decoration:none;"><p class="mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{subhead_3}}</p></a>
+</td>
+</tr>
+{% endif %}
+<!-- ML title grid -->
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px; padding-left: 20px; padding-right: 20px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- 3, 6, 9, 12, 15 items -->
+{% if result.containers[2].count == 3 or result.containers[2].count == 6 or result.containers[2].count == 9 or result.containers[2].count == 12 or result.containers[2].count ==15 %}
+{% for items in trigger-titles %}
+{% cycle "", "<!--", "<!--" %}
+<tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+{% cycle "", "-->", "-->" %}
+<td class="mw-32p" width="178" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+<a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+</td>
+</tr>
+</table>
+</td>
+{% cycle "", "", "<!--" %}
+<td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+{% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+</tr>
+ </table></td></tr>
+{% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 3, 6, 9, 12, 15 items -->
+ <!-- 2, 5, 8, 11, 14 items -->
+ {% elsif result.containers[2].count == 2 or result.containers[2].count == 5 or result.containers[2].count == 8 or result.containers[2].count == 11 or result.containers[2].count == 14 %}
+ {% for items in trigger-titles limit:2 %}
+ {% cycle "group_1": "", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+{% cycle "group_2": "", "-->" %}
+ <td class="mw-50p mpr-6" valign="top" width="268">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="268" height="383" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+</td>
+ {% cycle "group_3": "", "<!--" %}
+ <td class="m-hide" width="24">&nbsp;</td>
+ {% cycle "group_4": "", "-->" %}
+{% cycle "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "" %}
+ {% endfor %}
+ {% for items in trigger-titles offset:2 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 2, 5, 8, 11, 14 items -->
+ <!-- 1, 4, 7, 10, 13 items -->
+ {% elsif result.containers[2].count == 1 or result.containers[2].count == 4 or result.containers[2].count == 7 or result.containers[2].count == 10 or result.containers[2].count == 13 %}
+ {% for items in trigger-titles limit:1 %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.landscape_images[0].url}}" style="border-radius: 8px;" width="560" height="315" border="0" alt="image" /></a>
+ </td>
+</tr>
+ </table></td></tr>
+{% endfor %}
+{% for items in trigger-titles offset:1 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 1, 4, 7, 10, 13 items -->
+ {% endif %}
+</table>
+ </td>
+</tr> 
+ <!-- END ML title grid -->
+ <!-- CTA -->
+{% if cta_3 != blank %}
+<tr>
+<td class="pt-16 mpb-24" align="center" style="padding-top: 16px; padding-bottom: 30px;">
+<table border="0" cellspacing="0" cellpadding="0" style="border-collapse: separate; border-radius: 8px;" bgcolor="#FFFF13">
+ <tr>
+ <td class="btn btnp-12-30 fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; mso-padding-alt:12px 30px; font-size: 20px; line-height: 24px; color:#0F011C;">
+ <p class="btn fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; font-size: 20px; line-height: 24px; color:#0F011C;">
+<a href="{{cta_3_link}}" target="_blank" class="btn-text link c-white" style="display: block; padding: 18px 42px; text-decoration:none; font-weight:bold; color:#0F011C;">
+{{cta_3}}
+</a>
+</p>
+</td>
+</tr>
+ </table>
+</td>
+ </tr>
+ {% endif %}
+ <!-- END CTA -->
+ </table>
+</td>
+ </tr>
+</table>
+<!-- END title grid -->
+{% endif %}
+<!-- END 3 containers-->
+
+
+
+
+
+
+
+
+
+<!-- 5 containers-->
+{% if {{result.containers[4]}} != blank %}
+{% assign trigger-titles = {{result.containers[4].items}} %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  bgcolor="{{bgcolor_5}}">
+{% if headline_img_5 != blank %}
+<!-- H3 -->
+<tr>
+<td class="fluid-img a-center" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom:15px;">
+<a href="{{headling_img_link_5}}" ><img src="{{headline_img_5}}" width="600" height="{{headline_img_height_5}}" border="0" alt="image" /></a>
+</td>
+</tr>
+<!-- END H3 -->
+{% elsif headline_5 != blank %}
+<!-- Spacer 50px -->
+<tr>
+<td class="mpb-24 mh-auto" height="30" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+</tr> 
+<!-- END Spacer 50px -->
+<tr>
+<td class="h2 mpb-5" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 10px;">
+<a href="{{headline_5_link}}" style="text-decoration:none;"><p class="h2" style="font-weight: bold; font-size:36px; line-height:34px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{headline_5}}</p></a>
+</td>
+</tr>
+<tr>
+<td class="mpb-12 mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly; padding-bottom: 20px;">
+<a href="{{headline_5_link}}" style="text-decoration:none;"><p class="mfz-16 mlh-18" style="font-weight:300;font-size:24px; line-height:26px; color:#fffffe; font-family:Arial, Helvetica, sans-serif; text-align:center; mso-line-height-rule:exactly;padding-left:20px;padding-right:20px;letter-spacing:-0.03em;">{{subhead_5}}</p></a>
+</td>
+</tr>
+{% endif %}
+<!-- ML title grid -->
+<tr>
+<td class="pt-20 px-20 mpx-10" style="padding-top: 0px; padding-left: 20px; padding-right: 20px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- 3, 6, 9, 12, 15 items -->
+{% if result.containers[2].count == 3 or result.containers[2].count == 6 or result.containers[2].count == 9 or result.containers[2].count == 12 or result.containers[2].count ==15 %}
+{% for items in trigger-titles %}
+{% cycle "", "<!--", "<!--" %}
+<tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+{% cycle "", "-->", "-->" %}
+<td class="mw-32p" width="178" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+<a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+</td>
+</tr>
+</table>
+</td>
+{% cycle "", "", "<!--" %}
+<td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+{% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+</tr>
+ </table></td></tr>
+{% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 3, 6, 9, 12, 15 items -->
+ <!-- 2, 5, 8, 11, 14 items -->
+ {% elsif result.containers[2].count == 2 or result.containers[2].count == 5 or result.containers[2].count == 8 or result.containers[2].count == 11 or result.containers[2].count == 14 %}
+ {% for items in trigger-titles limit:2 %}
+ {% cycle "group_1": "", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+{% cycle "group_2": "", "-->" %}
+ <td class="mw-50p mpr-6" valign="top" width="268">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="268" height="383" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+</td>
+ {% cycle "group_3": "", "<!--" %}
+ <td class="m-hide" width="24">&nbsp;</td>
+ {% cycle "group_4": "", "-->" %}
+{% cycle "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "" %}
+ {% endfor %}
+ {% for items in trigger-titles offset:2 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 2, 5, 8, 11, 14 items -->
+ <!-- 1, 4, 7, 10, 13 items -->
+ {% elsif result.containers[2].count == 1 or result.containers[2].count == 4 or result.containers[2].count == 7 or result.containers[2].count == 10 or result.containers[2].count == 13 %}
+ {% for items in trigger-titles limit:1 %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.landscape_images[0].url}}" style="border-radius: 8px;" width="560" height="315" border="0" alt="image" /></a>
+ </td>
+</tr>
+ </table></td></tr>
+{% endfor %}
+{% for items in trigger-titles offset:1 %}
+ {% cycle "", "<!--", "<!--" %}
+ <tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ {% cycle "", "-->", "-->" %}
+ <td class="mw-32p" width="178" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="fluid-img imgrs-8 pb-24 mpb-12" style="font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 24px;">
+ <a href="{{items.url}}?utm_source=braze&utm_medium=crm_email&utm_campaign={{campaign.${name}}}" ><img src="{{items.posterarts_large[0].url}}" style="border-radius: 8px;" width="178" height="254" border="0" alt="image" /></a>
+ </td>
+ </tr>
+ </table>
+ </td>
+ {% cycle "", "", "<!--" %}
+ <td class="mw-2p" width="13" valign="top" style="font-size: 0pt; line-height: 0pt;">&nbsp;</td>
+ {% cycle "", "", "-->" %}
+ {% cycle "<!--", "<!--", "" %}
+ </tr>
+ </table></td></tr>
+ {% cycle "-->", "-->", "" %}
+ {% endfor %}
+ <!-- END 1, 4, 7, 10, 13 items -->
+ {% endif %}
+</table>
+ </td>
+</tr> 
+ <!-- END ML title grid -->
+<!-- CTA -->
+{% if cta_5 != blank %}
+<tr>
+<td class="pt-16 mpb-24" align="center" style="padding-top: 16px; padding-bottom: 30px;">
+<table border="0" cellspacing="0" cellpadding="0" style="border-collapse: separate; border-radius: 8px;" bgcolor="#FFFF13">
+ <tr>
+ <td class="btn btnp-12-30 fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; mso-padding-alt:12px 30px; font-size: 20px; line-height: 24px; color:#0F011C;">
+ <p class="btn fz-16 lh-20 mfz-14 mlh-18 c-white l-white" style="font-family:Helvetica, Arial, sans-serif; text-align:center; mso-line-height-rule:exactly; font-size: 20px; line-height: 24px; color:#0F011C;">
+<a href="{{cta_5_link}}" target="_blank" class="btn-text link c-white" style="display: block; padding: 18px 42px; text-decoration:none; font-weight:bold; color:#0F011C;">
+{{cta_5}}
+</a>
+</p>
+</td>
+</tr>
+ </table>
+</td>
+ </tr>
+ {% endif %}
+ <!-- END CTA -->
+ </table>
+</td>
+ </tr>
+</table>
+<!-- END title grid -->
+{% endif %}
+<!-- END 4 containers-->
+
+
+
+
+
+
+

@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="format-detection" content="telephone=no">
+  <title>New Movies This Week on Tubi</title>
+
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+
+  <!-- CSS Content Block Reference -->
+  {{content_blocks.${css_styles}}}
+
+</head>
+<body style="margin: 0; padding: 0; width: 100%; background-color: #000000;">
+
+  <!-- Preview Text (hidden) -->
+  <div style="display: none; max-height: 0px; overflow: hidden; font-size: 1px; line-height: 1px; color: #000000;">
+    Discover the latest movies and shows added this week - watch free on Tubi
+  </div>
+
+  <!-- Email Container -->
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0; padding: 0; background-color: #000000;">
+    <tr>
+      <td align="center" style="padding: 0;">
+
+        <!-- Main Content Wrapper (600px max width) -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" class="email-container" style="max-width: 600px; margin: 0 auto; background-color: #000000;">
+
+          <!-- Content Blocks -->
+          <tr>
+            <td style="padding: 0;">
+
+              <!-- HERO BLOCK -->
+              {% comment %} Configure hero section {% endcomment %}
+              {% assign hero_image_url = "https://cdn.tubitv.com/hero-new-releases.jpg" %}
+              {% assign hero_layout = "center" %}
+              {% assign headline_copy = "New This Week" %}
+              {% assign body_copy = "Discover the latest movies and shows added to Tubi" %}
+              {% assign cta_label = "Browse All New Releases" %}
+              {% assign cta_url = "https://tubitv.com/new-releases" %}
+              {% assign utm_campaign = "weekly_new_releases" %}
+              {% assign enable_tracking = true %}
+
+              {{content_blocks.${hero_basic}}}
+
+              <!-- SECTION 1: TRENDING MOVIES -->
+              {% comment %} Section headline {% endcomment %}
+              {% assign headline_copy = "Trending Movies" %}
+              {% assign body_copy = "See what everyone's watching right now" %}
+              {% assign text_align = "center" %}
+
+              {{content_blocks.${headline_body}}}
+
+              {% comment %} 3-column poster grid with manual content {% endcomment %}
+              {% assign poster_images = "https://cdn.tubitv.com/movie1.jpg,https://cdn.tubitv.com/movie2.jpg,https://cdn.tubitv.com/movie3.jpg,https://cdn.tubitv.com/movie4.jpg,https://cdn.tubitv.com/movie5.jpg,https://cdn.tubitv.com/movie6.jpg" %}
+              {% assign poster_urls = "https://tubitv.com/movies/12345,https://tubitv.com/movies/12346,https://tubitv.com/movies/12347,https://tubitv.com/movies/12348,https://tubitv.com/movies/12349,https://tubitv.com/movies/12350" %}
+              {% assign poster_titles = "Action Movie 1,Comedy Movie 2,Drama Movie 3,Thriller Movie 4,Adventure Movie 5,Horror Movie 6" %}
+              {% assign poster_years = "2024,2023,2024,2023,2024,2024" %}
+              {% assign poster_genres = "Action,Comedy,Drama,Thriller,Adventure,Horror" %}
+              {% assign item_count = 6 %}
+              {% assign show_metadata = true %}
+              {% assign cta_label = "See All Trending" %}
+              {% assign cta_url = "https://tubitv.com/trending" %}
+              {% assign utm_campaign = "weekly_new_releases" %}
+              {% assign enable_tracking = true %}
+
+              {% content_block poster_grid_3col %}
+
+              <!-- SECTION 2: NEW TV SHOWS -->
+              {% comment %} Section headline {% endcomment %}
+              {% assign headline_copy = "New TV Shows" %}
+              {% assign body_copy = "Binge-worthy series just added" %}
+              {% assign text_align = "center" %}
+
+              {{content_blocks.${headline_body}}}
+
+              {% comment %} 3-column poster grid {% endcomment %}
+              {% assign poster_images = "https://cdn.tubitv.com/show1.jpg,https://cdn.tubitv.com/show2.jpg,https://cdn.tubitv.com/show3.jpg,https://cdn.tubitv.com/show4.jpg,https://cdn.tubitv.com/show5.jpg,https://cdn.tubitv.com/show6.jpg" %}
+              {% assign poster_urls = "https://tubitv.com/series/54321,https://tubitv.com/series/54322,https://tubitv.com/series/54323,https://tubitv.com/series/54324,https://tubitv.com/series/54325,https://tubitv.com/series/54326" %}
+              {% assign poster_titles = "Drama Series 1,Comedy Series 2,Crime Series 3,Mystery Series 4,Sci-Fi Series 5,Reality Series 6" %}
+              {% assign poster_years = "2024,2023,2024,2024,2023,2024" %}
+              {% assign poster_genres = "Drama,Comedy,Crime,Mystery,Sci-Fi,Reality" %}
+              {% assign item_count = 6 %}
+              {% assign show_metadata = true %}
+              {% assign cta_label = "Browse All Series" %}
+              {% assign cta_url = "https://tubitv.com/tv-shows" %}
+              {% assign utm_campaign = "weekly_new_releases" %}
+              {% assign enable_tracking = true %}
+
+              {% content_block poster_grid_3col %}
+
+              <!-- SECTION 3: FEATURED CATEGORY -->
+              {% comment %} Section headline {% endcomment %}
+              {% assign headline_copy = "Action & Adventure" %}
+              {% assign body_copy = "Heart-pounding thrills and epic adventures" %}
+              {% assign text_align = "center" %}
+
+              {{content_blocks.${headline_body}}}
+
+              {% comment %} 2-column landscape grid for featured content {% endcomment %}
+              {% assign poster_images = "https://cdn.tubitv.com/action1-wide.jpg,https://cdn.tubitv.com/action2-wide.jpg,https://cdn.tubitv.com/action3-wide.jpg,https://cdn.tubitv.com/action4-wide.jpg" %}
+              {% assign poster_urls = "https://tubitv.com/movies/99991,https://tubitv.com/movies/99992,https://tubitv.com/movies/99993,https://tubitv.com/movies/99994" %}
+              {% assign poster_titles = "Epic Action Film 1,Adventure Movie 2,Action Thriller 3,Adventure Epic 4" %}
+              {% assign poster_years = "2024,2023,2024,2023" %}
+              {% assign poster_genres = "Action,Adventure,Action,Adventure" %}
+              {% assign item_count = 4 %}
+              {% assign show_metadata = true %}
+              {% assign cta_label = "Explore Action Movies" %}
+              {% assign cta_url = "https://tubitv.com/category/action" %}
+              {% assign utm_campaign = "weekly_new_releases" %}
+
+              {% content_block poster_grid_2col_landscape %}
+
+              <!-- FINAL CTA -->
+              {% comment %} Primary call-to-action {% endcomment %}
+              {% assign cta_label = "Browse All Free Movies & TV" %}
+              {% assign cta_url = "https://tubitv.com/home" %}
+              {% assign cta_style = "primary" %}
+              {% assign cta_width = "full" %}
+              {% assign utm_campaign = "weekly_new_releases" %}
+
+              {{content_blocks.${cta_single}}}
+
+            </td>
+          </tr>
+
+          <!-- Footer Block -->
+          <tr>
+            <td style="padding: 0;">
+              {% assign language = "en" %}
+              {% assign country = "US" %}
+              {{content_blocks.${footer}}}
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

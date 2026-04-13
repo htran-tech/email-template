@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Test — Image Alignment</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+  {{content_blocks.${css_global}}}
+
+  {% comment %} IMAGE ONLY block {% endcomment %}
+  {% assign image_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/68aca50a84419b00649fddb4/original.png?1756144905" %}
+  {% assign image_link = "https://tubitv.com/home" %}
+  {{content_blocks.${image_only}}}
+
+  {% comment %} HEADLINE right after — should align flush {% endcomment %}
+  {% assign headline_copy = "THIS SHOULD ALIGN WITH THE IMAGE ABOVE" %}
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} POSTER GRID right after — should align flush {% endcomment %}
+  {% assign grid_layout = "3v" %}
+  {% assign grid_show_metadata = "false" %}
+  {% assign grid_item_1_img = "https://canvas-lb.tubitv.com/opts/qXdai7PLD6OVTw==/e851289f-48f6-4ca9-87c6-6533dd63a91e/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_1_url = "https://tubitv.com/home" %}
+  {% assign grid_item_2_img = "https://canvas-lb.tubitv.com/opts/GAc_CKsJ8Xk5BA==/28e38f44-cb12-4651-9b76-7431653342a9/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_2_url = "https://tubitv.com/home" %}
+  {% assign grid_item_3_img = "https://canvas-lb.tubitv.com/opts/QNODmZsxW4t5Wg==/9b1b9c1a-38eb-4e60-bcc8-04069a071245/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign grid_item_3_url = "https://tubitv.com/home" %}
+  {{content_blocks.${poster_grid}}}
+
+  {% comment %} CTA {% endcomment %}
+  {% assign cta_label = "WATCH NOW" %}
+  {% assign cta_url = "https://tubitv.com/home" %}
+  {{content_blocks.${single_cta}}}
+
+  {% comment %} FOOTER {% endcomment %}
+  {% assign footer_lang = "en" %}
+  {% assign footer_country = "US" %}
+  {{content_blocks.${footer}}}
+
+</body>
+</html>

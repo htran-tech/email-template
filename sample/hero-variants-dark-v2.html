@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hero Variants Dark QA v2</title>
+</head>
+<body class="body" style="margin:0;padding:0;background:#000000;">
+
+  {{content_blocks.${css_global}}}
+
+  {% assign hb_text_color = "#ffffff" %}
+  {% assign hb_align = "center" %}
+  {% comment %} Set this to a Braze-hosted PNG URL to test Variant 1 background image. {% endcomment %}
+  {% assign hero_v1_bg_test_url = "" %}
+  {% assign headline_copy = "HERO QA V2: FULL STACK" %}
+  {% assign body_copy = "New hero-single-title coverage across all variants and orientations." %}
+  {{content_blocks.${headline_body}}}
+
+  {% comment %} ---------- Variant 1 / Portrait ---------- {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "VARIANT 1 - PORTRAIT" %}{% assign body_copy = "Get Active" %}
+  {{content_blocks.${headline_body}}}
+  {% assign hero_variant = "1" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#000000" %}
+  {% if hero_v1_bg_test_url != "" %}{% assign hero_v1_bg_url = hero_v1_bg_test_url %}{% endif %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = "https://tubitv.com/home" %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/qXdai7PLD6OVTw==/e851289f-48f6-4ca9-87c6-6533dd63a91e/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = "https://tubitv.com/home" %}
+  {% assign hero_title = "Get Active" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} ---------- Variant 1 / Landscape ---------- {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "VARIANT 1 - LANDSCAPE" %}{% assign body_copy = "The 51st State" %}
+  {{content_blocks.${headline_body}}}
+  {% assign hero_variant = "1" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_bg_color = "#000000" %}
+  {% if hero_v1_bg_test_url != "" %}{% assign hero_v1_bg_url = hero_v1_bg_test_url %}{% endif %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = "https://tubitv.com/home" %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/XYAaoJ_DXdRqUg==/c9e1d46d-7f60-460c-9a21-526c62b83ae5/CNcHEKgEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = "https://tubitv.com/home" %}
+  {% assign hero_title = "The 51st State" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} ---------- Variant 2A / Portrait ---------- {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "VARIANT 2A - PORTRAIT" %}{% assign body_copy = "Ninja the Immovable Heart" %}
+  {{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2a" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#000000" %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = "https://tubitv.com/home" %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/QNODmZsxW4t5Wg==/9b1b9c1a-38eb-4e60-bcc8-04069a071245/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = "https://tubitv.com/home" %}
+  {% assign hero_title = "Ninja the Immovable Heart" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} ---------- Variant 2A / Landscape ---------- {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "VARIANT 2A - LANDSCAPE" %}{% assign body_copy = "Lionheart" %}
+  {{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2a" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_bg_color = "#000000" %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = "https://tubitv.com/home" %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/Ob4jXhNjqy2Wuw==/fca2bc10-9d23-4423-ba42-5a4009868696/CNcHEKgEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = "https://tubitv.com/home" %}
+  {% assign hero_title = "Lionheart" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} ---------- Variant 2B / Portrait ---------- {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "VARIANT 2B - PORTRAIT" %}{% assign body_copy = "The Dallas Connection" %}
+  {{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2b" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#000000" %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = "https://tubitv.com/home" %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/HpOFQhmcKCH6AQ==/f6957784-8def-4fbf-a47e-82bd8d4ce711/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = "https://tubitv.com/home" %}
+  {% assign hero_title = "The Dallas Connection" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} ---------- Variant 2B / Landscape ---------- {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "VARIANT 2B - LANDSCAPE" %}{% assign body_copy = "Chain of Command" %}
+  {{content_blocks.${headline_body}}}
+  {% assign hero_variant = "2b" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_bg_color = "#000000" %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = "https://tubitv.com/home" %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/oDpPm-LLF3sF5Q==/b3c71511-40e7-40be-877b-4bcda03a8f8e/CNcHEKgEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = "https://tubitv.com/home" %}
+  {% assign hero_title = "Chain of Command" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} ---------- Variant 3 / Portrait ---------- {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "VARIANT 3 - PORTRAIT" %}{% assign body_copy = "Overrun" %}
+  {{content_blocks.${headline_body}}}
+  {% assign hero_variant = "3" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#000000" %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = "https://tubitv.com/home" %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/Qw6HxiBYKCBLKg==/49cd8b05-c330-4fe1-a98a-f2e492316463/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = "https://tubitv.com/home" %}
+  {% assign hero_title = "Overrun" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} ---------- Variant 3 / Landscape ---------- {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "VARIANT 3 - LANDSCAPE" %}{% assign body_copy = "Get Active" %}
+  {{content_blocks.${headline_body}}}
+  {% assign hero_variant = "3" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_bg_color = "#000000" %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = "https://tubitv.com/home" %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/ZQfFHz1ggRx0nA==/1fbe6bf9-0d22-4e70-bff7-f1b06c3cf8fe/CNcHEKgEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = "https://tubitv.com/home" %}
+  {% assign hero_title = "Get Active" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} ---------- Variant 4 / Portrait ---------- {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "VARIANT 4 - PORTRAIT" %}{% assign body_copy = "The 51st State" %}
+  {{content_blocks.${headline_body}}}
+  {% assign hero_variant = "4" %}
+  {% assign hero_orientation = "portrait" %}
+  {% assign hero_bg_color = "#000000" %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = "https://tubitv.com/home" %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/GAc_CKsJ8Xk5BA==/28e38f44-cb12-4651-9b76-7431653342a9/CJgDEMcEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = "https://tubitv.com/home" %}
+  {% assign hero_title = "The 51st State" %}
+  {{content_blocks.${hero_single_title}}}
+
+  {% comment %} ---------- Variant 4 / Landscape ---------- {% endcomment %}
+  {% assign hb_text_color = "#ffffff" %}{% assign hb_align = "center" %}
+  {% assign headline_copy = "VARIANT 4 - LANDSCAPE" %}{% assign body_copy = "Ninja the Immovable Heart" %}
+  {{content_blocks.${headline_body}}}
+  {% assign hero_variant = "4" %}
+  {% assign hero_orientation = "landscape" %}
+  {% assign hero_bg_color = "#000000" %}
+  {% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}
+  {% assign hero_logo_link = "https://tubitv.com/home" %}
+  {% assign hero_poster_url = "https://canvas-lb.tubitv.com/opts/-rbW6215_4hp5g==/07d6b14f-c02b-4ff6-9ef4-b7831b07ef9a/CNcHEKgEOgUxLjEuOQ==" %}
+  {% assign hero_poster_link = "https://tubitv.com/home" %}
+  {% assign hero_title = "Ninja the Immovable Heart" %}
+  {{content_blocks.${hero_single_title}}}
+
+</body>
+</html>

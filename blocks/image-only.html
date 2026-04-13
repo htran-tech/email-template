@@ -1,0 +1,65 @@
+<!-- IMAGE ONLY CONTENT BLOCK — Override-with-Fallback
+     Standalone image. Nothing renders if image_url is blank.
+     Full-bleed by default (all margins 0).
+
+     Required:
+       image_url              — Image source URL
+
+     Optional — Layout:
+       image_link             — Click-through URL
+       image_alt              — Alt text (default: "Tubi")
+       image_width            — HTML width attribute for Outlook (default: 600)
+       image_border_radius    — Border radius in px (default: 0)
+
+     Optional — Spacing:
+       image_margin_top       — Top spacing in px (default: 0)
+       image_margin_bottom    — Bottom spacing in px (default: 0)
+       image_margin_left      — Left spacing in px (default: 0)
+       image_margin_right     — Right spacing in px (default: 0)
+
+     Optional — Colors:
+       content_bg_color       — Content area background (global, default: "#000000")
+-->
+
+{% comment %} ===== 1. DEFAULTS ===== {% endcomment %}
+{% unless image_alt %}{% assign image_alt = "Tubi" %}{% endunless %}
+{% unless image_width %}{% assign image_width = 600 %}{% endunless %}
+{% unless image_border_radius %}{% assign image_border_radius = 0 %}{% endunless %}
+{% unless image_margin_top %}{% assign image_margin_top = 0 %}{% endunless %}
+{% unless image_margin_bottom %}{% assign image_margin_bottom = 0 %}{% endunless %}
+{% unless image_margin_left %}{% assign image_margin_left = 0 %}{% endunless %}
+{% unless image_margin_right %}{% assign image_margin_right = 0 %}{% endunless %}
+{% unless content_bg_color %}{% assign content_bg_color = email_inner_bg | default: "transparent" %}{% endunless %}
+
+{% comment %} ===== 2. RENDER ===== {% endcomment %}
+{% if image_url %}
+
+<!-- Image Only -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
+  <tr>
+    <td align="center" style="padding: {{image_margin_top}}px {{image_margin_right}}px {{image_margin_bottom}}px {{image_margin_left}}px; background-color: {{content_bg_color}};" class="dm-content-bg">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 100%;">
+        <tr>
+          <td align="center" style="font-size: 0; line-height: 0;">
+            {% if image_link %}<a href="{{image_link}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
+              <img src="{{image_url}}" alt="{{image_alt}}" width="{{image_width}}" class="fluid-img" style="display: block; width: 100%; height: auto;{% if image_border_radius != 0 %} border-radius: {{image_border_radius}}px;{% endif %} border: 0;" />
+            {% if image_link %}</a>{% endif %}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+{% endif %}
+
+{% comment %} ===== 3. RESET ===== {% endcomment %}
+{% assign image_url = null %}
+{% assign image_link = null %}
+{% assign image_alt = null %}
+{% assign image_width = null %}
+{% assign image_border_radius = null %}
+{% assign image_margin_top = null %}
+{% assign image_margin_bottom = null %}
+{% assign image_margin_left = null %}
+{% assign image_margin_right = null %}
