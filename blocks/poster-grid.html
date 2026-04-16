@@ -33,13 +33,15 @@
        grid_item_N_cta_url   — Per-item CTA button link (optional)
 
      API MODE (dynamic content from connected_content):
-       grid_api_items     — Array from API result (e.g. result.items or
-                            result.containers[N].items). When set, the block
-                            auto-maps items and applies smart layout.
+       grid_result        — Raw API result object. Block auto-detects single-container
+                            (result.items) vs multi-container (result.containers[N].items).
+       grid_container_index — Which container to render (default: 0). Only applies when
+                            result has a containers array.
+       grid_api_items     — Pass items array directly (legacy/override). Skips auto-resolve.
        grid_utm_params    — Optional UTM string appended to every item URL
 
      FOUR MODES:
-       1. API mode:     Set grid_api_items = result.items (auto-maps + smart layout)
+       1. API mode:     Set grid_result = result (auto-resolves items + smart layout)
        2. Mixed rows:   Set grid_rows="1l,3v,2l" + sequential items
        3. Uniform rows: Set grid_layout="2v" + sequential items (auto-fills rows)
        4. Auto:         Just set items — defaults to 3v, auto-fills rows
@@ -75,6 +77,17 @@
   {% assign _txt_dm = "dm-text-white" %}
 {% endif %}
 {% capture _dot_span %}<span style='color:{{_dot_color}};'>•</span>{% endcapture %}
+
+{% comment %} ============ API MODE: Resolve grid_result → grid_api_items ============ {% endcomment %}
+{% if grid_result and grid_api_items == nil %}
+  {% assign _container_idx = grid_container_index | default: 0 | plus: 0 %}
+  {% assign _has_containers = grid_result.containers[0] | default: "__none__" %}
+  {% if _has_containers != "__none__" %}
+    {% assign grid_api_items = grid_result.containers[_container_idx].items %}
+  {% else %}
+    {% assign grid_api_items = grid_result.items %}
+  {% endif %}
+{% endif %}
 
 {% comment %} ============ API MODE: Map grid_api_items to grid_item_N vars ============ {% endcomment %}
 {% assign _api_check = grid_api_items | default: "__none__" %}
@@ -453,6 +466,8 @@
 {% assign grid_text_color = nil %}
 {% assign _bg_dm = nil %}{% assign _txt_dm = nil %}{% assign _dot_color = nil %}{% assign _dot_span = nil %}{% assign grid_dot_color = nil %}
 {% assign _item_count = nil %}{% assign _auto_ipr = nil %}{% assign _gr = nil %}
+{% assign grid_result = nil %}{% assign grid_container_index = nil %}
+{% assign _container_idx = nil %}{% assign _has_containers = nil %}
 {% assign grid_api_items = nil %}{% assign grid_utm_params = nil %}
 {% assign _api_check = nil %}{% assign _utm = nil %}{% assign _api_count = nil %}{% assign _gr_api = nil %}{% assign _mod3 = nil %}{% assign _remaining = nil %}{% assign _3v_count = nil %}
 {% assign _api_genre = nil %}
