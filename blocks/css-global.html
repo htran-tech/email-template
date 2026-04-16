@@ -173,6 +173,36 @@
   /* --- GRID CELL GAPS --- */
   .grid-gap { width: 12px; min-width: 12px; font-size: 0; line-height: 0; }
 
+  /* --- LIST LAYOUT --- */
+  .list-gap { width: 24px; min-width: 24px; font-size: 0; line-height: 0; }
+  .t-list-headline {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 28px;
+    letter-spacing: -0.56px;
+    line-height: 90%;
+    text-transform: uppercase;
+  }
+  .t-list-genre {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .t-list-subhead {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 110%;
+  }
+  .t-list-cta {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: none;
+  }
+
   /* --- LAYOUT UTILITIES --- */
   .email-wrapper {
     width: 100%;
@@ -194,6 +224,9 @@
   }
   .v-space { height: 12px; font-size: 0; line-height: 0; }
   .v-space-lg { height: 24px; font-size: 0; line-height: 0; }
+  /* Auto device detection (image-device block) — mobile-first defaults */
+  .img-mobile  { display: block; }
+  .img-desktop { display: none; max-height: 0; overflow: hidden; mso-hide: all; }
 
   /* --- DARK MODE OVERRIDES --- */
   /* Apple Mail, iOS */
@@ -277,6 +310,10 @@
       font-size: 24px !important;
     }
 
+    /* Auto device detection (image-device block) */
+    .img-mobile  { display: none !important; max-height: 0 !important; overflow: hidden !important; mso-hide: all; }
+    .img-desktop { display: block !important; max-height: none !important; overflow: visible !important; }
+
     /* Desktop image-only */
     .img-full-width { width: 720px !important; max-width: 720px !important; }
 
@@ -290,6 +327,23 @@
     .poster-3v { width: 229px !important; height: 329px !important; }
     .grid-gap { width: 16px !important; min-width: 16px !important; }
     .grid-gap-v { height: 16px !important; }
+
+    /* Desktop poster-list sizes */
+    .list-gap { width: 32px !important; min-width: 32px !important; }
+    .list-text { width: 336px !important; }
+    .t-list-headline {
+      font-size: 36px !important;
+      letter-spacing: -0.72px !important;
+    }
+    .t-list-genre {
+      font-size: 18px !important;
+    }
+    .t-list-subhead {
+      font-size: 22px !important;
+    }
+    .t-list-cta {
+      font-size: 22px !important;
+    }
 
     /* CTA desktop */
     .cta-primary, .cta-secondary, .cta-secondary-brand {
