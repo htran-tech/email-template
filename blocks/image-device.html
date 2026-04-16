@@ -1,0 +1,120 @@
+<!-- IMAGE DEVICE BLOCK — Override-with-Fallback
+     Conditional image: renders desktop or mobile image based on user attributes.
+     Renders nothing if the user has the mobile app (has_mobile = true).
+
+     3 scenarios:
+       has_mobile = true              → nothing rendered (5A, 5C)
+       has_mobile = false/unset
+         open_on_desktop = true      → desktop image (image_url)      (5B)
+         open_on_desktop = false     → mobile image (image_mobile_url) (5D)
+
+     Required — Desktop scenario:
+       image_url              — Desktop image source URL
+
+     Required — Mobile scenario:
+       image_mobile_url       — Mobile image source URL
+
+     Required — Flags:
+       has_mobile             — Truthy if user has the mobile app (block hidden when true)
+       open_on_desktop        — Truthy if user is on desktop; falsy for mobile
+
+     Optional — Links:
+       image_link             — Click-through URL for desktop image
+       image_mobile_link      — Click-through URL for mobile image (defaults to image_link)
+
+     Optional — Alt text:
+       image_alt              — Alt text for desktop image (default: "Tubi")
+       image_mobile_alt       — Alt text for mobile image (defaults to image_alt)
+
+     Optional — Layout (shared by both images):
+       image_width            — HTML width attribute for Outlook (default: 600)
+       image_border_radius    — Border radius in px (default: 0)
+
+     Optional — Spacing (shared by both images):
+       image_margin_top       — Top spacing in px (default: 0)
+       image_margin_bottom    — Bottom spacing in px (default: 0)
+       image_margin_left      — Left spacing in px (default: 0)
+       image_margin_right     — Right spacing in px (default: 0)
+
+     Optional — Colors:
+       content_bg_color       — Content area background (global, default: "transparent")
+-->
+
+{% comment %} ===== 1. DEFAULTS ===== {% endcomment %}
+{% unless image_alt %}{% assign image_alt = "Tubi" %}{% endunless %}
+{% unless image_mobile_alt %}{% assign image_mobile_alt = image_alt %}{% endunless %}
+{% unless image_mobile_link %}{% assign image_mobile_link = image_link %}{% endunless %}
+{% unless image_width %}{% assign image_width = 600 %}{% endunless %}
+{% unless image_border_radius %}{% assign image_border_radius = 0 %}{% endunless %}
+{% unless image_margin_top %}{% assign image_margin_top = 0 %}{% endunless %}
+{% unless image_margin_bottom %}{% assign image_margin_bottom = 0 %}{% endunless %}
+{% unless image_margin_left %}{% assign image_margin_left = 0 %}{% endunless %}
+{% unless image_margin_right %}{% assign image_margin_right = 0 %}{% endunless %}
+{% unless content_bg_color %}{% assign content_bg_color = email_inner_bg | default: "transparent" %}{% endunless %}
+
+{% comment %} ===== 2. RENDER ===== {% endcomment %}
+{% unless has_mobile %}
+
+  {% if open_on_desktop %}
+
+    {% comment %} --- 5B: Desktop, no mobile app → desktop image --- {% endcomment %}
+    {% if image_url %}
+<!-- Image Device: Desktop -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
+  <tr>
+    <td align="center" style="padding: {{image_margin_top}}px {{image_margin_right}}px {{image_margin_bottom}}px {{image_margin_left}}px; background-color: {{content_bg_color}};" class="dm-content-bg">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 100%;">
+        <tr>
+          <td align="center" style="font-size: 0; line-height: 0;">
+            {% if image_link %}<a href="{{image_link}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
+              <img src="{{image_url}}" alt="{{image_alt}}" width="{{image_width}}" class="fluid-img" style="display: block; width: 100%; height: auto;{% if image_border_radius != 0 %} border-radius: {{image_border_radius}}px;{% endif %} border: 0;" />
+            {% if image_link %}</a>{% endif %}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+    {% endif %}
+
+  {% else %}
+
+    {% comment %} --- 5D: Mobile, no mobile app → mobile image --- {% endcomment %}
+    {% if image_mobile_url %}
+<!-- Image Device: Mobile -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
+  <tr>
+    <td align="center" style="padding: {{image_margin_top}}px {{image_margin_right}}px {{image_margin_bottom}}px {{image_margin_left}}px; background-color: {{content_bg_color}};" class="dm-content-bg">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 100%;">
+        <tr>
+          <td align="center" style="font-size: 0; line-height: 0;">
+            {% if image_mobile_link %}<a href="{{image_mobile_link}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
+              <img src="{{image_mobile_url}}" alt="{{image_mobile_alt}}" width="{{image_width}}" class="fluid-img" style="display: block; width: 100%; height: auto;{% if image_border_radius != 0 %} border-radius: {{image_border_radius}}px;{% endif %} border: 0;" />
+            {% if image_mobile_link %}</a>{% endif %}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+    {% endif %}
+
+  {% endif %}
+
+{% endunless %}
+
+{% comment %} ===== 3. RESET ===== {% endcomment %}
+{% assign image_url = null %}
+{% assign image_mobile_url = null %}
+{% assign image_link = null %}
+{% assign image_mobile_link = null %}
+{% assign image_alt = null %}
+{% assign image_mobile_alt = null %}
+{% assign image_width = null %}
+{% assign image_border_radius = null %}
+{% assign image_margin_top = null %}
+{% assign image_margin_bottom = null %}
+{% assign image_margin_left = null %}
+{% assign image_margin_right = null %}
+{% assign has_mobile = null %}
+{% assign open_on_desktop = null %}
