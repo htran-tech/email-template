@@ -14,6 +14,7 @@
        grid_cta_url       — Optional CTA button link
        grid_cta_style     — CTA style: "primary"|"secondary"|"secondary-brand"
                             Default: "primary"
+       grid_items_limit         — Max items to render (default: 18, hard max: 18)
        grid_show_metadata — Show both genre + title: "true"|"false". Default: "false"
        grid_show_genre    — Show genre independently: "true"|"false". Default: follows grid_show_metadata
        grid_show_title    — Show title independently: "true"|"false". Default: follows grid_show_metadata
@@ -54,6 +55,8 @@
 
 {% comment %} ============ DEFAULTS ============ {% endcomment %}
 {% assign grid_layout = grid_layout | default: "3v" %}
+{% assign grid_items_limit = grid_items_limit | default: 18 | plus: 0 %}
+{% if grid_items_limit > 18 %}{% assign grid_items_limit = 18 %}{% endif %}
 {% assign content_bg_color = content_bg_color | default: email_inner_bg | default: "transparent" %}
 {% assign grid_text_color = grid_text_color | default: "#cccccc" %}
 {% assign grid_cta_style = grid_cta_style | default: "primary" %}
@@ -77,6 +80,7 @@
 {% assign _api_check = grid_api_items | default: "__none__" %}
 {% if _api_check != "__none__" %}
   {% assign _utm = grid_utm_params | default: "" %}
+  {% assign grid_api_items = grid_api_items | slice: 0, grid_items_limit %}
 
   {% for item in grid_api_items %}
     {% assign _api_genre = item.sgs_genre | replace: ":", " • " | upcase %}
@@ -98,12 +102,11 @@
     {% if forloop.index == 16 %}{% assign grid_item_16_img = item.posterarts_large[0].url %}{% assign grid_item_16_url = item.url | append: _utm %}{% assign grid_item_16_subhead = item.title %}{% assign grid_item_16_genre = _api_genre %}{% endif %}
     {% if forloop.index == 17 %}{% assign grid_item_17_img = item.posterarts_large[0].url %}{% assign grid_item_17_url = item.url | append: _utm %}{% assign grid_item_17_subhead = item.title %}{% assign grid_item_17_genre = _api_genre %}{% endif %}
     {% if forloop.index == 18 %}{% assign grid_item_18_img = item.posterarts_large[0].url %}{% assign grid_item_18_url = item.url | append: _utm %}{% assign grid_item_18_subhead = item.title %}{% assign grid_item_18_genre = _api_genre %}{% endif %}
-    {% if forloop.index > 18 %}{% break %}{% endif %}
   {% endfor %}
 
   {% comment %} Smart auto-layout based on item count (count%3 logic from old ML grid) {% endcomment %}
   {% assign _api_count = grid_api_items.size %}
-  {% if _api_count > 18 %}{% assign _api_count = 18 %}{% endif %}
+  {% if _api_count > grid_items_limit %}{% assign _api_count = grid_items_limit %}{% endif %}
   {% assign _gr_api = grid_rows | default: "__auto__" %}
   {% if _gr_api == "__auto__" %}
     {% assign _mod3 = _api_count | modulo: 3 %}
@@ -151,6 +154,7 @@
 {% if grid_item_16_img %}{% assign _item_count = 16 %}{% endif %}
 {% if grid_item_17_img %}{% assign _item_count = 17 %}{% endif %}
 {% if grid_item_18_img %}{% assign _item_count = 18 %}{% endif %}
+{% if _item_count > grid_items_limit %}{% assign _item_count = grid_items_limit %}{% endif %}
 
 {% comment %} ============ PACK ITEMS INTO ARRAYS (delimiter: ~^~) ============ {% endcomment %}
 {% capture _imgs %}{{grid_item_1_img}}~^~{{grid_item_2_img}}~^~{{grid_item_3_img}}~^~{{grid_item_4_img}}~^~{{grid_item_5_img}}~^~{{grid_item_6_img}}~^~{{grid_item_7_img}}~^~{{grid_item_8_img}}~^~{{grid_item_9_img}}~^~{{grid_item_10_img}}~^~{{grid_item_11_img}}~^~{{grid_item_12_img}}~^~{{grid_item_13_img}}~^~{{grid_item_14_img}}~^~{{grid_item_15_img}}~^~{{grid_item_16_img}}~^~{{grid_item_17_img}}~^~{{grid_item_18_img}}{% endcapture %}
@@ -436,6 +440,7 @@
 {% comment %} ============ RESET ALL VARIABLES ============ {% endcomment %}
 {% assign grid_rows = nil %}
 {% assign grid_layout = nil %}
+{% assign grid_items_limit = nil %}
 {% assign grid_headline = nil %}
 {% assign grid_headline_url = nil %}
 {% assign grid_cta_label = nil %}
