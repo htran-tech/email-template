@@ -8,12 +8,12 @@
                             Overrides grid_layout when set.
        grid_layout        — Uniform layout for all rows: "1l"|"2l"|"2v"|"3v"
                             Default: "3v". Ignored when grid_rows is set.
-       grid_headline      — Optional headline text above grid
-       grid_headline_url  — Optional headline link
-       grid_cta_label     — Optional CTA button label below grid
-       grid_cta_url       — Optional CTA button link
-       grid_cta_style     — CTA style: "primary"|"secondary"|"secondary-brand"
-                            Default: "primary"
+       grid_cta_watch     — Auto-apply "Watch Now" button to every item: "true"|"false"
+                            Default: "false". Fills in only if no per-item cta_label is set.
+       grid_cta_watch_label — Override watch button text. Default: "Watch Now"
+       grid_cta_mylist    — Auto-apply "+ My List" button to every item: "true"|"false"
+                            Default: "false". Uses item URL + ?action=add-to-list (or &... if URL has query params).
+       grid_cta_mylist_label — Override mylist button text. Default: "+ My List"
        grid_items_limit         — Max items to render (default: 18, hard max: 18)
        grid_show_metadata — Show both genre + title: "true"|"false". Default: "false"
        grid_show_genre    — Show genre independently: "true"|"false". Default: follows grid_show_metadata
@@ -25,12 +25,14 @@
        grid_text_color    — Text color for headline/metadata (default: "#ffffff")
 
      CONTENT ITEMS (up to 18, sequentially consumed by rows):
-       grid_item_N_img    — Poster image URL
-       grid_item_N_url    — Click-through URL
-       grid_item_N_subhead   — Subhead text (metadata, per Figma naming)
-       grid_item_N_genre    — Genre tags (metadata), use • for separators
-       grid_item_N_cta_label — Per-item CTA button text (optional)
-       grid_item_N_cta_url   — Per-item CTA button link (optional)
+       grid_item_N_img           — Poster image URL (vertical/portrait)
+       grid_item_N_landscape_img — Landscape image URL (optional; used when item falls in a 1l or 2l row)
+                                   Falls back to grid_item_N_img if not set.
+       grid_item_N_url           — Click-through URL
+       grid_item_N_subhead       — Subhead text (metadata, per Figma naming)
+       grid_item_N_genre         — Genre tags (metadata), use • for separators
+       grid_item_N_cta_label     — Per-item CTA button text (optional)
+       grid_item_N_cta_url       — Per-item CTA button link (optional)
 
      API MODE (dynamic content from connected_content):
        grid_result        — Raw API result object. Block auto-detects single-container
@@ -38,13 +40,15 @@
        grid_container_index — Which container to render (default: 0). Only applies when
                             result has a containers array.
        grid_api_items     — Pass items array directly (legacy/override). Skips auto-resolve.
-       grid_utm_params    — Optional UTM string appended to every item URL
+       grid_utm_params    — UTM string appended to all links. Auto-built from campaign/canvas name
+                            by default. Override: pass any string. Disable: pass "false".
 
      FOUR MODES:
        1. API mode:     Set grid_result = result (auto-resolves items + smart layout)
        2. Mixed rows:   Set grid_rows="1l,3v,2l" + sequential items
        3. Uniform rows: Set grid_layout="2v" + sequential items (auto-fills rows)
-       4. Auto:         Just set items — defaults to 3v, auto-fills rows
+       4. Auto:         Just set items, no grid_rows/grid_layout — uses count%3 smart
+                        layout (same as API mode: remainder→1l/2v prefix, rest→3v rows)
 
      LAYOUT TYPES (items consumed per row):
        1l — 1 landscape  (560×315 mobile, 720×405 desktop)
@@ -56,12 +60,31 @@
 -->
 
 {% comment %} ============ DEFAULTS ============ {% endcomment %}
+{% assign _grid_layout_user = grid_layout | default: "__none__" %}
 {% assign grid_layout = grid_layout | default: "3v" %}
 {% assign grid_items_limit = grid_items_limit | default: 18 | plus: 0 %}
 {% if grid_items_limit > 18 %}{% assign grid_items_limit = 18 %}{% endif %}
 {% assign content_bg_color = content_bg_color | default: email_inner_bg | default: "transparent" %}
 {% assign grid_text_color = grid_text_color | default: "#cccccc" %}
-{% assign grid_cta_style = grid_cta_style | default: "primary" %}
+{% assign grid_cta_watch = grid_cta_watch | default: "false" %}
+{% assign grid_cta_watch_label = grid_cta_watch_label | default: "Watch Now" %}
+{% assign grid_cta_mylist = grid_cta_mylist | default: "false" %}
+{% assign grid_cta_mylist_label = grid_cta_mylist_label | default: "+ My List" %}
+{% comment %} UTM: auto-build from campaign/canvas name unless overridden or disabled {% endcomment %}
+{% if grid_utm_params == "false" %}
+  {% assign _utm = "" %}
+{% elsif grid_utm_params != blank %}
+  {% assign _utm = grid_utm_params %}
+{% else %}
+  {% if campaign.name != blank %}
+    {% assign _utm_name = campaign.name | url_encode %}
+  {% elsif canvas.name != blank %}
+    {% assign _utm_name = canvas.name | url_encode %}
+  {% else %}
+    {% assign _utm_name = "braze_email" %}
+  {% endif %}
+  {% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}
+{% endif %}
 {% assign grid_show_metadata = grid_show_metadata | default: "false" %}
 {% assign grid_show_genre = grid_show_genre | default: grid_show_metadata %}
 {% assign grid_show_title = grid_show_title | default: grid_show_metadata %}
@@ -92,29 +115,28 @@
 {% comment %} ============ API MODE: Map grid_api_items to grid_item_N vars ============ {% endcomment %}
 {% assign _api_check = grid_api_items | default: "__none__" %}
 {% if _api_check != "__none__" %}
-  {% assign _utm = grid_utm_params | default: "" %}
   {% assign grid_api_items = grid_api_items | slice: 0, grid_items_limit %}
 
   {% for item in grid_api_items %}
     {% assign _api_genre = item.sgs_genre | replace: ":", " • " | upcase %}
-    {% if forloop.index == 1 %}{% assign grid_item_1_img = item.posterarts_large[0].url %}{% assign grid_item_1_url = item.url | append: _utm %}{% assign grid_item_1_subhead = item.title %}{% assign grid_item_1_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 2 %}{% assign grid_item_2_img = item.posterarts_large[0].url %}{% assign grid_item_2_url = item.url | append: _utm %}{% assign grid_item_2_subhead = item.title %}{% assign grid_item_2_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 3 %}{% assign grid_item_3_img = item.posterarts_large[0].url %}{% assign grid_item_3_url = item.url | append: _utm %}{% assign grid_item_3_subhead = item.title %}{% assign grid_item_3_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 4 %}{% assign grid_item_4_img = item.posterarts_large[0].url %}{% assign grid_item_4_url = item.url | append: _utm %}{% assign grid_item_4_subhead = item.title %}{% assign grid_item_4_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 5 %}{% assign grid_item_5_img = item.posterarts_large[0].url %}{% assign grid_item_5_url = item.url | append: _utm %}{% assign grid_item_5_subhead = item.title %}{% assign grid_item_5_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 6 %}{% assign grid_item_6_img = item.posterarts_large[0].url %}{% assign grid_item_6_url = item.url | append: _utm %}{% assign grid_item_6_subhead = item.title %}{% assign grid_item_6_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 7 %}{% assign grid_item_7_img = item.posterarts_large[0].url %}{% assign grid_item_7_url = item.url | append: _utm %}{% assign grid_item_7_subhead = item.title %}{% assign grid_item_7_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 8 %}{% assign grid_item_8_img = item.posterarts_large[0].url %}{% assign grid_item_8_url = item.url | append: _utm %}{% assign grid_item_8_subhead = item.title %}{% assign grid_item_8_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 9 %}{% assign grid_item_9_img = item.posterarts_large[0].url %}{% assign grid_item_9_url = item.url | append: _utm %}{% assign grid_item_9_subhead = item.title %}{% assign grid_item_9_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 10 %}{% assign grid_item_10_img = item.posterarts_large[0].url %}{% assign grid_item_10_url = item.url | append: _utm %}{% assign grid_item_10_subhead = item.title %}{% assign grid_item_10_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 11 %}{% assign grid_item_11_img = item.posterarts_large[0].url %}{% assign grid_item_11_url = item.url | append: _utm %}{% assign grid_item_11_subhead = item.title %}{% assign grid_item_11_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 12 %}{% assign grid_item_12_img = item.posterarts_large[0].url %}{% assign grid_item_12_url = item.url | append: _utm %}{% assign grid_item_12_subhead = item.title %}{% assign grid_item_12_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 13 %}{% assign grid_item_13_img = item.posterarts_large[0].url %}{% assign grid_item_13_url = item.url | append: _utm %}{% assign grid_item_13_subhead = item.title %}{% assign grid_item_13_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 14 %}{% assign grid_item_14_img = item.posterarts_large[0].url %}{% assign grid_item_14_url = item.url | append: _utm %}{% assign grid_item_14_subhead = item.title %}{% assign grid_item_14_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 15 %}{% assign grid_item_15_img = item.posterarts_large[0].url %}{% assign grid_item_15_url = item.url | append: _utm %}{% assign grid_item_15_subhead = item.title %}{% assign grid_item_15_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 16 %}{% assign grid_item_16_img = item.posterarts_large[0].url %}{% assign grid_item_16_url = item.url | append: _utm %}{% assign grid_item_16_subhead = item.title %}{% assign grid_item_16_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 17 %}{% assign grid_item_17_img = item.posterarts_large[0].url %}{% assign grid_item_17_url = item.url | append: _utm %}{% assign grid_item_17_subhead = item.title %}{% assign grid_item_17_genre = _api_genre %}{% endif %}
-    {% if forloop.index == 18 %}{% assign grid_item_18_img = item.posterarts_large[0].url %}{% assign grid_item_18_url = item.url | append: _utm %}{% assign grid_item_18_subhead = item.title %}{% assign grid_item_18_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 1 %}{% assign grid_item_1_img = item.posterarts_large[0].url %}{% assign grid_item_1_url = item.url %}{% assign grid_item_1_subhead = item.title %}{% assign grid_item_1_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 2 %}{% assign grid_item_2_img = item.posterarts_large[0].url %}{% assign grid_item_2_url = item.url %}{% assign grid_item_2_subhead = item.title %}{% assign grid_item_2_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 3 %}{% assign grid_item_3_img = item.posterarts_large[0].url %}{% assign grid_item_3_url = item.url %}{% assign grid_item_3_subhead = item.title %}{% assign grid_item_3_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 4 %}{% assign grid_item_4_img = item.posterarts_large[0].url %}{% assign grid_item_4_url = item.url %}{% assign grid_item_4_subhead = item.title %}{% assign grid_item_4_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 5 %}{% assign grid_item_5_img = item.posterarts_large[0].url %}{% assign grid_item_5_url = item.url %}{% assign grid_item_5_subhead = item.title %}{% assign grid_item_5_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 6 %}{% assign grid_item_6_img = item.posterarts_large[0].url %}{% assign grid_item_6_url = item.url %}{% assign grid_item_6_subhead = item.title %}{% assign grid_item_6_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 7 %}{% assign grid_item_7_img = item.posterarts_large[0].url %}{% assign grid_item_7_url = item.url %}{% assign grid_item_7_subhead = item.title %}{% assign grid_item_7_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 8 %}{% assign grid_item_8_img = item.posterarts_large[0].url %}{% assign grid_item_8_url = item.url %}{% assign grid_item_8_subhead = item.title %}{% assign grid_item_8_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 9 %}{% assign grid_item_9_img = item.posterarts_large[0].url %}{% assign grid_item_9_url = item.url %}{% assign grid_item_9_subhead = item.title %}{% assign grid_item_9_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 10 %}{% assign grid_item_10_img = item.posterarts_large[0].url %}{% assign grid_item_10_url = item.url %}{% assign grid_item_10_subhead = item.title %}{% assign grid_item_10_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 11 %}{% assign grid_item_11_img = item.posterarts_large[0].url %}{% assign grid_item_11_url = item.url %}{% assign grid_item_11_subhead = item.title %}{% assign grid_item_11_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 12 %}{% assign grid_item_12_img = item.posterarts_large[0].url %}{% assign grid_item_12_url = item.url %}{% assign grid_item_12_subhead = item.title %}{% assign grid_item_12_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 13 %}{% assign grid_item_13_img = item.posterarts_large[0].url %}{% assign grid_item_13_url = item.url %}{% assign grid_item_13_subhead = item.title %}{% assign grid_item_13_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 14 %}{% assign grid_item_14_img = item.posterarts_large[0].url %}{% assign grid_item_14_url = item.url %}{% assign grid_item_14_subhead = item.title %}{% assign grid_item_14_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 15 %}{% assign grid_item_15_img = item.posterarts_large[0].url %}{% assign grid_item_15_url = item.url %}{% assign grid_item_15_subhead = item.title %}{% assign grid_item_15_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 16 %}{% assign grid_item_16_img = item.posterarts_large[0].url %}{% assign grid_item_16_url = item.url %}{% assign grid_item_16_subhead = item.title %}{% assign grid_item_16_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 17 %}{% assign grid_item_17_img = item.posterarts_large[0].url %}{% assign grid_item_17_url = item.url %}{% assign grid_item_17_subhead = item.title %}{% assign grid_item_17_genre = _api_genre %}{% endif %}
+    {% if forloop.index == 18 %}{% assign grid_item_18_img = item.posterarts_large[0].url %}{% assign grid_item_18_url = item.url %}{% assign grid_item_18_subhead = item.title %}{% assign grid_item_18_genre = _api_genre %}{% endif %}
   {% endfor %}
 
   {% comment %} Smart auto-layout based on item count (count%3 logic from old ML grid) {% endcomment %}
@@ -188,24 +210,52 @@
 {% capture _cta_urls %}{{grid_item_1_cta_url}}~^~{{grid_item_2_cta_url}}~^~{{grid_item_3_cta_url}}~^~{{grid_item_4_cta_url}}~^~{{grid_item_5_cta_url}}~^~{{grid_item_6_cta_url}}~^~{{grid_item_7_cta_url}}~^~{{grid_item_8_cta_url}}~^~{{grid_item_9_cta_url}}~^~{{grid_item_10_cta_url}}~^~{{grid_item_11_cta_url}}~^~{{grid_item_12_cta_url}}~^~{{grid_item_13_cta_url}}~^~{{grid_item_14_cta_url}}~^~{{grid_item_15_cta_url}}~^~{{grid_item_16_cta_url}}~^~{{grid_item_17_cta_url}}~^~{{grid_item_18_cta_url}}{% endcapture %}
 {% assign _cta_url_arr = _cta_urls | split: "~^~" %}
 
+{% capture _landscape_imgs %}{{grid_item_1_landscape_img}}~^~{{grid_item_2_landscape_img}}~^~{{grid_item_3_landscape_img}}~^~{{grid_item_4_landscape_img}}~^~{{grid_item_5_landscape_img}}~^~{{grid_item_6_landscape_img}}~^~{{grid_item_7_landscape_img}}~^~{{grid_item_8_landscape_img}}~^~{{grid_item_9_landscape_img}}~^~{{grid_item_10_landscape_img}}~^~{{grid_item_11_landscape_img}}~^~{{grid_item_12_landscape_img}}~^~{{grid_item_13_landscape_img}}~^~{{grid_item_14_landscape_img}}~^~{{grid_item_15_landscape_img}}~^~{{grid_item_16_landscape_img}}~^~{{grid_item_17_landscape_img}}~^~{{grid_item_18_landscape_img}}{% endcapture %}
+{% assign _landscape_img_arr = _landscape_imgs | split: "~^~" %}
+
 {% comment %} ============ RESOLVE GRID ROWS ============ {% endcomment %}
 {% assign _gr = grid_rows | default: "__auto__" %}
 {% if _gr == "__auto__" %}
-  {% if grid_layout == "1l" %}{% assign _auto_ipr = 1 %}
-  {% elsif grid_layout == "2l" or grid_layout == "2v" %}{% assign _auto_ipr = 2 %}
-  {% else %}{% assign _auto_ipr = 3 %}{% endif %}
+  {% if _grid_layout_user == "__none__" and _api_check == "__none__" %}
+    {% comment %} Smart auto-layout for manual mode: mirrors API mode count%3 logic {% endcomment %}
+    {% assign _mod3 = _item_count | modulo: 3 %}
+    {% assign _remaining = _item_count %}
 
-  {% assign _num_rows = _item_count | divided_by: _auto_ipr %}
-  {% assign _rem = _item_count | modulo: _auto_ipr %}
-  {% if _rem > 0 %}{% assign _num_rows = _num_rows | plus: 1 %}{% endif %}
-  {% if _num_rows > 6 %}{% assign _num_rows = 6 %}{% endif %}
+    {% if _mod3 == 1 and _item_count >= 1 %}
+      {% assign grid_rows = "1l" %}
+      {% assign _remaining = _remaining | minus: 1 %}
+    {% elsif _mod3 == 2 and _item_count >= 2 %}
+      {% assign grid_rows = "2v" %}
+      {% assign _remaining = _remaining | minus: 2 %}
+    {% else %}
+      {% assign grid_rows = "" %}
+    {% endif %}
 
-  {% if _num_rows >= 1 %}{% assign grid_rows = grid_layout %}{% else %}{% assign grid_rows = "" %}{% endif %}
-  {% if _num_rows >= 2 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
-  {% if _num_rows >= 3 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
-  {% if _num_rows >= 4 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
-  {% if _num_rows >= 5 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
-  {% if _num_rows >= 6 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
+    {% assign _3v_count = _remaining | divided_by: 3 %}
+    {% if _3v_count >= 1 %}{% if grid_rows != "" %}{% assign grid_rows = grid_rows | append: "," %}{% endif %}{% assign grid_rows = grid_rows | append: "3v" %}{% endif %}
+    {% if _3v_count >= 2 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
+    {% if _3v_count >= 3 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
+    {% if _3v_count >= 4 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
+    {% if _3v_count >= 5 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
+
+  {% else %}
+    {% comment %} Uniform layout: repeat grid_layout for each row {% endcomment %}
+    {% if grid_layout == "1l" %}{% assign _auto_ipr = 1 %}
+    {% elsif grid_layout == "2l" or grid_layout == "2v" %}{% assign _auto_ipr = 2 %}
+    {% else %}{% assign _auto_ipr = 3 %}{% endif %}
+
+    {% assign _num_rows = _item_count | divided_by: _auto_ipr %}
+    {% assign _rem = _item_count | modulo: _auto_ipr %}
+    {% if _rem > 0 %}{% assign _num_rows = _num_rows | plus: 1 %}{% endif %}
+    {% if _num_rows > 6 %}{% assign _num_rows = 6 %}{% endif %}
+
+    {% if _num_rows >= 1 %}{% assign grid_rows = grid_layout %}{% else %}{% assign grid_rows = "" %}{% endif %}
+    {% if _num_rows >= 2 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
+    {% if _num_rows >= 3 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
+    {% if _num_rows >= 4 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
+    {% if _num_rows >= 5 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
+    {% if _num_rows >= 6 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
+  {% endif %}
 {% endif %}
 
 {% assign _row_layouts = grid_rows | split: "," %}
@@ -216,17 +266,6 @@
   <tr>
     <td align="center" class="content-pad" style="padding: 12px 20px;">
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" style="max-width: 560px; background-color: {{content_bg_color}}; border-radius: 8px; border: none; mso-border-alt: none;" class="{{_bg_dm}}">
-
-        {% comment %} ---- HEADLINE ---- {% endcomment %}
-        {% if grid_headline %}
-        <tr>
-          <td align="center" style="padding-bottom: 12px;">
-            {% if grid_headline_url %}<a href="{{grid_headline_url}}" style="text-decoration: none; color: {{grid_text_color}};">{% endif %}
-              <span class="t-headline {{_txt_dm}}" style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 32px; letter-spacing: -0.02em; line-height: 100%; text-transform: uppercase; color: {{grid_text_color}};">{{grid_headline}}</span>
-            {% if grid_headline_url %}</a>{% endif %}
-          </td>
-        </tr>
-        {% endif %}
 
         {% comment %} ---- ROW RENDERING LOOP ---- {% endcomment %}
         {% assign _offset = 0 %}
@@ -254,7 +293,7 @@
           {% assign _i3 = _offset | plus: 2 %}
 
           {% assign _c1_img = _img_arr[_i1] %}
-          {% assign _c1_url = _url_arr[_i1] %}
+          {% assign _c1_url = _url_arr[_i1] | append: _utm %}
           {% assign _c1_subhead = _subhead_arr[_i1] %}
           {% assign _c1_genre = _genre_arr[_i1] %}
           {% assign _c1_cta_label = _cta_label_arr[_i1] %}
@@ -262,7 +301,7 @@
 
           {% if _ipr >= 2 %}
             {% assign _c2_img = _img_arr[_i2] %}
-            {% assign _c2_url = _url_arr[_i2] %}
+            {% assign _c2_url = _url_arr[_i2] | append: _utm %}
             {% assign _c2_subhead = _subhead_arr[_i2] %}
             {% assign _c2_genre = _genre_arr[_i2] %}
             {% assign _c2_cta_label = _cta_label_arr[_i2] %}
@@ -273,7 +312,7 @@
 
           {% if _ipr >= 3 %}
             {% assign _c3_img = _img_arr[_i3] %}
-            {% assign _c3_url = _url_arr[_i3] %}
+            {% assign _c3_url = _url_arr[_i3] | append: _utm %}
             {% assign _c3_subhead = _subhead_arr[_i3] %}
             {% assign _c3_genre = _genre_arr[_i3] %}
             {% assign _c3_cta_label = _cta_label_arr[_i3] %}
@@ -282,8 +321,16 @@
             {% assign _c3_img = "" %}
           {% endif %}
 
-          {% comment %} Swap to landscape images for 1l/2l rows (API mode only) {% endcomment %}
+          {% comment %} Swap to landscape images for 1l/2l rows {% endcomment %}
           {% if _rlt == "1l" or _rlt == "2l" %}
+            {% comment %} Manual mode: use grid_item_N_landscape_img if provided {% endcomment %}
+            {% assign _ls1 = _landscape_img_arr[_i1] %}
+            {% if _ls1 != "" %}{% assign _c1_img = _ls1 %}{% endif %}
+            {% if _ipr >= 2 %}
+              {% assign _ls2 = _landscape_img_arr[_i2] %}
+              {% if _ls2 != "" %}{% assign _c2_img = _ls2 %}{% endif %}
+            {% endif %}
+            {% comment %} API mode: landscape_images field takes precedence {% endcomment %}
             {% if _api_check != "__none__" %}
               {% if grid_api_items[_i1].landscape_images[0] %}{% assign _c1_img = grid_api_items[_i1].landscape_images[0].url %}{% endif %}
               {% if _ipr >= 2 and grid_api_items[_i2].landscape_images[0] %}{% assign _c2_img = grid_api_items[_i2].landscape_images[0].url %}{% endif %}
@@ -324,7 +371,10 @@
                       {% if grid_show_title == "true" and _c1_subhead != "" %}<tr><td style="padding-top: 2px; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 24px; line-height: 110%; color: {{grid_text_color}}; text-align: {{grid_meta_align}};" class="{{_txt_dm}}">{{_c1_subhead}}</td></tr>{% endif %}
                     </table>
                     {% endif %}
-                    {% assign _cta1_lbl = _c1_cta_label | default: "" %}{% assign _cta1_url = _c1_cta_url | default: "" %}{% if _cta1_lbl != "" and _cta1_url != "" %}
+                    {% assign _cta1_lbl = _c1_cta_label | default: "" %}{% assign _cta1_url = _c1_cta_url | default: "" %}
+                    {% if grid_cta_watch == "true" and _cta1_lbl == "" %}{% assign _cta1_lbl = grid_cta_watch_label %}{% assign _cta1_url = _c1_url %}{% endif %}
+                    {% if grid_cta_mylist == "true" %}{% if _c1_url contains "?" %}{% assign _cta1_ml_url = _c1_url | append: "&action=add-to-list" %}{% else %}{% assign _cta1_ml_url = _c1_url | append: "?action=add-to-list" %}{% endif %}{% else %}{% assign _cta1_ml_url = "" %}{% endif %}
+                    {% if _cta1_lbl != "" and _cta1_url != "" %}
                     <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                       <tr><td height="8" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
                       <tr>
@@ -332,7 +382,23 @@
                           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: separate; border-radius: 200px; border: 3px solid {{grid_text_color}};">
                             <tr>
                               <td align="center" height="60" style="height: 60px; text-align: center;">
-                                <a href="{{_c1_cta_url}}" target="_blank" class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{grid_text_color}};">{{_c1_cta_label}}</a>
+                                <a href="{{_cta1_url}}" target="_blank" class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{grid_text_color}};">{{_cta1_lbl}}</a>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                    {% endif %}
+                    {% if _cta1_ml_url != "" %}
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                      <tr><td height="8" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
+                      <tr>
+                        <td align="center">
+                          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: separate; border-radius: 200px; border: 3px solid {{grid_text_color}};">
+                            <tr>
+                              <td align="center" height="60" style="height: 60px; text-align: center;">
+                                <a href="{{_cta1_ml_url}}" target="_blank" class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{grid_text_color}};">{{grid_cta_mylist_label}}</a>
                               </td>
                             </tr>
                           </table>
@@ -356,21 +422,34 @@
                       {% if grid_show_title == "true" and _c2_subhead != "" %}<tr><td style="padding-top: 2px; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 24px; line-height: 110%; color: {{grid_text_color}}; text-align: {{grid_meta_align}};" class="{{_txt_dm}}">{{_c2_subhead}}</td></tr>{% endif %}
                     </table>
                     {% endif %}
-                    {% assign _cta2_lbl = _c2_cta_label | default: "" %}{% assign _cta2_url = _c2_cta_url | default: "" %}{% if _cta2_lbl != "" and _cta2_url != "" %}
+                    {% assign _cta2_lbl = _c2_cta_label | default: "" %}{% assign _cta2_url = _c2_cta_url | default: "" %}
+                    {% if grid_cta_watch == "true" and _cta2_lbl == "" %}{% assign _cta2_lbl = grid_cta_watch_label %}{% assign _cta2_url = _c2_url %}{% endif %}
+                    {% if grid_cta_mylist == "true" %}{% if _c2_url contains "?" %}{% assign _cta2_ml_url = _c2_url | append: "&action=add-to-list" %}{% else %}{% assign _cta2_ml_url = _c2_url | append: "?action=add-to-list" %}{% endif %}{% else %}{% assign _cta2_ml_url = "" %}{% endif %}
+                    {% if _cta2_lbl != "" and _cta2_url != "" %}
                     <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                       <tr><td height="8" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
                       <tr>
                         <td align="center">
-                          <table role="presentation" cellpadding="3" cellspacing="0" border="0" width="100%" bgcolor="{{grid_text_color}}" style="border-radius: 200px;">
+                          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: separate; border-radius: 200px; border: 3px solid {{grid_text_color}};">
                             <tr>
-                              <td>
-                                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="{{content_bg_color}}" style="border-radius: 197px;">
-                                  <tr>
-                                    <td align="center" height="54" style="height: 54px; text-align: center;">
-                                      <a href="{{_c2_cta_url}}" target="_blank" class="t-cta" style="display: block; padding: 15px 27px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{grid_text_color}};">{{_c2_cta_label}}</a>
-                                    </td>
-                                  </tr>
-                                </table>
+                              <td align="center" height="60" style="height: 60px; text-align: center;">
+                                <a href="{{_cta2_url}}" target="_blank" class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{grid_text_color}};">{{_cta2_lbl}}</a>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                    {% endif %}
+                    {% if _cta2_ml_url != "" %}
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                      <tr><td height="8" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
+                      <tr>
+                        <td align="center">
+                          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: separate; border-radius: 200px; border: 3px solid {{grid_text_color}};">
+                            <tr>
+                              <td align="center" height="60" style="height: 60px; text-align: center;">
+                                <a href="{{_cta2_ml_url}}" target="_blank" class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{grid_text_color}};">{{grid_cta_mylist_label}}</a>
                               </td>
                             </tr>
                           </table>
@@ -395,21 +474,34 @@
                       {% if grid_show_title == "true" and _c3_subhead != "" %}<tr><td style="padding-top: 2px; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 24px; line-height: 110%; color: {{grid_text_color}}; text-align: {{grid_meta_align}};" class="{{_txt_dm}}">{{_c3_subhead}}</td></tr>{% endif %}
                     </table>
                     {% endif %}
-                    {% assign _cta3_lbl = _c3_cta_label | default: "" %}{% assign _cta3_url = _c3_cta_url | default: "" %}{% if _cta3_lbl != "" and _cta3_url != "" %}
+                    {% assign _cta3_lbl = _c3_cta_label | default: "" %}{% assign _cta3_url = _c3_cta_url | default: "" %}
+                    {% if grid_cta_watch == "true" and _cta3_lbl == "" %}{% assign _cta3_lbl = grid_cta_watch_label %}{% assign _cta3_url = _c3_url %}{% endif %}
+                    {% if grid_cta_mylist == "true" %}{% if _c3_url contains "?" %}{% assign _cta3_ml_url = _c3_url | append: "&action=add-to-list" %}{% else %}{% assign _cta3_ml_url = _c3_url | append: "?action=add-to-list" %}{% endif %}{% else %}{% assign _cta3_ml_url = "" %}{% endif %}
+                    {% if _cta3_lbl != "" and _cta3_url != "" %}
                     <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                       <tr><td height="8" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
                       <tr>
                         <td align="center">
-                          <table role="presentation" cellpadding="3" cellspacing="0" border="0" width="100%" bgcolor="{{grid_text_color}}" style="border-radius: 200px;">
+                          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: separate; border-radius: 200px; border: 3px solid {{grid_text_color}};">
                             <tr>
-                              <td>
-                                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="{{content_bg_color}}" style="border-radius: 197px;">
-                                  <tr>
-                                    <td align="center" height="54" style="height: 54px; text-align: center;">
-                                      <a href="{{_c3_cta_url}}" target="_blank" class="t-cta" style="display: block; padding: 15px 27px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{grid_text_color}};">{{_c3_cta_label}}</a>
-                                    </td>
-                                  </tr>
-                                </table>
+                              <td align="center" height="60" style="height: 60px; text-align: center;">
+                                <a href="{{_cta3_url}}" target="_blank" class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{grid_text_color}};">{{_cta3_lbl}}</a>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                    {% endif %}
+                    {% if _cta3_ml_url != "" %}
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                      <tr><td height="8" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
+                      <tr>
+                        <td align="center">
+                          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: separate; border-radius: 200px; border: 3px solid {{grid_text_color}};">
+                            <tr>
+                              <td align="center" height="60" style="height: 60px; text-align: center;">
+                                <a href="{{_cta3_ml_url}}" target="_blank" class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{grid_text_color}};">{{grid_cta_mylist_label}}</a>
                               </td>
                             </tr>
                           </table>
@@ -429,21 +521,6 @@
           {% assign _offset = _offset | plus: _ipr %}
         {% endfor %}
 
-        {% comment %} ---- CTA BUTTON ---- {% endcomment %}
-        {% if grid_cta_label and grid_cta_url %}
-        <tr>
-          <td align="center" style="padding-top: 12px;">
-            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"{% if grid_cta_style != 'secondary' and grid_cta_style != 'secondary-brand' %} bgcolor="#ffff13"{% endif %} style="border-collapse: separate; border-radius: 200px;{% if grid_cta_style == 'secondary' %} border: 3px solid #cccccc;{% elsif grid_cta_style == 'secondary-brand' %} border: 3px solid #ffff13;{% endif %}">
-              <tr>
-                <td align="center" height="60" style="height: 60px; text-align: center;">
-                  <a href="{{grid_cta_url}}" target="_blank" class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 14px; text-transform: uppercase; text-decoration: none; line-height: 100%;{% if grid_cta_style == 'secondary' %} color: #cccccc;{% elsif grid_cta_style == 'secondary-brand' %} color: #ffff13;{% else %} color: #000000;{% endif %}">{{grid_cta_label}}</a>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        {% endif %}
-
       </table>
     </td>
   </tr>
@@ -454,22 +531,22 @@
 {% assign grid_rows = nil %}
 {% assign grid_layout = nil %}
 {% assign grid_items_limit = nil %}
-{% assign grid_headline = nil %}
-{% assign grid_headline_url = nil %}
-{% assign grid_cta_label = nil %}
-{% assign grid_cta_url = nil %}
-{% assign grid_cta_style = nil %}
 {% assign grid_show_metadata = nil %}
 {% assign grid_show_genre = nil %}{% assign grid_show_title = nil %}
 {% assign grid_meta_align = nil %}
 {% assign grid_meta_position = nil %}
 {% assign grid_text_color = nil %}
 {% assign _bg_dm = nil %}{% assign _txt_dm = nil %}{% assign _dot_color = nil %}{% assign _dot_span = nil %}{% assign grid_dot_color = nil %}
+{% assign _grid_layout_user = nil %}
 {% assign _item_count = nil %}{% assign _auto_ipr = nil %}{% assign _gr = nil %}
 {% assign grid_result = nil %}{% assign grid_container_index = nil %}
 {% assign _container_idx = nil %}{% assign _has_containers = nil %}
 {% assign grid_api_items = nil %}{% assign grid_utm_params = nil %}
-{% assign _api_check = nil %}{% assign _utm = nil %}{% assign _api_count = nil %}{% assign _gr_api = nil %}{% assign _mod3 = nil %}{% assign _remaining = nil %}{% assign _3v_count = nil %}
+{% assign _api_check = nil %}{% assign _utm = nil %}{% assign _utm_name = nil %}{% assign _api_count = nil %}{% assign _gr_api = nil %}{% assign _mod3 = nil %}{% assign _remaining = nil %}{% assign _3v_count = nil %}
+{% assign _landscape_imgs = nil %}{% assign _landscape_img_arr = nil %}{% assign _ls1 = nil %}{% assign _ls2 = nil %}
+{% assign grid_cta_watch = nil %}{% assign grid_cta_watch_label = nil %}
+{% assign grid_cta_mylist = nil %}{% assign grid_cta_mylist_label = nil %}
+{% assign _cta1_ml_url = nil %}{% assign _cta2_ml_url = nil %}{% assign _cta3_ml_url = nil %}
 {% assign _api_genre = nil %}
 {% assign _num_rows = nil %}{% assign _rem = nil %}
 {% assign _offset = nil %}{% assign _rendered_rows = nil %}{% assign _needs_spacer = nil %}
@@ -503,3 +580,4 @@
 {% assign grid_item_16_img = nil %}{% assign grid_item_16_url = nil %}{% assign grid_item_16_subhead = nil %}{% assign grid_item_16_genre = nil %}{% assign grid_item_16_cta_label = nil %}{% assign grid_item_16_cta_url = nil %}
 {% assign grid_item_17_img = nil %}{% assign grid_item_17_url = nil %}{% assign grid_item_17_subhead = nil %}{% assign grid_item_17_genre = nil %}{% assign grid_item_17_cta_label = nil %}{% assign grid_item_17_cta_url = nil %}
 {% assign grid_item_18_img = nil %}{% assign grid_item_18_url = nil %}{% assign grid_item_18_subhead = nil %}{% assign grid_item_18_genre = nil %}{% assign grid_item_18_cta_label = nil %}{% assign grid_item_18_cta_url = nil %}
+{% assign grid_item_1_landscape_img = nil %}{% assign grid_item_2_landscape_img = nil %}{% assign grid_item_3_landscape_img = nil %}{% assign grid_item_4_landscape_img = nil %}{% assign grid_item_5_landscape_img = nil %}{% assign grid_item_6_landscape_img = nil %}{% assign grid_item_7_landscape_img = nil %}{% assign grid_item_8_landscape_img = nil %}{% assign grid_item_9_landscape_img = nil %}{% assign grid_item_10_landscape_img = nil %}{% assign grid_item_11_landscape_img = nil %}{% assign grid_item_12_landscape_img = nil %}{% assign grid_item_13_landscape_img = nil %}{% assign grid_item_14_landscape_img = nil %}{% assign grid_item_15_landscape_img = nil %}{% assign grid_item_16_landscape_img = nil %}{% assign grid_item_17_landscape_img = nil %}{% assign grid_item_18_landscape_img = nil %}
