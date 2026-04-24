@@ -14,7 +14,6 @@
 {% assign grid_cta_watch_label = grid_cta_watch_label | default: "Watch Now" %}
 {% assign grid_cta_mylist = grid_cta_mylist | default: "false" %}
 {% assign grid_cta_mylist_label = grid_cta_mylist_label | default: "+ My List" %}
-{% comment %} UTM: auto-build from campaign/canvas name unless overridden or disabled {% endcomment %}
 {% if grid_utm_params == "false" %}
   {% assign _utm = "" %}
 {% elsif grid_utm_params != blank %}
@@ -34,8 +33,6 @@
 {% assign grid_show_title = grid_show_title | default: grid_show_metadata %}
 {% assign grid_meta_align = grid_meta_align | default: "left" %}
 {% assign grid_meta_position = grid_meta_position | default: "below" %}
-
-{% comment %} Dark-mode CSS helper classes {% endcomment %}
 {% assign _bg_dm = "dm-content-bg" %}
 {% assign _dot_color = grid_dot_color | default: "#ffff13" %}
 {% if grid_text_color == "#000000" or grid_text_color == "#000" %}
@@ -44,7 +41,6 @@
   {% assign _txt_dm = "dm-text-white" %}
 {% endif %}
 {% capture _dot_span %}<span style='color:{{_dot_color}}; padding: 0 0.3em;'>•</span>{% endcapture %}
-
 {% if grid_result and grid_api_items == nil %}
   {% assign _container_idx = grid_container_index | default: 0 | plus: 0 %}
   {% assign _has_containers = grid_result.containers[0] | default: "__none__" %}
@@ -54,13 +50,11 @@
     {% assign grid_api_items = grid_result.items %}
   {% endif %}
 {% endif %}
-
 {% assign _api_check = grid_api_items | default: "__none__" %}
 {% if _api_check != "__none__" %}
   {% assign grid_api_items = grid_api_items | slice: 0, grid_items_limit %}
-
   {% for item in grid_api_items %}
-    {% assign _api_genre = item.sgs_genre | replace: ":", " • " | upcase %}
+    {% assign _api_genre = item.sgs_genre | replace: ":" , " • " | upcase %}
     {% if _api_genre == "DEFAULT" %}{% assign _api_genre = "" %}{% endif %}
     {% if forloop.index == 1 %}{% assign grid_item_1_img = item.posterarts_large[0].url %}{% assign grid_item_1_url = item.url %}{% assign grid_item_1_subhead = item.title %}{% assign grid_item_1_genre = _api_genre %}{% endif %}
     {% if forloop.index == 2 %}{% assign grid_item_2_img = item.posterarts_large[0].url %}{% assign grid_item_2_url = item.url %}{% assign grid_item_2_subhead = item.title %}{% assign grid_item_2_genre = _api_genre %}{% endif %}
@@ -81,15 +75,12 @@
     {% if forloop.index == 17 %}{% assign grid_item_17_img = item.posterarts_large[0].url %}{% assign grid_item_17_url = item.url %}{% assign grid_item_17_subhead = item.title %}{% assign grid_item_17_genre = _api_genre %}{% endif %}
     {% if forloop.index == 18 %}{% assign grid_item_18_img = item.posterarts_large[0].url %}{% assign grid_item_18_url = item.url %}{% assign grid_item_18_subhead = item.title %}{% assign grid_item_18_genre = _api_genre %}{% endif %}
   {% endfor %}
-
-  {% comment %} Smart auto-layout based on item count (count%3 logic from old ML grid) {% endcomment %}
   {% assign _api_count = grid_api_items.size %}
   {% if _api_count > grid_items_limit %}{% assign _api_count = grid_items_limit %}{% endif %}
   {% assign _gr_api = grid_rows | default: "__auto__" %}
   {% if _gr_api == "__auto__" %}
     {% assign _mod3 = _api_count | modulo: 3 %}
     {% assign _remaining = _api_count %}
-
     {% if _mod3 == 1 and _api_count >= 1 %}
       {% if grid_api_items[0].landscape_images[0] %}
         {% assign grid_item_1_img = grid_api_items[0].landscape_images[0].url %}
@@ -102,7 +93,6 @@
     {% else %}
       {% assign grid_rows = "" %}
     {% endif %}
-
     {% assign _3v_count = _remaining | divided_by: 3 %}
     {% if _3v_count >= 1 %}{% if grid_rows != "" %}{% assign grid_rows = grid_rows | append: "," %}{% endif %}{% assign grid_rows = grid_rows | append: "3v" %}{% endif %}
     {% if _3v_count >= 2 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
@@ -111,7 +101,6 @@
     {% if _3v_count >= 5 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
   {% endif %}
 {% endif %}
-
 {% assign _item_count = 0 %}
 {% if grid_item_1_img %}{% assign _item_count = 1 %}{% endif %}
 {% if grid_item_2_img %}{% assign _item_count = 2 %}{% endif %}
@@ -132,37 +121,25 @@
 {% if grid_item_17_img %}{% assign _item_count = 17 %}{% endif %}
 {% if grid_item_18_img %}{% assign _item_count = 18 %}{% endif %}
 {% if _item_count > grid_items_limit %}{% assign _item_count = grid_items_limit %}{% endif %}
-
-{% comment %} ============ PACK ITEMS INTO ARRAYS (delimiter: ~^~) ============ {% endcomment %}
 {% capture _imgs %}{{grid_item_1_img}}~^~{{grid_item_2_img}}~^~{{grid_item_3_img}}~^~{{grid_item_4_img}}~^~{{grid_item_5_img}}~^~{{grid_item_6_img}}~^~{{grid_item_7_img}}~^~{{grid_item_8_img}}~^~{{grid_item_9_img}}~^~{{grid_item_10_img}}~^~{{grid_item_11_img}}~^~{{grid_item_12_img}}~^~{{grid_item_13_img}}~^~{{grid_item_14_img}}~^~{{grid_item_15_img}}~^~{{grid_item_16_img}}~^~{{grid_item_17_img}}~^~{{grid_item_18_img}}{% endcapture %}
 {% assign _img_arr = _imgs | split: "~^~" %}
-
 {% capture _urls %}{{grid_item_1_url}}~^~{{grid_item_2_url}}~^~{{grid_item_3_url}}~^~{{grid_item_4_url}}~^~{{grid_item_5_url}}~^~{{grid_item_6_url}}~^~{{grid_item_7_url}}~^~{{grid_item_8_url}}~^~{{grid_item_9_url}}~^~{{grid_item_10_url}}~^~{{grid_item_11_url}}~^~{{grid_item_12_url}}~^~{{grid_item_13_url}}~^~{{grid_item_14_url}}~^~{{grid_item_15_url}}~^~{{grid_item_16_url}}~^~{{grid_item_17_url}}~^~{{grid_item_18_url}}{% endcapture %}
 {% assign _url_arr = _urls | split: "~^~" %}
-
 {% capture _subheads %}{{grid_item_1_subhead}}~^~{{grid_item_2_subhead}}~^~{{grid_item_3_subhead}}~^~{{grid_item_4_subhead}}~^~{{grid_item_5_subhead}}~^~{{grid_item_6_subhead}}~^~{{grid_item_7_subhead}}~^~{{grid_item_8_subhead}}~^~{{grid_item_9_subhead}}~^~{{grid_item_10_subhead}}~^~{{grid_item_11_subhead}}~^~{{grid_item_12_subhead}}~^~{{grid_item_13_subhead}}~^~{{grid_item_14_subhead}}~^~{{grid_item_15_subhead}}~^~{{grid_item_16_subhead}}~^~{{grid_item_17_subhead}}~^~{{grid_item_18_subhead}}{% endcapture %}
 {% assign _subhead_arr = _subheads | split: "~^~" %}
-
 {% capture _genres %}{{grid_item_1_genre}}~^~{{grid_item_2_genre}}~^~{{grid_item_3_genre}}~^~{{grid_item_4_genre}}~^~{{grid_item_5_genre}}~^~{{grid_item_6_genre}}~^~{{grid_item_7_genre}}~^~{{grid_item_8_genre}}~^~{{grid_item_9_genre}}~^~{{grid_item_10_genre}}~^~{{grid_item_11_genre}}~^~{{grid_item_12_genre}}~^~{{grid_item_13_genre}}~^~{{grid_item_14_genre}}~^~{{grid_item_15_genre}}~^~{{grid_item_16_genre}}~^~{{grid_item_17_genre}}~^~{{grid_item_18_genre}}{% endcapture %}
 {% assign _genre_arr = _genres | split: "~^~" %}
-
 {% capture _cta_labels %}{{grid_item_1_cta_label}}~^~{{grid_item_2_cta_label}}~^~{{grid_item_3_cta_label}}~^~{{grid_item_4_cta_label}}~^~{{grid_item_5_cta_label}}~^~{{grid_item_6_cta_label}}~^~{{grid_item_7_cta_label}}~^~{{grid_item_8_cta_label}}~^~{{grid_item_9_cta_label}}~^~{{grid_item_10_cta_label}}~^~{{grid_item_11_cta_label}}~^~{{grid_item_12_cta_label}}~^~{{grid_item_13_cta_label}}~^~{{grid_item_14_cta_label}}~^~{{grid_item_15_cta_label}}~^~{{grid_item_16_cta_label}}~^~{{grid_item_17_cta_label}}~^~{{grid_item_18_cta_label}}{% endcapture %}
 {% assign _cta_label_arr = _cta_labels | split: "~^~" %}
-
 {% capture _cta_urls %}{{grid_item_1_cta_url}}~^~{{grid_item_2_cta_url}}~^~{{grid_item_3_cta_url}}~^~{{grid_item_4_cta_url}}~^~{{grid_item_5_cta_url}}~^~{{grid_item_6_cta_url}}~^~{{grid_item_7_cta_url}}~^~{{grid_item_8_cta_url}}~^~{{grid_item_9_cta_url}}~^~{{grid_item_10_cta_url}}~^~{{grid_item_11_cta_url}}~^~{{grid_item_12_cta_url}}~^~{{grid_item_13_cta_url}}~^~{{grid_item_14_cta_url}}~^~{{grid_item_15_cta_url}}~^~{{grid_item_16_cta_url}}~^~{{grid_item_17_cta_url}}~^~{{grid_item_18_cta_url}}{% endcapture %}
 {% assign _cta_url_arr = _cta_urls | split: "~^~" %}
-
 {% capture _landscape_imgs %}{{grid_item_1_landscape_img}}~^~{{grid_item_2_landscape_img}}~^~{{grid_item_3_landscape_img}}~^~{{grid_item_4_landscape_img}}~^~{{grid_item_5_landscape_img}}~^~{{grid_item_6_landscape_img}}~^~{{grid_item_7_landscape_img}}~^~{{grid_item_8_landscape_img}}~^~{{grid_item_9_landscape_img}}~^~{{grid_item_10_landscape_img}}~^~{{grid_item_11_landscape_img}}~^~{{grid_item_12_landscape_img}}~^~{{grid_item_13_landscape_img}}~^~{{grid_item_14_landscape_img}}~^~{{grid_item_15_landscape_img}}~^~{{grid_item_16_landscape_img}}~^~{{grid_item_17_landscape_img}}~^~{{grid_item_18_landscape_img}}{% endcapture %}
 {% assign _landscape_img_arr = _landscape_imgs | split: "~^~" %}
-
-{% comment %} ============ RESOLVE GRID ROWS ============ {% endcomment %}
 {% assign _gr = grid_rows | default: "__auto__" %}
 {% if _gr == "__auto__" %}
   {% if _grid_layout_user == "__none__" and _api_check == "__none__" %}
-    {% comment %} Smart auto-layout for manual mode: mirrors API mode count%3 logic {% endcomment %}
     {% assign _mod3 = _item_count | modulo: 3 %}
     {% assign _remaining = _item_count %}
-
     {% if _mod3 == 1 and _item_count >= 1 %}
       {% assign grid_rows = "1l" %}
       {% assign _remaining = _remaining | minus: 1 %}
@@ -172,25 +149,20 @@
     {% else %}
       {% assign grid_rows = "" %}
     {% endif %}
-
     {% assign _3v_count = _remaining | divided_by: 3 %}
     {% if _3v_count >= 1 %}{% if grid_rows != "" %}{% assign grid_rows = grid_rows | append: "," %}{% endif %}{% assign grid_rows = grid_rows | append: "3v" %}{% endif %}
     {% if _3v_count >= 2 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
     {% if _3v_count >= 3 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
     {% if _3v_count >= 4 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
     {% if _3v_count >= 5 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
-
   {% else %}
-    {% comment %} Uniform layout: repeat grid_layout for each row {% endcomment %}
     {% if grid_layout == "1l" %}{% assign _auto_ipr = 1 %}
     {% elsif grid_layout == "2l" or grid_layout == "2v" %}{% assign _auto_ipr = 2 %}
     {% else %}{% assign _auto_ipr = 3 %}{% endif %}
-
     {% assign _num_rows = _item_count | divided_by: _auto_ipr %}
     {% assign _rem = _item_count | modulo: _auto_ipr %}
     {% if _rem > 0 %}{% assign _num_rows = _num_rows | plus: 1 %}{% endif %}
     {% if _num_rows > 6 %}{% assign _num_rows = 6 %}{% endif %}
-
     {% if _num_rows >= 1 %}{% assign grid_rows = grid_layout %}{% else %}{% assign grid_rows = "" %}{% endif %}
     {% if _num_rows >= 2 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
     {% if _num_rows >= 3 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
@@ -199,9 +171,7 @@
     {% if _num_rows >= 6 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
   {% endif %}
 {% endif %}
-
 {% assign _row_layouts = grid_rows | split: "," %}
-
 {% if _item_count > 0 %}
 {% if grid_headline != "" or grid_body != "" %}
 {% assign _hl_url = grid_headline_url | append: _utm %}
@@ -211,19 +181,13 @@
   <tr>
     <td align="center" class="content-pad" style="padding: 12px 20px;">
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" style="max-width: 560px; background-color: {{content_bg_color}}; border-radius: 8px; border: none; mso-border-alt: none;" class="{{_bg_dm}}">
-
-        {% comment %} ---- TOP PADDING ---- {% endcomment %}
         <tr><td height="12" style="font-size:0;line-height:0;">&nbsp;</td></tr>
-
-        {% comment %} ---- ROW RENDERING LOOP ---- {% endcomment %}
         {% assign _offset = 0 %}
         {% assign _rendered_rows = 0 %}
         {% assign _needs_spacer = false %}
-
         {% for _rl in _row_layouts %}
           {% assign _rendered_rows = _rendered_rows | plus: 1 %}
           {% if _rendered_rows > 6 %}{% break %}{% endif %}
-
           {% assign _rlt = _rl | strip %}
           {% if _rlt == "1l" %}
             {% assign _ipr = 1 %}{% assign _w = 560 %}{% assign _h = 315 %}{% assign _pc = "poster-1l" %}
@@ -234,19 +198,15 @@
           {% else %}
             {% assign _ipr = 3 %}{% assign _w = 178 %}{% assign _h = 256 %}{% assign _pc = "poster-3v" %}
           {% endif %}
-
-          {% comment %} Extract items for this row via offset indexing {% endcomment %}
           {% assign _i1 = _offset %}
           {% assign _i2 = _offset | plus: 1 %}
           {% assign _i3 = _offset | plus: 2 %}
-
           {% assign _c1_img = _img_arr[_i1] %}
           {% assign _c1_url = _url_arr[_i1] | append: _utm %}
           {% assign _c1_subhead = _subhead_arr[_i1] %}
           {% assign _c1_genre = _genre_arr[_i1] %}
           {% assign _c1_cta_label = _cta_label_arr[_i1] %}
           {% assign _c1_cta_url = _cta_url_arr[_i1] %}
-
           {% if _ipr >= 2 %}
             {% assign _c2_img = _img_arr[_i2] %}
             {% assign _c2_url = _url_arr[_i2] | append: _utm %}
@@ -257,7 +217,6 @@
           {% else %}
             {% assign _c2_img = "" %}
           {% endif %}
-
           {% if _ipr >= 3 %}
             {% assign _c3_img = _img_arr[_i3] %}
             {% assign _c3_url = _url_arr[_i3] | append: _utm %}
@@ -268,41 +227,31 @@
           {% else %}
             {% assign _c3_img = "" %}
           {% endif %}
-
-          {% comment %} Swap to landscape images for 1l/2l rows {% endcomment %}
           {% if _rlt == "1l" or _rlt == "2l" %}
-            {% comment %} Manual mode: use grid_item_N_landscape_img if provided {% endcomment %}
             {% assign _ls1 = _landscape_img_arr[_i1] %}
             {% if _ls1 != "" %}{% assign _c1_img = _ls1 %}{% endif %}
             {% if _ipr >= 2 %}
               {% assign _ls2 = _landscape_img_arr[_i2] %}
               {% if _ls2 != "" %}{% assign _c2_img = _ls2 %}{% endif %}
             {% endif %}
-            {% comment %} API mode: landscape_images field takes precedence {% endcomment %}
             {% if _api_check != "__none__" %}
               {% if grid_api_items[_i1].landscape_images[0] %}{% assign _c1_img = grid_api_items[_i1].landscape_images[0].url %}{% endif %}
               {% if _ipr >= 2 and grid_api_items[_i2].landscape_images[0] %}{% assign _c2_img = grid_api_items[_i2].landscape_images[0].url %}{% endif %}
             {% endif %}
           {% endif %}
-
           {% if _c1_img != "" %}
-
           {% if _needs_spacer %}
           <tr><td height="12" class="grid-gap-v" style="font-size: 0; line-height: 0;">&nbsp;</td></tr>
           {% endif %}
           {% assign _needs_spacer = true %}
-
-          {% comment %} Compute exact row width so the table auto-sizes {% endcomment %}
           {% if _ipr == 1 %}{% assign _row_w = _w %}
           {% elsif _ipr == 2 %}{% assign _row_w = _w | times: 2 | plus: 12 %}
           {% elsif _ipr == 3 %}{% assign _row_w = _w | times: 3 | plus: 24 %}
           {% endif %}
-
           <tr>
             <td align="center">
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="{{_row_w}}" style="width: {{_row_w}}px;">
                 <tr>
-                  {% comment %} — CELL 1 (always rendered) — {% endcomment %}
                   <td align="center" valign="top" width="{{_w}}" style="width: {{_w}}px;">
                     {% if grid_show_genre == "true" and grid_meta_position == "above" and _c1_genre != "" %}
                     <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -329,8 +278,6 @@
                     <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td height="24" style="font-size:0;line-height:0;">&nbsp;</td></tr><tr><td align="center"><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:separate;border-radius:200px;border:3px solid #cccccc;"><tr><td align="center" height="60" style="height:60px;text-align:center;"><a href="{{_cta1_ml_url}}" target="_blank" class="t-cta" style="display:block;padding:18px 30px;font-family:Arial,Helvetica,sans-serif;font-weight:normal;font-size:24px;text-decoration:none;line-height:100%;color:{{grid_text_color}};">{{grid_cta_mylist_label}}</a></td></tr></table></td></tr></table>
                     {% endif %}
                   </td>
-
-                  {% comment %} — CELL 2 (2-col and 3-col layouts) — {% endcomment %}
                   {% if _ipr >= 2 and _c2_img != "" %}
                   <td width="12" class="grid-gap" style="width: 12px; min-width: 12px; font-size: 0; line-height: 0; padding: 0;">&nbsp;</td>
                   <td align="center" valign="top" width="{{_w}}" style="width: {{_w}}px;">
@@ -355,8 +302,6 @@
                     {% endif %}
                   </td>
                   {% endif %}
-
-                  {% comment %} — CELL 3 (3-col layouts only) — {% endcomment %}
                   {% if _ipr >= 3 and _c3_img != "" %}
                   <td width="12" class="grid-gap" style="width: 12px; min-width: 12px; font-size: 0; line-height: 0; padding: 0;">&nbsp;</td>
                   <td align="center" valign="top" width="{{_w}}" style="width: {{_w}}px;">
@@ -385,28 +330,21 @@
               </table>
             </td>
           </tr>
-
-          {% endif %}{% comment %} end _c1_img check {% endcomment %}
-
+          {% endif %}
           {% assign _offset = _offset | plus: _ipr %}
         {% endfor %}
-
         {% assign _gcta_url = grid_cta_url | append: _utm %}
         {% if grid_cta_label != "" and grid_cta_url != "" %}
         {% if grid_cta_style == "primary" %}{% assign _cta_bg = "#ffff13" %}{% assign _cta_tc = "#000000" %}{% assign _cta_bd = "" %}{% elsif grid_cta_style == "secondary-brand" %}{% assign _cta_bg = "" %}{% assign _cta_tc = "#ffff13" %}{% assign _cta_bd = "border:3px solid #ffff13;" %}{% else %}{% assign _cta_bg = "" %}{% assign _cta_tc = grid_text_color %}{% assign _cta_bd = "border:3px solid #cccccc;" %}{% endif %}
         <tr><td height="12" style="font-size:0;line-height:0;">&nbsp;</td></tr>
         <tr><td align="center"><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="grid-cta"{% if _cta_bg != "" %} bgcolor="{{_cta_bg}}"{% endif %} style="border-collapse:separate;border-radius:200px;{% if _cta_bg != "" %}background:{{_cta_bg}};{% endif %}{{_cta_bd}}"><tr><td align="center" height="60" style="height:60px;text-align:center;"><a href="{{_gcta_url}}" target="_blank" class="t-cta" style="display:block;padding:18px 30px;font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:24px;text-decoration:none;line-height:100%;color:{{_cta_tc}};">{{grid_cta_label}}</a></td></tr></table></td></tr>
         {% endif %}
-
-        {% comment %} ---- BOTTOM PADDING ---- {% endcomment %}
         <tr><td height="12" style="font-size:0;line-height:0;">&nbsp;</td></tr>
-
       </table>
     </td>
   </tr>
 </table>
 {% endif %}
-
 {% assign grid_rows = nil %}
 {% assign grid_layout = nil %}
 {% assign grid_items_limit = nil %}

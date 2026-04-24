@@ -1,8 +1,6 @@
 {% unless hero_variant %}{% assign hero_variant = "1" %}{% endunless %}
 {% unless hero_orientation %}{% assign hero_orientation = "portrait" %}{% endunless %}
 {% unless hero_border %}{% if hero_variant == "3" or hero_variant == "4" %}{% assign hero_border = "true" %}{% else %}{% assign hero_border = "false" %}{% endif %}{% endunless %}
-
-{% comment %} --- Auto-select background URLs (600px mobile, 800px desktop) --- {% endcomment %}
 {% unless hero_bg_url %}
   {% if hero_variant == "2a" %}
     {% if hero_orientation == "landscape" %}
@@ -42,7 +40,6 @@
 {% unless hero_logo_url %}{% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}{% endunless %}
 {% unless hero_logo_link %}{% assign hero_logo_link = "https://tubitv.com/home" %}{% endunless %}
 {% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% elsif canvas.name != blank %}{% assign _utm_name = canvas.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
-
 {% if hero_orientation == "landscape" %}
   {% assign poster_w = 560 %}
   {% assign poster_h = 315 %}
@@ -54,30 +51,24 @@
   {% assign _poster_class = "hero-poster-p" %}
   {% assign _poster_img_class = "hero-img-p" %}
 {% endif %}
-
 {% assign _vml_h = poster_h | plus: 129 %}
 {% if hero_banner_text %}{% assign _vml_h = _vml_h | plus: 44 %}{% endif %}
-
 {% if hero_poster_url %}
 {% if _hero_bg_desktop %}
 <style>@media screen and (min-width:600px){.{{_hero_bg_class}}{background-image:url({{_hero_bg_desktop}}) !important;}}</style>
 {% endif %}
-<!-- Hero Section — Full Bleed -->
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
   <tr>
     <td align="center" style="padding: 0;">
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="hero-full-width" style="max-width: 600px;">
         <tr>
           <td align="center" valign="top" class="{{_hero_bg_class}}" background="{{hero_bg_url}}" style="background: transparent url({{hero_bg_url}}) no-repeat center top / cover; background-size: cover; background-position: center top;" bgcolor="#000000">
-
             <!--[if gte mso 9]>
             <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:{{_vml_h}}px;">
               <v:fill type="frame" src="{{hero_bg_url}}" color="#000000" />
               <v:textbox inset="0,0,0,0">
             <![endif]-->
-
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-              <!-- Tubi Logo -->
               <tr>
                 <td align="center" class="hero-logo-pad" style="padding: 30px 0 0; font-size: 0; line-height: 0; text-align: center;">
                   <a href="{{hero_logo_link | append: _utm}}" target="_blank" style="text-decoration: none;">
@@ -85,14 +76,11 @@
                   </a>
                 </td>
               </tr>
-
-              <!-- Poster Card -->
               <tr>
                 <td align="center" class="hero-poster-pad" style="padding: 29px 0 40px; font-size: 0; line-height: 0; text-align: center;">
                   {% if hero_poster_link %}<a href="{{hero_poster_link | append: _utm}}" target="_blank" style="text-decoration: none;">{% endif %}
                   <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="{{poster_w}}" class="{{_poster_class}}" style="width: {{poster_w}}px; margin: 0 auto; border-radius: 8px; overflow: hidden;{% if hero_border == 'true' %} border: 3px solid #FFFF13;{% endif %}">
                     {% if hero_banner_text %}
-                    <!-- Banner Status Bar -->
                     <tr>
                       <td align="center" height="44" bgcolor="#333333" style="height: 44px; background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%); background-color: #333333; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 18px; line-height: 44px; mso-line-height-rule: exactly; color: #ffffff; text-align: center;">{{hero_banner_text}}</td>
                     </tr>
@@ -107,22 +95,17 @@
                 </td>
               </tr>
             </table>
-
             <!--[if gte mso 9]>
               </v:textbox>
             </v:rect>
             <![endif]-->
-
           </td>
         </tr>
-
       </table>
     </td>
   </tr>
 </table>
 {% endif %}
-
-<!-- Reset hero Liquid variables -->
 {% assign hero_variant = null %}
 {% assign hero_orientation = null %}
 {% assign hero_border = null %}

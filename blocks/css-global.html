@@ -3,26 +3,16 @@
   body, table, td { font-family: Arial, Helvetica, sans-serif !important; }
 </style>
 <![endif]-->
-
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark">
-
 <style type="text/css">
-  /* ============================================================
-     CSS GLOBAL — Tubi CRM Email Template System
-     ============================================================ */
-
   :root {
     color-scheme: light dark;
   }
-
-  /* --- RESET --- */
   body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
   table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
   img { -ms-interpolation-mode: bicubic; border: 0; line-height: 100%; outline: none; text-decoration: none; }
   body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
-
-  /* --- TYPOGRAPHY (Mobile-first base) --- */
   .t-headline {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
@@ -96,8 +86,6 @@
     line-height: 100%;
     color: rgba(255,255,255,0.5);
   }
-
-  /* --- CREATIVE MODULE --- */
   .t-cm-headline {
     font-family: 'Arial Black', Arial, Helvetica, sans-serif;
     font-weight: 900;
@@ -112,8 +100,6 @@
     font-size: 16px;
     line-height: 120%;
   }
-
-  /* --- CTA BUTTONS --- */
   .cta-primary {
     background-color: #ffff13;
     color: #000000;
@@ -127,7 +113,6 @@
     text-transform: uppercase;
   }
   .cta-primary:hover { opacity: 0.9; }
-
   .cta-secondary {
     background-color: transparent;
     color: #ffffff;
@@ -141,7 +126,6 @@
     font-size: 14px;
     text-transform: uppercase;
   }
-
   .cta-secondary-brand {
     background-color: transparent;
     color: #ffff13;
@@ -155,8 +139,6 @@
     font-size: 14px;
     text-transform: uppercase;
   }
-
-  /* --- IMAGES --- */
   .fluid-img {
     display: block;
     width: 100% !important;
@@ -169,11 +151,7 @@
     width: 100%;
     height: auto;
   }
-
-  /* --- GRID CELL GAPS --- */
   .grid-gap { width: 12px; min-width: 12px; font-size: 0; line-height: 0; }
-
-  /* --- LIST LAYOUT --- */
   .list-gap { width: 24px; min-width: 24px; font-size: 0; line-height: 0; }
   .t-list-headline {
     font-family: Arial, Helvetica, sans-serif;
@@ -202,8 +180,6 @@
     font-size: 18px;
     text-decoration: none;
   }
-
-  /* --- BEHAVIORAL CARDS --- */
   .bcard-heading {
     font-family: 'Arial Black', Arial, Helvetica, sans-serif;
     font-weight: 900;
@@ -229,8 +205,6 @@
     color: #ffffff;
     text-decoration: none;
   }
-
-  /* --- LAYOUT UTILITIES --- */
   .email-wrapper {
     width: 100%;
     background-color: {% if email_outer_bg %}{{email_outer_bg}}{% else %}transparent{% endif %};
@@ -251,12 +225,8 @@
   }
   .v-space { height: 12px; font-size: 0; line-height: 0; }
   .v-space-lg { height: 24px; font-size: 0; line-height: 0; }
-  /* Auto device detection (image-device block) — mobile-first defaults */
   .img-mobile  { display: block; }
   .img-desktop { display: none; max-height: 0; overflow: hidden; mso-hide: all; }
-
-  /* --- DARK MODE OVERRIDES --- */
-  /* Apple Mail, iOS */
   @media (prefers-color-scheme: dark) {
     .email-wrapper { background-color: #000000 !important; }
     .email-container { background-color: #000000 !important; }
@@ -270,13 +240,9 @@
     .cta-secondary { color: #ffffff !important; border-color: #ffffff !important; }
     .t-badge { color: #ffffff !important; }
     .t-year { color: #ffffff !important; }
-
-    /* Light mode overrides for light-themed emails */
     .lm-bg-white { background-color: #000000 !important; }
     .lm-text-dark { color: #ffffff !important; }
   }
-
-  /* Outlook app dark mode */
   [data-ogsc] .dm-bg-dark { background-color: #000000 !important; }
   [data-ogsc] .dm-content-bg { background-color: #000000 !important; }
   [data-ogsc] .dm-text-white { color: #ffffff !important; }
@@ -285,8 +251,6 @@
   [data-ogsc] .cta-primary { background-color: #ffff13 !important; color: #000000 !important; }
   [data-ogsc] .t-badge { color: #ffffff !important; }
   [data-ogsc] .t-year { color: #ffffff !important; }
-
-  /* --- RESPONSIVE: DESKTOP (min-width: 600px) --- */
   @media screen and (min-width: 600px) {
     .email-container {
       max-width: 800px !important;
@@ -301,8 +265,6 @@
     }
     .v-space { height: 16px !important; }
     .v-space-lg { height: 32px !important; }
-
-    /* Typography desktop scale */
     .t-headline {
       font-size: 42px !important;
       line-height: 100% !important;
@@ -339,15 +301,9 @@
     .t-cm-subhead {
       font-size: 24px !important;
     }
-
-    /* Auto device detection (image-device block) */
     .img-mobile  { display: none !important; max-height: 0 !important; overflow: hidden !important; mso-hide: all; }
     .img-desktop { display: block !important; max-height: none !important; overflow: visible !important; }
-
-    /* Desktop image-only */
     .img-full-width { width: 720px !important; max-width: 720px !important; }
-
-    /* Desktop hero (fills full container, no side padding) */
     .hero-full-width { width: 800px !important; max-width: 800px !important; }
     .hero-poster-p { width: 473px !important; }
     .hero-poster-l { width: 747px !important; }
@@ -356,8 +312,6 @@
     .hero-logo { width: 134px !important; height: 40px !important; }
     .hero-logo-pad { padding-top: 40px !important; }
     .hero-poster-pad { padding-top: 39px !important; padding-bottom: 53px !important; }
-
-    /* Desktop poster grid sizes */
     .poster-1l { width: 720px !important; height: 405px !important; }
     .poster-2l { width: 352px !important; height: 198px !important; }
     .poster-2v { width: 352px !important; height: 504px !important; }
@@ -365,8 +319,6 @@
     .grid-gap { width: 16px !important; min-width: 16px !important; }
     .grid-gap-v { height: 16px !important; }
     .grid-cta { width: 720px !important; max-width: 100% !important; }
-
-    /* Desktop poster-list sizes */
     .list-card { width: 720px !important; max-width: 720px !important; }
     .list-row { width: 720px !important; }
     .list-gap { width: 32px !important; min-width: 32px !important; }
@@ -384,8 +336,6 @@
     .t-list-cta {
       font-size: 22px !important;
     }
-
-    /* Behavioral cards desktop */
     .bcard { width: 344px !important; }
     .bcard-card { width: 344px !important; }
     .bcard-row { width: 720px !important; max-width: 720px !important; }
@@ -394,17 +344,12 @@
     .bcard-heading { font-size: 32px !important; }
     .bcard-body { font-size: 22px !important; }
     .bcard-cta { font-size: 18px !important; }
-
-    /* CTA desktop */
     .cta-primary, .cta-secondary, .cta-secondary-brand {
       font-size: 28px !important;
       min-height: 44px !important;
     }
   }
-
-  /* --- GMAIL FIX --- */
   u + .body .email-container { width: 600px !important; }
-  /* Gmail image-device: mobile-first default */
   u + .body .img-mobile  { display: block !important; }
   u + .body .img-desktop { display: none !important; max-height: 0 !important; overflow: hidden !important; }
   @media screen and (min-width: 600px) {

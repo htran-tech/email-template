@@ -1,4 +1,3 @@
-{% comment %} ===== 1. DEFAULTS ===== {% endcomment %}
 {% unless cta_clicktracking %}{% assign cta_clicktracking = "on" %}{% endunless %}
 {% unless cta_style %}{% assign cta_style = "primary" %}{% endunless %}
 {% unless cta2_style %}{% assign cta2_style = "secondary" %}{% endunless %}
@@ -11,8 +10,6 @@
 {% unless dcta_height %}{% assign dcta_height = 60 %}{% endunless %}
 {% unless dcta_btn_width %}{% assign dcta_btn_width = 270 %}{% endunless %}
 {% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% elsif canvas.name != blank %}{% assign _utm_name = canvas.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
-
-{% comment %} Resolve Button 1 colors from preset {% endcomment %}
 {% if cta_style == "secondary" %}
   {% unless cta_bg_color %}{% assign cta_bg_color = content_bg_color %}{% endunless %}
   {% unless cta_text_color %}{% assign cta_text_color = "#ffffff" %}{% endunless %}
@@ -26,8 +23,6 @@
   {% unless cta_text_color %}{% assign cta_text_color = "#000000" %}{% endunless %}
   {% unless cta_border_color %}{% assign cta_border_color = "none" %}{% endunless %}
 {% endif %}
-
-{% comment %} Resolve Button 2 colors from preset {% endcomment %}
 {% if cta2_style == "secondary" %}
   {% unless cta2_bg_color %}{% assign cta2_bg_color = content_bg_color %}{% endunless %}
   {% unless cta2_text_color %}{% assign cta2_text_color = "#ffffff" %}{% endunless %}
@@ -45,8 +40,6 @@
   {% unless cta2_text_color %}{% assign cta2_text_color = "#ffffff" %}{% endunless %}
   {% unless cta2_border_color %}{% assign cta2_border_color = "#cccccc" %}{% endunless %}
 {% endif %}
-
-{% comment %} ===== 2. RENDER ===== {% endcomment %}
 {% if cta_label and cta_url and cta2_label and cta2_url %}
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
   <tr>
@@ -56,15 +49,10 @@
           <td align="{{dcta_align}}" style="padding: 0;">
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" class="grid-cta" style="max-width: 560px;">
               <tr>
-                <!-- Button 1 -->
                 <td align="center" width="{{dcta_btn_width}}" height="{{dcta_height}}" bgcolor="{{cta_bg_color}}" style="width: {{dcta_btn_width}}px; height: {{dcta_height}}px; border-radius: {{dcta_radius}}px; text-align: center;{% if cta_border_color != 'none' %} border: 3px solid {{cta_border_color}};{% endif %}">
                   <a href="{{cta_url | append: _utm}}" target="_blank"{% if cta_clicktracking == "off" %} clicktracking="off"{% endif %} class="t-cta" style="display: block; padding: 18px 20px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{cta_text_color}};">{{cta_label}}</a>
                 </td>
-
-                <!-- Gap -->
                 <td width="{{dcta_gap}}" style="width: {{dcta_gap}}px; font-size: 0;">&nbsp;</td>
-
-                <!-- Button 2 -->
                 <td align="center" width="{{dcta_btn_width}}" height="{{dcta_height}}" bgcolor="{{cta2_bg_color}}" style="width: {{dcta_btn_width}}px; height: {{dcta_height}}px; border-radius: {{dcta_radius}}px; text-align: center;{% if cta2_border_color != 'none' %} border: 3px solid {{cta2_border_color}};{% endif %}">
                   <a href="{{cta2_url | append: _utm}}" target="_blank"{% if cta_clicktracking == "off" %} clicktracking="off"{% endif %} class="t-cta" style="display: block; padding: 18px 20px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{cta2_text_color}};">{{cta2_label}}</a>
                 </td>
@@ -77,8 +65,6 @@
   </tr>
 </table>
 {% endif %}
-
-{% comment %} ===== 3. RESET ===== {% endcomment %}
 {% assign cta_clicktracking = null %}
 {% assign cta_label = null %}
 {% assign cta_url = null %}
