@@ -1,47 +1,3 @@
-<!-- IMAGE DEVICE BLOCK — Override-with-Fallback
-     Conditional image: renders desktop or mobile image based on user attributes.
-     Renders nothing if the user has the mobile app (has_mobile = true).
-
-     4 scenarios:
-       has_mobile = true              → nothing rendered (5A, 5C)
-       has_mobile = false/unset
-         open_on_desktop = true      → desktop image only (image_url)        (5B)
-         open_on_desktop = false     → mobile image only  (image_mobile_url)  (5D)
-         open_on_desktop unset       → auto: CSS shows desktop ≥600px,        (5E)
-                                               mobile <600px
-
-     Required — Desktop scenario:
-       image_url              — Desktop image source URL
-
-     Required — Mobile scenario:
-       image_mobile_url       — Mobile image source URL
-
-     Required — Flags:
-       has_mobile             — Truthy if user has the mobile app (block hidden when true)
-       open_on_desktop        — true: desktop only; false: mobile only; unset: auto-detect
-
-     Optional — Links:
-       image_link             — Click-through URL for desktop image
-       image_mobile_link      — Click-through URL for mobile image (defaults to image_link)
-
-     Optional — Alt text:
-       image_alt              — Alt text for desktop image (default: "Tubi")
-       image_mobile_alt       — Alt text for mobile image (defaults to image_alt)
-
-     Optional — Layout (shared by both images):
-       image_width            — HTML width attribute for Outlook (default: 600)
-       image_border_radius    — Border radius in px (default: 0)
-
-     Optional — Spacing (shared by both images):
-       image_margin_top       — Top spacing in px (default: 0)
-       image_margin_bottom    — Bottom spacing in px (default: 0)
-       image_margin_left      — Left spacing in px (default: 0)
-       image_margin_right     — Right spacing in px (default: 0)
-
-     Optional — Colors:
-       content_bg_color       — Content area background (global, default: "transparent")
--->
-
 {% comment %} ===== 1. DEFAULTS ===== {% endcomment %}
 {% unless image_alt %}{% assign image_alt = "Tubi" %}{% endunless %}
 {% unless image_mobile_alt %}{% assign image_mobile_alt = image_alt %}{% endunless %}
@@ -53,6 +9,7 @@
 {% unless image_margin_left %}{% assign image_margin_left = 0 %}{% endunless %}
 {% unless image_margin_right %}{% assign image_margin_right = 0 %}{% endunless %}
 {% unless content_bg_color %}{% assign content_bg_color = email_inner_bg | default: "transparent" %}{% endunless %}
+{% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% elsif canvas.name != blank %}{% assign _utm_name = canvas.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
 
 {% comment %} ===== 2. RENDER ===== {% endcomment %}
 {% unless has_mobile %}
@@ -68,7 +25,7 @@
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 100%;">
         <tr>
           <td align="center" style="font-size: 0; line-height: 0;">
-            {% if image_link %}<a href="{{image_link}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
+            {% if image_link %}<a href="{{image_link | append: _utm}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
               <img src="{{image_url}}" alt="{{image_alt}}" width="{{image_width}}" class="fluid-img" style="display: block; width: 100%; height: auto;{% if image_border_radius != 0 %} border-radius: {{image_border_radius}}px;{% endif %} border: 0;" />
             {% if image_link %}</a>{% endif %}
           </td>
@@ -90,7 +47,7 @@
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 100%;">
         <tr>
           <td align="center" style="font-size: 0; line-height: 0;">
-            {% if image_mobile_link %}<a href="{{image_mobile_link}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
+            {% if image_mobile_link %}<a href="{{image_mobile_link | append: _utm}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
               <img src="{{image_mobile_url}}" alt="{{image_mobile_alt}}" width="{{image_width}}" class="fluid-img" style="display: block; width: 100%; height: auto;{% if image_border_radius != 0 %} border-radius: {{image_border_radius}}px;{% endif %} border: 0;" />
             {% if image_mobile_link %}</a>{% endif %}
           </td>
@@ -106,14 +63,14 @@
     {% comment %} --- 5E: Auto-detect → CSS shows desktop ≥600px, mobile <600px --- {% endcomment %}
     {% if image_url %}
 <!-- Image Device: Auto Desktop -->
-<div class="img-desktop">
+<div class="img-desktop" style="display:none; max-height:0; overflow:hidden;">
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
   <tr>
     <td align="center" style="padding: {{image_margin_top}}px {{image_margin_right}}px {{image_margin_bottom}}px {{image_margin_left}}px; background-color: {{content_bg_color}};" class="dm-content-bg">
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 100%;">
         <tr>
           <td align="center" style="font-size: 0; line-height: 0;">
-            {% if image_link %}<a href="{{image_link}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
+            {% if image_link %}<a href="{{image_link | append: _utm}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
               <img src="{{image_url}}" alt="{{image_alt}}" width="{{image_width}}" class="fluid-img" style="display: block; width: 100%; height: auto;{% if image_border_radius != 0 %} border-radius: {{image_border_radius}}px;{% endif %} border: 0;" />
             {% if image_link %}</a>{% endif %}
           </td>
@@ -133,7 +90,7 @@
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 100%;">
         <tr>
           <td align="center" style="font-size: 0; line-height: 0;">
-            {% if image_mobile_link %}<a href="{{image_mobile_link}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
+            {% if image_mobile_link %}<a href="{{image_mobile_link | append: _utm}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
               <img src="{{image_mobile_url}}" alt="{{image_mobile_alt}}" width="{{image_width}}" class="fluid-img" style="display: block; width: 100%; height: auto;{% if image_border_radius != 0 %} border-radius: {{image_border_radius}}px;{% endif %} border: 0;" />
             {% if image_mobile_link %}</a>{% endif %}
           </td>
@@ -164,3 +121,4 @@
 {% assign image_margin_right = null %}
 {% assign has_mobile = null %}
 {% assign open_on_desktop = null %}
+{% assign _utm = null %}{% assign _utm_name = null %}

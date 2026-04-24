@@ -1,56 +1,74 @@
-<!-- HERO SINGLE TITLE PROMO CONTENT BLOCK
-     Liquid Variables:
-
-     REQUIRED:
-       {{hero_poster_url}}      — Title poster image URL (block won't render without it)
-
-     VISUAL VARIANT:
-       {{hero_variant}}         — Background treatment: "1" | "2a" | "2b" | "3" | "4" (default: "1")
-       {{hero_border}}          — Yellow border around poster: "true" | "false" (default: "false", auto "true" for variant 4)
-       {{hero_orientation}}     — Poster shape: "portrait" | "landscape" (default: "portrait")
-     BACKGROUND:
-       {{hero_bg_url}}          — Background image URL (default: Braze production purple gradient)
-
-     LOGO:
-       {{hero_logo_url}}        — Tubi logo image (default: Braze production asset)
-       {{hero_logo_link}}       — Logo click-through (default: https://tubitv.com/home)
-
-     POSTER:
-       {{hero_poster_link}}     — Click-through URL for the poster (optional)
-       {{hero_title}}           — Title text for alt attribute (default: "Watch on Tubi")
-
-     BANNER STATUS BAR (shows only when hero_banner_text is set):
-       {{hero_banner_text}}     — Status text e.g. "Picked For You", "Leaving Soon", "Coming Soon"
-
--->
-
 {% unless hero_variant %}{% assign hero_variant = "1" %}{% endunless %}
 {% unless hero_orientation %}{% assign hero_orientation = "portrait" %}{% endunless %}
 {% unless hero_border %}{% if hero_variant == "3" or hero_variant == "4" %}{% assign hero_border = "true" %}{% else %}{% assign hero_border = "false" %}{% endif %}{% endunless %}
 
-{% unless hero_bg_url %}{% assign hero_bg_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/65c6c1f7c27ffc004c2e55b1/original.png?1707524598" %}{% endunless %}
+{% comment %} --- Auto-select background URLs (600px mobile, 800px desktop) --- {% endcomment %}
+{% unless hero_bg_url %}
+  {% if hero_variant == "2a" %}
+    {% if hero_orientation == "landscape" %}
+      {% assign hero_bg_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e6513ad1f64fc78004d23e/original.png?1776701753" %}
+      {% assign _hero_bg_desktop = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e65138af676500ac67160b/original.png?1776701751" %}
+    {% else %}
+      {% assign hero_bg_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e65137d99d2e00a85b28e4/original.png?1776701751" %}
+      {% assign _hero_bg_desktop = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e651397080ea00aa715df9/original.png?1776701752" %}
+    {% endif %}
+  {% elsif hero_variant == "2b" %}
+    {% if hero_orientation == "landscape" %}
+      {% assign hero_bg_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e65139f41db500acd0de3c/original.png?1776701752" %}
+      {% assign _hero_bg_desktop = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e6513925828100ad8e4d9d/original.png?1776701752" %}
+    {% else %}
+      {% assign hero_bg_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e6513a029a5200baf1dfbe/original.png?1776701753" %}
+      {% assign _hero_bg_desktop = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e6513bc9cf7a00aa11b9ed/original.png?1776701754" %}
+    {% endif %}
+  {% elsif hero_variant == "3" %}
+    {% if hero_orientation == "landscape" %}
+      {% assign hero_bg_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e6513b7f403b00e0055064/original.png?1776701754" %}
+      {% assign _hero_bg_desktop = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e6513ba4cf9500c42497fe/original.png?1776701755" %}
+    {% else %}
+      {% assign hero_bg_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e6513ba1840400aa113e50/original.png?1776701754" %}
+      {% assign _hero_bg_desktop = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e6513c559d5500aacf6cd5/original.png?1776701756" %}
+    {% endif %}
+  {% else %}
+    {% if hero_orientation == "landscape" %}
+      {% assign hero_bg_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e6513a6d17a400ae78104b/original.png?1776701753" %}
+      {% assign _hero_bg_desktop = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e65138c77d1200aa5329bc/original.png?1776701752" %}
+    {% else %}
+      {% assign hero_bg_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e6513acc504a00aacab7f4/original.png?1776701753" %}
+      {% assign _hero_bg_desktop = "https://braze-images.com/appboy/communication/assets/image_assets/images/69e651393fe30200bacc81f2/original.png?1776701752" %}
+    {% endif %}
+  {% endif %}
+{% endunless %}
+{% assign _hero_bg_class = "hero-bg-" | append: hero_variant | append: "-" | append: hero_orientation %}
 {% unless hero_logo_url %}{% assign hero_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}{% endunless %}
 {% unless hero_logo_link %}{% assign hero_logo_link = "https://tubitv.com/home" %}{% endunless %}
+{% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% elsif canvas.name != blank %}{% assign _utm_name = canvas.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
 
 {% if hero_orientation == "landscape" %}
   {% assign poster_w = 560 %}
   {% assign poster_h = 315 %}
+  {% assign _poster_class = "hero-poster-l" %}
+  {% assign _poster_img_class = "hero-img-l" %}
 {% else %}
   {% assign poster_w = 355 %}
   {% assign poster_h = 507 %}
+  {% assign _poster_class = "hero-poster-p" %}
+  {% assign _poster_img_class = "hero-img-p" %}
 {% endif %}
 
 {% assign _vml_h = poster_h | plus: 129 %}
 {% if hero_banner_text %}{% assign _vml_h = _vml_h | plus: 44 %}{% endif %}
 
 {% if hero_poster_url %}
+{% if _hero_bg_desktop %}
+<style>@media screen and (min-width:600px){.{{_hero_bg_class}}{background-image:url({{_hero_bg_desktop}}) !important;}}</style>
+{% endif %}
 <!-- Hero Section — Full Bleed -->
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
   <tr>
     <td align="center" style="padding: 0;">
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="hero-full-width" style="max-width: 600px;">
         <tr>
-          <td align="center" valign="top" background="{{hero_bg_url}}" style="background: transparent url({{hero_bg_url}}) no-repeat center top / cover; background-size: cover; background-position: center top;" bgcolor="#000000">
+          <td align="center" valign="top" class="{{_hero_bg_class}}" background="{{hero_bg_url}}" style="background: transparent url({{hero_bg_url}}) no-repeat center top / cover; background-size: cover; background-position: center top;" bgcolor="#000000">
 
             <!--[if gte mso 9]>
             <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:{{_vml_h}}px;">
@@ -61,18 +79,18 @@
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
               <!-- Tubi Logo -->
               <tr>
-                <td align="center" style="padding: 30px 0 0; font-size: 0; line-height: 0; text-align: center;">
-                  <a href="{{hero_logo_link}}" target="_blank" style="text-decoration: none;">
-                    <img src="{{hero_logo_url}}" width="100" height="30" border="0" alt="tubi" style="display: block; margin: 0 auto;" />
+                <td align="center" class="hero-logo-pad" style="padding: 30px 0 0; font-size: 0; line-height: 0; text-align: center;">
+                  <a href="{{hero_logo_link | append: _utm}}" target="_blank" style="text-decoration: none;">
+                    <img src="{{hero_logo_url}}" width="100" height="30" border="0" alt="tubi" class="hero-logo" style="display: block; margin: 0 auto;" />
                   </a>
                 </td>
               </tr>
 
               <!-- Poster Card -->
               <tr>
-                <td align="center" style="padding: 29px 0 40px; font-size: 0; line-height: 0; text-align: center;">
-                  {% if hero_poster_link %}<a href="{{hero_poster_link}}" target="_blank" style="text-decoration: none;">{% endif %}
-                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="{{poster_w}}" style="width: {{poster_w}}px; margin: 0 auto; border-radius: 8px; overflow: hidden;{% if hero_border == 'true' %} border: 3px solid #FFFF13;{% endif %}">
+                <td align="center" class="hero-poster-pad" style="padding: 29px 0 40px; font-size: 0; line-height: 0; text-align: center;">
+                  {% if hero_poster_link %}<a href="{{hero_poster_link | append: _utm}}" target="_blank" style="text-decoration: none;">{% endif %}
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="{{poster_w}}" class="{{_poster_class}}" style="width: {{poster_w}}px; margin: 0 auto; border-radius: 8px; overflow: hidden;{% if hero_border == 'true' %} border: 3px solid #FFFF13;{% endif %}">
                     {% if hero_banner_text %}
                     <!-- Banner Status Bar -->
                     <tr>
@@ -81,7 +99,7 @@
                     {% endif %}
                     <tr>
                       <td align="center" style="font-size: 0; line-height: 0;">
-                        <img src="{{hero_poster_url}}" alt="{% if hero_title %}{{hero_title}}{% else %}Watch on Tubi{% endif %}" width="{{poster_w}}" height="{{poster_h}}" border="0" style="display: block; width: {{poster_w}}px; height: {{poster_h}}px;" />
+                        <img src="{{hero_poster_url}}" alt="{% if hero_title %}{{hero_title}}{% else %}Watch on Tubi{% endif %}" width="{{poster_w}}" height="{{poster_h}}" border="0" class="{{_poster_img_class}}" style="display: block; width: {{poster_w}}px; height: {{poster_h}}px;" />
                       </td>
                     </tr>
                   </table>
@@ -118,3 +136,8 @@
 {% assign poster_w = null %}
 {% assign poster_h = null %}
 {% assign _vml_h = null %}
+{% assign _poster_class = null %}
+{% assign _poster_img_class = null %}
+{% assign _hero_bg_desktop = null %}
+{% assign _hero_bg_class = null %}
+{% assign _utm = null %}{% assign _utm_name = null %}

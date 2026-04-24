@@ -1,31 +1,5 @@
-<!-- SINGLE CTA CONTENT BLOCK — Override-with-Fallback
-     Standalone single CTA button. Nothing renders if cta_label or cta_url is blank.
-
-     Content (required):
-       cta_label              — Button text
-       cta_url                — Button link
-
-     Style preset (shorthand — sets color defaults):
-       cta_style              — "primary" | "secondary" | "secondary-brand" (default: "primary")
-
-     Configurable colors (override preset):
-       cta_bg_color           — Button background (default from preset)
-       cta_text_color         — Button text color (default from preset)
-       cta_border_color       — Button border color (default from preset; "none" = no border)
-
-     Configurable width:
-       cta_width              — "full" | "auto" | px value (default: "full" = 560px)
-
-     Layout:
-       content_bg_color       — Content area background (global, default: "#000000")
-       cta_padding_top        — Top padding in px (default: 12)
-       cta_padding_bottom     — Bottom padding in px (default: 12)
-       cta_align              — "left" | "center" | "right" (default: "center")
-       cta_radius             — Border radius in px (default: 200)
-       cta_height             — Button height in px (default: 60)
--->
-
 {% comment %} ===== 1. DEFAULTS ===== {% endcomment %}
+{% unless cta_clicktracking %}{% assign cta_clicktracking = "on" %}{% endunless %}
 {% unless cta_style %}{% assign cta_style = "primary" %}{% endunless %}
 {% unless content_bg_color %}{% assign content_bg_color = email_inner_bg | default: "transparent" %}{% endunless %}
 {% unless cta_padding_top %}{% assign cta_padding_top = 12 %}{% endunless %}
@@ -34,11 +8,12 @@
 {% unless cta_radius %}{% assign cta_radius = 200 %}{% endunless %}
 {% unless cta_height %}{% assign cta_height = 60 %}{% endunless %}
 {% unless cta_width %}{% assign cta_width = "full" %}{% endunless %}
+{% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% elsif canvas.name != blank %}{% assign _utm_name = canvas.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
 
 {% comment %} Resolve colors from preset if not explicitly set {% endcomment %}
 {% if cta_style == "secondary" %}
   {% unless cta_bg_color %}{% assign cta_bg_color = content_bg_color %}{% endunless %}
-  {% unless cta_text_color %}{% assign cta_text_color = "#cccccc" %}{% endunless %}
+  {% unless cta_text_color %}{% assign cta_text_color = "#ffffff" %}{% endunless %}
   {% unless cta_border_color %}{% assign cta_border_color = "#cccccc" %}{% endunless %}
 {% elsif cta_style == "secondary-brand" %}
   {% unless cta_bg_color %}{% assign cta_bg_color = content_bg_color %}{% endunless %}
@@ -64,10 +39,10 @@
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" style="max-width: 560px; background-color: {{content_bg_color}};" class="dm-content-bg">
         <tr>
           <td align="{{cta_align}}" style="padding: 0;">
-            <table role="presentation" cellpadding="0" cellspacing="0" border="0"{% if _cta_w_attr != '' %} width="{{_cta_w_attr}}"{% endif %} bgcolor="{{cta_bg_color}}" style="border-collapse: separate; border-radius: {{cta_radius}}px; max-width: 560px;{% if _cta_w_style != '' %} {{_cta_w_style}}{% endif %}{% if cta_border_color != 'none' %} border: 3px solid {{cta_border_color}};{% endif %}">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0"{% if _cta_w_attr != '' %} width="{{_cta_w_attr}}"{% endif %} bgcolor="{{cta_bg_color}}"{% if cta_width == "full" %} class="grid-cta"{% endif %} style="border-collapse: separate; border-radius: {{cta_radius}}px; max-width: 560px;{% if _cta_w_style != '' %} {{_cta_w_style}}{% endif %}{% if cta_border_color != 'none' %} border: 3px solid {{cta_border_color}};{% endif %}">
               <tr>
                 <td align="center" height="{{cta_height}}" style="height: {{cta_height}}px; text-align: center;">
-                  <a href="{{cta_url}}" target="_blank" class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{cta_text_color}};">{{cta_label}}</a>
+                  <a href="{{cta_url | append: _utm}}" target="_blank"{% if cta_clicktracking == "off" %} clicktracking="off"{% endif %} class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{cta_text_color}};">{{cta_label}}</a>
                 </td>
               </tr>
             </table>
@@ -80,6 +55,7 @@
 {% endif %}
 
 {% comment %} ===== 3. RESET ===== {% endcomment %}
+{% assign cta_clicktracking = null %}
 {% assign cta_label = null %}
 {% assign cta_url = null %}
 {% assign cta_style = null %}
@@ -94,3 +70,4 @@
 {% assign cta_align = null %}
 {% assign cta_radius = null %}
 {% assign cta_height = null %}
+{% assign _utm = null %}{% assign _utm_name = null %}

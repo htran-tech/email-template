@@ -1,0 +1,251 @@
+{% comment %} ===== 1. DEFAULTS ===== {% endcomment %}
+{% unless bcard_show_cw %}{% assign bcard_show_cw = "true" %}{% endunless %}
+{% unless bcard_show_ml %}{% assign bcard_show_ml = "true" %}{% endunless %}
+{% unless content_bg_color %}{% assign content_bg_color = email_inner_bg | default: "transparent" %}{% endunless %}
+{% unless bcard_padding_top %}{% assign bcard_padding_top = 12 %}{% endunless %}
+{% unless bcard_padding_bottom %}{% assign bcard_padding_bottom = 12 %}{% endunless %}
+
+{% unless bcard_cw_heading %}{% assign bcard_cw_heading = "Continue Watching" %}{% endunless %}
+{% unless bcard_cw_body %}{% assign bcard_cw_body = "Something you started is almost gone." %}{% endunless %}
+{% unless bcard_cw_cta_label %}{% assign bcard_cw_cta_label = "Watch Now" %}{% endunless %}
+{% unless bcard_cw_url %}{% assign bcard_cw_url = "https://tubitv.com/category/continue_watching" %}{% endunless %}
+{% unless bcard_cw_bg %}{% assign bcard_cw_bg = "#45009D" %}{% endunless %}
+{% unless bcard_cw_cta_bg %}{% assign bcard_cw_cta_bg = "rgba(255,255,255,0.2)" %}{% endunless %}
+{% unless bcard_cw_cta_color %}{% assign bcard_cw_cta_color = "#ffffff" %}{% endunless %}
+
+{% unless bcard_ml_heading %}{% assign bcard_ml_heading = "My List" %}{% endunless %}
+{% unless bcard_ml_body %}{% assign bcard_ml_body = "Don't let your great taste go to waste." %}{% endunless %}
+{% unless bcard_ml_cta_label %}{% assign bcard_ml_cta_label = "Watch Now" %}{% endunless %}
+{% unless bcard_ml_url %}{% assign bcard_ml_url = "https://tubitv.com/category/queue" %}{% endunless %}
+{% unless bcard_ml_bg %}{% assign bcard_ml_bg = "#8C00E5" %}{% endunless %}
+{% unless bcard_ml_cta_bg %}{% assign bcard_ml_cta_bg = "rgba(255,255,255,0.2)" %}{% endunless %}
+{% unless bcard_ml_cta_color %}{% assign bcard_ml_cta_color = "#ffffff" %}{% endunless %}
+
+{% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% elsif canvas.name != blank %}{% assign _utm_name = canvas.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
+
+{% comment %} API auto-toggle: if result data is passed, override show flags based on count {% endcomment %}
+{% if bcard_result_cw %}{% assign _cw_count = bcard_result_cw.count | plus: 0 %}{% if _cw_count > 0 %}{% assign bcard_show_cw = "true" %}{% else %}{% assign bcard_show_cw = "false" %}{% endif %}{% endif %}
+{% if bcard_result_ml %}{% assign _ml_count = bcard_result_ml.count | plus: 0 %}{% if _ml_count > 0 %}{% assign bcard_show_ml = "true" %}{% else %}{% assign bcard_show_ml = "false" %}{% endif %}{% endif %}
+
+{% comment %} Count visible cards {% endcomment %}
+{% assign _bcard_count = 0 %}
+{% if bcard_show_cw == "true" %}{% assign _bcard_count = _bcard_count | plus: 1 %}{% endif %}
+{% if bcard_show_ml == "true" %}{% assign _bcard_count = _bcard_count | plus: 1 %}{% endif %}
+
+{% comment %} ===== 2. RENDER ===== {% endcomment %}
+{% if _bcard_count > 0 %}
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
+  <tr>
+    <td align="center" class="content-pad" style="padding: {{bcard_padding_top}}px 20px {{bcard_padding_bottom}}px;">
+
+      {% if _bcard_count == 2 %}
+      {% comment %} --- TWO CARDS SIDE BY SIDE --- {% endcomment %}
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" style="max-width: 560px;" class="bcard-row">
+        <tr>
+          <!-- Continue Watching -->
+          <td align="center" valign="top" width="268" class="bcard" style="width: 268px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="268" class="bcard-card" bgcolor="{{bcard_cw_bg}}" style="width: 268px; background-color: {{bcard_cw_bg}}; border-radius: 8px;">
+              <tr>
+                <td height="188" style="height: 188px; padding: 16px; vertical-align: top;" class="bcard-inner">
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" height="100%" style="height: 100%;">
+                    <tr>
+                      <td valign="top" style="font-family: 'Arial Black', Arial, Helvetica, sans-serif; font-weight: 900; font-style: normal; font-size: 26px; line-height: 87%; text-transform: uppercase; color: #ffffff; letter-spacing: -0.78px; padding-bottom: 0;" class="bcard-heading">
+                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                          <tr>
+                            <td style="font-family: 'Arial Black', Arial, Helvetica, sans-serif; font-weight: 900; font-style: normal; font-size: 26px; line-height: 87%; text-transform: uppercase; color: #ffffff; letter-spacing: -0.78px;" class="bcard-heading">
+                              <a href="{{bcard_cw_url | append: _utm}}" target="_blank" style="color: #ffffff; text-decoration: none;">{{bcard_cw_heading}}</a>
+                            </td>
+                            <td width="30" valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 28px; color: #ffffff; text-align: right; line-height: 100%;">
+                              <a href="{{bcard_cw_url | append: _utm}}" target="_blank" style="color: #ffffff; text-decoration: none;">&#8250;</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td valign="top" style="border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 18px; line-height: 120%; color: #ffffff; letter-spacing: -0.75px;" class="bcard-body">
+                        {{bcard_cw_body}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td valign="bottom" style="padding-top: 14px;">
+                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: separate; border-radius: 200px; background-color: {{bcard_cw_cta_bg}};">
+                          <tr>
+                            <td align="center" height="60" style="height: 60px; text-align: center; border-radius: 200px;">
+                              <a href="{{bcard_cw_url | append: _utm}}" target="_blank" class="bcard-cta t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; line-height: 100%; color: {{bcard_cw_cta_color}}; text-decoration: none;">{{bcard_cw_cta_label}}</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+
+          <!-- Gap -->
+          <td width="24" class="bcard-gap" style="width: 24px; min-width: 24px; font-size: 0; line-height: 0;">&nbsp;</td>
+
+          <!-- My List -->
+          <td align="center" valign="top" width="268" class="bcard" style="width: 268px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="268" class="bcard-card" bgcolor="{{bcard_ml_bg}}" style="width: 268px; background-color: {{bcard_ml_bg}}; border-radius: 8px;">
+              <tr>
+                <td height="188" style="height: 188px; padding: 16px; vertical-align: top;" class="bcard-inner">
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" height="100%" style="height: 100%;">
+                    <tr>
+                      <td valign="top" style="font-family: 'Arial Black', Arial, Helvetica, sans-serif; font-weight: 900; font-style: normal; font-size: 26px; line-height: 87%; text-transform: uppercase; color: #ffffff; letter-spacing: -0.78px; padding-bottom: 0;" class="bcard-heading">
+                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                          <tr>
+                            <td style="font-family: 'Arial Black', Arial, Helvetica, sans-serif; font-weight: 900; font-style: normal; font-size: 26px; line-height: 87%; text-transform: uppercase; color: #ffffff; letter-spacing: -0.78px;" class="bcard-heading">
+                              {% assign _ml_words = bcard_ml_heading | split: ' ' %}<a href="{{bcard_ml_url | append: _utm}}" target="_blank" style="color: #ffffff; text-decoration: none;">{% for _w in _ml_words %}{{_w}}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</a>
+                            </td>
+                            <td width="30" valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 28px; color: #ffffff; text-align: right; line-height: 100%;">
+                              <a href="{{bcard_ml_url | append: _utm}}" target="_blank" style="color: #ffffff; text-decoration: none;">&#8250;</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td valign="top" style="border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 18px; line-height: 120%; color: #ffffff; letter-spacing: -0.75px;" class="bcard-body">
+                        {{bcard_ml_body}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td valign="bottom" style="padding-top: 14px;">
+                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: separate; border-radius: 200px; background-color: {{bcard_ml_cta_bg}};">
+                          <tr>
+                            <td align="center" height="60" style="height: 60px; text-align: center; border-radius: 200px;">
+                              <a href="{{bcard_ml_url | append: _utm}}" target="_blank" class="bcard-cta t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; line-height: 100%; color: {{bcard_ml_cta_color}}; text-decoration: none;">{{bcard_ml_cta_label}}</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+
+      {% else %}
+      {% comment %} --- SINGLE CARD FULL WIDTH (centered text) --- {% endcomment %}
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" class="bcard-row" style="max-width: 560px;">
+        <tr>
+          {% if bcard_show_cw == "true" %}
+          <td align="center" valign="top" width="560" style="width: 560px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" class="bcard-row" bgcolor="{{bcard_cw_bg}}" style="width: 560px; background-color: {{bcard_cw_bg}}; border-radius: 8px;">
+              <tr>
+                <td height="188" style="height: 188px; padding: 16px; vertical-align: top;" class="bcard-inner">
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" height="100%" style="height: 100%;">
+                    <tr>
+                      <td valign="top" style="padding-bottom: 0;">
+                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                          <tr>
+                            <td style="text-align: center; font-family: 'Arial Black', Arial, Helvetica, sans-serif; font-weight: 900; font-style: normal; font-size: 26px; line-height: 87%; text-transform: uppercase; color: #ffffff; letter-spacing: -0.78px;" class="bcard-heading">
+                              <a href="{{bcard_cw_url | append: _utm}}" target="_blank" style="color: #ffffff; text-decoration: none;">{{bcard_cw_heading}}</a>
+                            </td>
+                            <td width="30" valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 28px; color: #ffffff; text-align: right; line-height: 100%;">
+                              <a href="{{bcard_cw_url | append: _utm}}" target="_blank" style="color: #ffffff; text-decoration: none;">&#8250;</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td valign="top" align="center" style="border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 18px; line-height: 120%; color: #ffffff; letter-spacing: -0.75px;" class="bcard-body">
+                        {{bcard_cw_body}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td valign="bottom" style="padding-top: 14px;">
+                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: separate; border-radius: 200px; background-color: {{bcard_cw_cta_bg}};">
+                          <tr>
+                            <td align="center" height="60" style="height: 60px; text-align: center; border-radius: 200px;">
+                              <a href="{{bcard_cw_url | append: _utm}}" target="_blank" class="bcard-cta t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; line-height: 100%; color: {{bcard_cw_cta_color}}; text-decoration: none;">{{bcard_cw_cta_label}}</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+          {% elsif bcard_show_ml == "true" %}
+          <td align="center" valign="top" width="560" style="width: 560px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" class="bcard-row" bgcolor="{{bcard_ml_bg}}" style="width: 560px; background-color: {{bcard_ml_bg}}; border-radius: 8px;">
+              <tr>
+                <td height="188" style="height: 188px; padding: 16px; vertical-align: top;" class="bcard-inner">
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" height="100%" style="height: 100%;">
+                    <tr>
+                      <td valign="top" style="padding-bottom: 0;">
+                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                          <tr>
+                            <td style="text-align: center; font-family: 'Arial Black', Arial, Helvetica, sans-serif; font-weight: 900; font-style: normal; font-size: 26px; line-height: 87%; text-transform: uppercase; color: #ffffff; letter-spacing: -0.78px;" class="bcard-heading">
+                              <a href="{{bcard_ml_url | append: _utm}}" target="_blank" style="color: #ffffff; text-decoration: none;">{{bcard_ml_heading}}</a>
+                            </td>
+                            <td width="30" valign="top" style="font-family: Arial, Helvetica, sans-serif; font-size: 28px; color: #ffffff; text-align: right; line-height: 100%;">
+                              <a href="{{bcard_ml_url | append: _utm}}" target="_blank" style="color: #ffffff; text-decoration: none;">&#8250;</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td valign="top" align="center" style="border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 18px; line-height: 120%; color: #ffffff; letter-spacing: -0.75px;" class="bcard-body">
+                        {{bcard_ml_body}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td valign="bottom" style="padding-top: 14px;">
+                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: separate; border-radius: 200px; background-color: {{bcard_ml_cta_bg}};">
+                          <tr>
+                            <td align="center" height="60" style="height: 60px; text-align: center; border-radius: 200px;">
+                              <a href="{{bcard_ml_url | append: _utm}}" target="_blank" class="bcard-cta t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; line-height: 100%; color: {{bcard_ml_cta_color}}; text-decoration: none;">{{bcard_ml_cta_label}}</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+          {% endif %}
+        </tr>
+      </table>
+      {% endif %}
+
+    </td>
+  </tr>
+</table>
+{% endif %}
+
+{% comment %} ===== 3. RESET ===== {% endcomment %}
+{% assign bcard_show_cw = null %}
+{% assign bcard_show_ml = null %}
+{% assign bcard_cw_heading = null %}
+{% assign bcard_cw_body = null %}
+{% assign bcard_cw_cta_label = null %}
+{% assign bcard_cw_url = null %}
+{% assign bcard_cw_bg = null %}
+{% assign bcard_cw_cta_bg = null %}
+{% assign bcard_cw_cta_color = null %}
+{% assign bcard_ml_heading = null %}
+{% assign bcard_ml_body = null %}
+{% assign bcard_ml_cta_label = null %}
+{% assign bcard_ml_url = null %}
+{% assign bcard_ml_bg = null %}
+{% assign bcard_ml_cta_bg = null %}
+{% assign bcard_ml_cta_color = null %}
+{% assign bcard_padding_top = null %}
+{% assign bcard_padding_bottom = null %}
+{% assign _bcard_count = null %}
+{% assign _utm = null %}{% assign _utm_name = null %}{% assign _ml_words = null %}
+{% assign bcard_result_cw = null %}{% assign bcard_result_ml = null %}{% assign _cw_count = null %}{% assign _ml_count = null %}
