@@ -16,9 +16,9 @@
   .t-headline {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
-    font-size: 36px;
+    font-size: 40px;
     letter-spacing: -0.02em;
-    line-height: 90%;
+    line-height: 36px;
     text-transform: uppercase;
     color: #ffffff;
   }
@@ -27,7 +27,7 @@
     font-weight: normal;
     font-size: 24px;
     letter-spacing: 0;
-    line-height: 100%;
+    line-height: 24px;
     color: #ffffff;
   }
   .t-genre {
@@ -207,13 +207,13 @@
   }
   .email-wrapper {
     width: 100%;
-    background-color: {% if email_outer_bg %}{{email_outer_bg}}{% else %}transparent{% endif %};
+    background-color: {{email_outer_bg | default: "transparent"}};
   }
   .email-container {
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
-    background-color: {% if email_inner_bg %}{{email_inner_bg}}{% else %}transparent{% endif %};
+    background-color: {{email_inner_bg | default: "transparent"}};
   }
   .content-pad {
     padding-left: 20px;
@@ -287,7 +287,6 @@
     }
     .t-cta {
       font-size: 18px !important;
-      text-transform: uppercase !important;
     }
     .t-footer {
       font-size: 16px !important;

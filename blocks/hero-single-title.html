@@ -78,20 +78,18 @@
               </tr>
               <tr>
                 <td align="center" class="hero-poster-pad" style="padding: 29px 0 40px; font-size: 0; line-height: 0; text-align: center;">
-                  {% if hero_poster_link %}<a href="{{hero_poster_link | append: _utm}}" target="_blank" style="text-decoration: none;">{% endif %}
                   <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="{{poster_w}}" class="{{_poster_class}}" style="width: {{poster_w}}px; margin: 0 auto; border-radius: 8px; overflow: hidden;{% if hero_border == 'true' %} border: 3px solid #FFFF13;{% endif %}">
                     {% if hero_banner_text %}
                     <tr>
-                      <td align="center" height="44" bgcolor="#333333" style="height: 44px; background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%); background-color: #333333; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 18px; line-height: 44px; mso-line-height-rule: exactly; color: #ffffff; text-align: center;">{{hero_banner_text}}</td>
+                      <td align="center" height="44" bgcolor="#333333" style="height: 44px; background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%); background-color: #333333; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 18px; line-height: 44px; mso-line-height-rule: exactly; color: #ffffff; text-align: center;">{% if hero_poster_link %}<a href="{{hero_poster_link | append: _utm}}" target="_blank" style="text-decoration: none; color: #ffffff;">{{hero_banner_text}}</a>{% else %}{{hero_banner_text}}{% endif %}</td>
                     </tr>
                     {% endif %}
                     <tr>
                       <td align="center" style="font-size: 0; line-height: 0;">
-                        <img src="{{hero_poster_url}}" alt="{% if hero_title %}{{hero_title}}{% else %}Watch on Tubi{% endif %}" width="{{poster_w}}" height="{{poster_h}}" border="0" class="{{_poster_img_class}}" style="display: block; width: {{poster_w}}px; height: {{poster_h}}px;" />
+                        {% if hero_poster_link %}<a href="{{hero_poster_link | append: _utm}}" target="_blank" style="text-decoration: none;">{% endif %}<img src="{{hero_poster_url}}" alt="{% if hero_title %}{{hero_title}}{% else %}Watch on Tubi{% endif %}" width="{{poster_w}}" height="{{poster_h}}" border="0" class="{{_poster_img_class}}" style="display: block;" />{% if hero_poster_link %}</a>{% endif %}
                       </td>
                     </tr>
                   </table>
-                  {% if hero_poster_link %}</a>{% endif %}
                 </td>
               </tr>
             </table>

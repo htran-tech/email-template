@@ -21,10 +21,12 @@
   {% unless cta_text_color %}{% assign cta_text_color = "#000000" %}{% endunless %}
   {% unless cta_border_color %}{% assign cta_border_color = "none" %}{% endunless %}
 {% endif %}
-{% if cta_width == "full" %}{% assign _cta_w_attr = '560' %}{% assign _cta_w_style = 'width: 560px; max-width: 100%;' %}
-{% elsif cta_width == "auto" %}{% assign _cta_w_attr = '' %}{% assign _cta_w_style = '' %}
-{% else %}{% assign _cta_w_attr = cta_width %}{% assign _cta_w_style = 'width: ' | append: cta_width | append: 'px; max-width: 100%;' %}
+{% if cta_width == "full" %}{% assign _cta_w_attr = '560' %}{% assign _cta_w_style = 'width: 560px; max-width: 100%;' %}{% assign _cta_class = 'grid-cta' %}
+{% elsif cta_width == "auto" %}{% assign _cta_w_attr = '' %}{% assign _cta_w_style = '' %}{% assign _cta_class = '' %}
+{% else %}{% assign _cta_w_attr = cta_width %}{% assign _cta_w_style = 'width: ' | append: cta_width | append: 'px; max-width: 100%;' %}{% assign _cta_class = '' %}
 {% endif %}
+{% if cta_border_color != 'none' %}{% assign _cta_border_style = ' border: 3px solid ' | append: cta_border_color | append: ';' %}{% else %}{% assign _cta_border_style = '' %}{% endif %}
+{% if cta_clicktracking == "off" %}{% assign _cta_ct_attr = ' clicktracking="off"' %}{% else %}{% assign _cta_ct_attr = '' %}{% endif %}
 {% if cta_label and cta_url %}
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
   <tr>
@@ -32,10 +34,10 @@
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" style="max-width: 560px; background-color: {{content_bg_color}};" class="dm-content-bg">
         <tr>
           <td align="{{cta_align}}" style="padding: 0;">
-            <table role="presentation" cellpadding="0" cellspacing="0" border="0"{% if _cta_w_attr != '' %} width="{{_cta_w_attr}}"{% endif %} bgcolor="{{cta_bg_color}}"{% if cta_width == "full" %} class="grid-cta"{% endif %} style="border-collapse: separate; border-radius: {{cta_radius}}px; max-width: 560px;{% if _cta_w_style != '' %} {{_cta_w_style}}{% endif %}{% if cta_border_color != 'none' %} border: 3px solid {{cta_border_color}};{% endif %}">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="{{_cta_w_attr}}" bgcolor="{{cta_bg_color}}" class="{{_cta_class}}" style="border-collapse: separate; border-radius: {{cta_radius}}px; max-width: 560px; {{_cta_w_style}}{{_cta_border_style}}">
               <tr>
                 <td align="center" height="{{cta_height}}" style="height: {{cta_height}}px; text-align: center;">
-                  <a href="{{cta_url | append: _utm}}" target="_blank"{% if cta_clicktracking == "off" %} clicktracking="off"{% endif %} class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{cta_text_color}};">{{cta_label}}</a>
+                  <a href="{{cta_url | append: _utm}}" target="_blank"{{_cta_ct_attr}} class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{cta_text_color}};">{{cta_label}}</a>
                 </td>
               </tr>
             </table>
@@ -56,6 +58,9 @@
 {% assign cta_width = null %}
 {% assign _cta_w_attr = null %}
 {% assign _cta_w_style = null %}
+{% assign _cta_class = null %}
+{% assign _cta_border_style = null %}
+{% assign _cta_ct_attr = null %}
 {% assign cta_padding_top = null %}
 {% assign cta_padding_bottom = null %}
 {% assign cta_align = null %}
