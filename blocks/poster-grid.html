@@ -1,3 +1,5 @@
+{% assign grid_padding_top = grid_padding_top | default: 12 %}
+{% assign grid_padding_bottom = grid_padding_bottom | default: 12 %}
 {% assign _grid_layout_user = grid_layout | default: "__none__" %}
 {% assign grid_layout = grid_layout | default: "3v" %}
 {% assign grid_items_limit = grid_items_limit | default: 18 | plus: 0 %}
@@ -179,9 +181,9 @@
 {% endif %}
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
   <tr>
-    <td align="center" class="content-pad" style="padding: 12px 20px;">
+    <td align="center" class="content-pad" style="padding: {{grid_padding_top}}px 20px {{grid_padding_bottom}}px;">
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" style="max-width: 560px; background-color: {{content_bg_color}}; border-radius: 8px; border: none; mso-border-alt: none;" class="{{_bg_dm}}">
-        <tr><td height="12" style="font-size:0;line-height:0;">&nbsp;</td></tr>
+        <tr><td height="{{grid_padding_top}}" style="font-size:0;line-height:0;">&nbsp;</td></tr>
         {% assign _offset = 0 %}
         {% assign _rendered_rows = 0 %}
         {% assign _needs_spacer = false %}
@@ -339,7 +341,7 @@
         <tr><td height="12" style="font-size:0;line-height:0;">&nbsp;</td></tr>
         <tr><td align="center"><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="grid-cta"{% if _cta_bg != "" %} bgcolor="{{_cta_bg}}"{% endif %} style="border-collapse:separate;border-radius:200px;{% if _cta_bg != "" %}background:{{_cta_bg}};{% endif %}{{_cta_bd}}"><tr><td align="center" height="60" style="height:60px;text-align:center;"><a href="{{_gcta_url}}" target="_blank" class="t-cta" style="display:block;padding:18px 30px;font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:24px;text-decoration:none;line-height:100%;color:{{_cta_tc}};">{{grid_cta_label}}</a></td></tr></table></td></tr>
         {% endif %}
-        <tr><td height="12" style="font-size:0;line-height:0;">&nbsp;</td></tr>
+        <tr><td height="{{grid_padding_bottom}}" style="font-size:0;line-height:0;">&nbsp;</td></tr>
       </table>
     </td>
   </tr>
@@ -365,6 +367,7 @@
 {% assign grid_cta_label = nil %}{% assign grid_cta_url = nil %}{% assign grid_cta_style = nil %}{% assign _gcta_url = nil %}{% assign _cta_bg = nil %}{% assign _cta_tc = nil %}{% assign _cta_bd = nil %}
 {% assign grid_cta_watch = nil %}{% assign grid_cta_watch_label = nil %}
 {% assign grid_cta_mylist = nil %}{% assign grid_cta_mylist_label = nil %}
+{% assign grid_padding_top = nil %}{% assign grid_padding_bottom = nil %}
 {% assign _cta1_ml_url = nil %}{% assign _cta2_ml_url = nil %}{% assign _cta3_ml_url = nil %}
 {% assign _api_genre = nil %}
 {% assign _num_rows = nil %}{% assign _rem = nil %}
