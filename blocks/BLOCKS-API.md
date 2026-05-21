@@ -4,6 +4,62 @@ Variable reference for all Tubi CRM email template content blocks.
 
 ---
 
+## email_header
+
+Campaign HTML wrapper (DOCTYPE through opening `<td>`). Includes XHTML doctype, Office XML, meta tags, css_global, preheader whitespace hack, and email-container opening. No parameters — just include it as the first line of every campaign.
+
+```liquid
+{{content_blocks.${email_header}}}
+```
+
+**Provides:** White outer background (#ffffff), black inner background (#000000), 600px mobile / 800px desktop container, preheader compatibility, Gmail `u + .body` hack.
+
+---
+
+## email_footer
+
+Closing HTML tags for the campaign wrapper. Include as the last line of every campaign (after the `footer` block).
+
+```liquid
+{{content_blocks.${email_footer}}}
+```
+
+---
+
+## Campaign Quick Start
+
+```liquid
+{{content_blocks.${email_header}}}
+
+{% assign tubi = "https://tubitv.com/home" %}
+{% capture _utm_campaign %}{{campaign.${name}}}{% endcapture %}
+{% assign utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_campaign %}
+
+{% assign hero_poster_url = "POSTER_IMAGE_URL" %}
+{% assign hero_orientation = "portrait" %}
+{% assign hero_poster_link = "DESTINATION_URL" %}
+{% assign hero_title = "Watch on Tubi" %}
+{% assign hero_variant = "1" %}
+{% assign hero_logo_link = tubi %}
+{{content_blocks.${hero_single_title}}}
+
+{% assign headline_copy = "Your Headline" %}
+{% assign body_copy = "Your body text here." %}
+{{content_blocks.${headline_body}}}
+
+{% assign cta_label = "Watch Now" %}
+{% assign cta_url = "DESTINATION_URL" | append: utm %}
+{{content_blocks.${single_cta}}}
+
+{% assign footer_lang = "en" %}
+{% assign footer_country = "US" %}
+{{content_blocks.${footer}}}
+
+{{content_blocks.${email_footer}}}
+```
+
+---
+
 ## behavioral-cards
 
 Two side-by-side cards for "Continue Watching" and "My List".
