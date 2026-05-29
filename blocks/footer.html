@@ -92,7 +92,7 @@
 {% unless footer_social_facebook_icon %}{% assign footer_social_facebook_icon = "https://braze-images.com/appboy/communication/assets/image_assets/images/689a5d1c5498c400643f5ab4/original.png?1754946844" %}{% endunless %}
 {% unless footer_social_facebook_alt %}{% assign footer_social_facebook_alt = "Facebook" %}{% endunless %}
 {% assign _footer_icon_slots = footer_social_icons | split: "," %}
-{% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% elsif canvas.name != blank %}{% assign _utm_name = canvas.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
+{% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if canvas.${api_id} != blank %}{% assign _utm_name = canvas.${api_id} %}{% elsif campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
   <tr>
     <td align="center" style="padding: 30px;" class="content-pad">

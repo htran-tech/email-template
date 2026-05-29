@@ -16,13 +16,11 @@
 {% assign grid_cta_mylist_label = grid_cta_mylist_label | default: "+ My List" %}
 {% if grid_utm_params == "false" %}
   {% assign _utm = "" %}
-{% elsif grid_utm_params != blank %}
-  {% assign _utm = grid_utm_params %}
 {% else %}
-  {% if campaign.name != blank %}
+  {% if canvas.${api_id} != blank %}
+    {% assign _utm_name = canvas.${api_id} %}
+  {% elsif campaign.name != blank %}
     {% assign _utm_name = campaign.name | url_encode %}
-  {% elsif canvas.name != blank %}
-    {% assign _utm_name = canvas.name | url_encode %}
   {% else %}
     {% assign _utm_name = "braze_email" %}
   {% endif %}

@@ -20,11 +20,13 @@
 {% assign grid_cta_mylist_label = grid_cta_mylist_label | default: "+ My List" %}
 {% if grid_utm_params == "false" %}
   {% assign _utm = "" %}
+{% elsif grid_utm_params != blank %}
+  {% assign _utm = grid_utm_params %}
 {% else %}
-  {% if canvas.${api_id} != blank %}
-    {% assign _utm_name = canvas.${api_id} %}
-  {% elsif campaign.name != blank %}
+  {% if campaign.name != blank %}
     {% assign _utm_name = campaign.name | url_encode %}
+  {% elsif canvas.name != blank %}
+    {% assign _utm_name = canvas.name | url_encode %}
   {% else %}
     {% assign _utm_name = "braze_email" %}
   {% endif %}
@@ -137,6 +139,8 @@
 {% assign _cta_url_arr = _cta_urls | split: "~^~" %}
 {% capture _landscape_imgs %}{{grid_item_1_landscape_img}}~^~{{grid_item_2_landscape_img}}~^~{{grid_item_3_landscape_img}}~^~{{grid_item_4_landscape_img}}~^~{{grid_item_5_landscape_img}}~^~{{grid_item_6_landscape_img}}~^~{{grid_item_7_landscape_img}}~^~{{grid_item_8_landscape_img}}~^~{{grid_item_9_landscape_img}}~^~{{grid_item_10_landscape_img}}~^~{{grid_item_11_landscape_img}}~^~{{grid_item_12_landscape_img}}~^~{{grid_item_13_landscape_img}}~^~{{grid_item_14_landscape_img}}~^~{{grid_item_15_landscape_img}}~^~{{grid_item_16_landscape_img}}~^~{{grid_item_17_landscape_img}}~^~{{grid_item_18_landscape_img}}{% endcapture %}
 {% assign _landscape_img_arr = _landscape_imgs | split: "~^~" %}
+{% capture _sot_labels %}{{grid_item_1_sot}}~^~{{grid_item_2_sot}}~^~{{grid_item_3_sot}}~^~{{grid_item_4_sot}}~^~{{grid_item_5_sot}}~^~{{grid_item_6_sot}}~^~{{grid_item_7_sot}}~^~{{grid_item_8_sot}}~^~{{grid_item_9_sot}}~^~{{grid_item_10_sot}}~^~{{grid_item_11_sot}}~^~{{grid_item_12_sot}}~^~{{grid_item_13_sot}}~^~{{grid_item_14_sot}}~^~{{grid_item_15_sot}}~^~{{grid_item_16_sot}}~^~{{grid_item_17_sot}}~^~{{grid_item_18_sot}}{% endcapture %}
+{% assign _sot_arr = _sot_labels | split: "~^~" %}
 {% assign _gr = grid_rows | default: "__auto__" %}
 {% if _gr == "__auto__" %}
   {% if _grid_layout_user == "__none__" and _api_check == "__none__" %}
@@ -209,6 +213,7 @@
           {% assign _c1_genre = _genre_arr[_i1] %}
           {% assign _c1_cta_label = _cta_label_arr[_i1] %}
           {% assign _c1_cta_url = _cta_url_arr[_i1] %}
+          {% assign _c1_sot = _sot_arr[_i1] %}
           {% if _ipr >= 2 %}
             {% assign _c2_img = _img_arr[_i2] %}
             {% assign _c2_url = _url_arr[_i2] | append: _utm %}
@@ -216,6 +221,7 @@
             {% assign _c2_genre = _genre_arr[_i2] %}
             {% assign _c2_cta_label = _cta_label_arr[_i2] %}
             {% assign _c2_cta_url = _cta_url_arr[_i2] %}
+            {% assign _c2_sot = _sot_arr[_i2] %}
           {% else %}
             {% assign _c2_img = "" %}
           {% endif %}
@@ -226,6 +232,7 @@
             {% assign _c3_genre = _genre_arr[_i3] %}
             {% assign _c3_cta_label = _cta_label_arr[_i3] %}
             {% assign _c3_cta_url = _cta_url_arr[_i3] %}
+            {% assign _c3_sot = _sot_arr[_i3] %}
           {% else %}
             {% assign _c3_img = "" %}
           {% endif %}
@@ -260,6 +267,7 @@
                       <tr><td style="padding-bottom: 24px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 16px; letter-spacing: -0.02em; text-transform: uppercase; color: {{grid_text_color}}; text-align: {{grid_meta_align}};" class="t-genre {{_txt_dm}}">{% assign _g1 = _c1_genre | replace: "•", _dot_span %}{{_g1}}</td></tr>
                     </table>
                     {% endif %}
+                    {% if _c1_sot != "" %}<div class="sot-badge-wrap"><div class="sot-badge">{{_c1_sot}}</div></div>{% endif %}
                     <a href="{{_c1_url}}" target="_blank" style="text-decoration: none; display: block;">
                       <img src="{{_c1_img}}" alt="{% if _c1_subhead != '' %}{{_c1_subhead}}{% else %}Watch on Tubi{% endif %}" width="{{_w}}" height="{{_h}}" border="0" class="poster-img {{_pc}}" style="display: block; width: {{_w}}px; height: {{_h}}px; border-radius: 8px; object-fit: cover;" />
                     </a>
@@ -283,6 +291,7 @@
                   {% if _ipr >= 2 and _c2_img != "" %}
                   <td width="12" class="grid-gap" style="width: 12px; min-width: 12px; font-size: 0; line-height: 0; padding: 0;">&nbsp;</td>
                   <td align="center" valign="top" width="{{_w}}" style="width: {{_w}}px;">
+                    {% if _c2_sot != "" %}<div class="sot-badge-wrap"><div class="sot-badge">{{_c2_sot}}</div></div>{% endif %}
                     <a href="{{_c2_url}}" target="_blank" style="text-decoration: none; display: block;">
                       <img src="{{_c2_img}}" alt="{% if _c2_subhead != '' %}{{_c2_subhead}}{% else %}Watch on Tubi{% endif %}" width="{{_w}}" height="{{_h}}" border="0" class="poster-img {{_pc}}" style="display: block; width: {{_w}}px; height: {{_h}}px; border-radius: 8px; object-fit: cover;" />
                     </a>
@@ -307,6 +316,7 @@
                   {% if _ipr >= 3 and _c3_img != "" %}
                   <td width="12" class="grid-gap" style="width: 12px; min-width: 12px; font-size: 0; line-height: 0; padding: 0;">&nbsp;</td>
                   <td align="center" valign="top" width="{{_w}}" style="width: {{_w}}px;">
+                    {% if _c3_sot != "" %}<div class="sot-badge-wrap"><div class="sot-badge">{{_c3_sot}}</div></div>{% endif %}
                     <a href="{{_c3_url}}" target="_blank" style="text-decoration: none; display: block;">
                       <img src="{{_c3_img}}" alt="{% if _c3_subhead != '' %}{{_c3_subhead}}{% else %}Watch on Tubi{% endif %}" width="{{_w}}" height="{{_h}}" border="0" class="poster-img {{_pc}}" style="display: block; width: {{_w}}px; height: {{_h}}px; border-radius: 8px; object-fit: cover;" />
                     </a>

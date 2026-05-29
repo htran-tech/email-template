@@ -17,7 +17,7 @@
 {% unless bcard_ml_bg %}{% assign bcard_ml_bg = "#8C00E5" %}{% endunless %}
 {% unless bcard_ml_cta_bg %}{% assign bcard_ml_cta_bg = "rgba(255,255,255,0.2)" %}{% endunless %}
 {% unless bcard_ml_cta_color %}{% assign bcard_ml_cta_color = "#ffffff" %}{% endunless %}
-{% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% elsif canvas.name != blank %}{% assign _utm_name = canvas.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
+{% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if canvas.${api_id} != blank %}{% assign _utm_name = canvas.${api_id} %}{% elsif campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
 {% if bcard_result_cw %}{% assign _cw_count = bcard_result_cw.count | plus: 0 %}{% if _cw_count > 0 %}{% assign bcard_show_cw = "true" %}{% else %}{% assign bcard_show_cw = "false" %}{% endif %}{% endif %}
 {% if bcard_result_ml %}{% assign _ml_count = bcard_result_ml.count | plus: 0 %}{% if _ml_count > 0 %}{% assign bcard_show_ml = "true" %}{% else %}{% assign bcard_show_ml = "false" %}{% endif %}{% endif %}
 {% assign _bcard_count = 0 %}

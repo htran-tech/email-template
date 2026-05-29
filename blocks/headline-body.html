@@ -4,12 +4,12 @@
 {% unless hb_headline_color %}{% assign hb_headline_color = hb_text_color %}{% endunless %}
 {% unless hb_body_color %}{% assign hb_body_color = hb_text_color %}{% endunless %}
 {% unless hb_align %}{% assign hb_align = "center" %}{% endunless %}
-{% unless hb_padding_top %}{% assign hb_padding_top = 42 %}{% endunless %}
+{% unless hb_padding_top %}{% if headline_copy %}{% assign hb_padding_top = 42 %}{% else %}{% assign hb_padding_top = 10 %}{% endif %}{% endunless %}
 {% unless hb_padding_bottom %}{% assign hb_padding_bottom = 12 %}{% endunless %}
 {% unless hb_padding_side %}{% assign hb_padding_side = 20 %}{% endunless %}
 {% unless hb_gap %}{% assign hb_gap = 8 %}{% endunless %}
 {% unless hb_headline_transform %}{% assign hb_headline_transform = "uppercase" %}{% endunless %}
-{% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% elsif canvas.name != blank %}{% assign _utm_name = canvas.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
+{% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if canvas.${api_id} != blank %}{% assign _utm_name = canvas.${api_id} %}{% elsif campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
 {% if headline_copy or body_copy %}
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
   <tr>
@@ -27,7 +27,7 @@
         {% if body_copy %}
         <tr>
           <td align="{{hb_align}}" style="{% if hb_body_size %} font-size: {{hb_body_size}}px;{% else %} font-size: 24px;{% endif %} mso-line-height-rule: exactly;">
-            <p class="t-body dm-text-white" style="margin: 0; font-family: Arial, Helvetica, sans-serif; font-weight: normal;{% if hb_body_size %} font-size: {{hb_body_size}}px;{% else %} font-size: 24px;{% endif %} letter-spacing: 0; line-height: 24px; mso-line-height-rule: exactly; color: {{hb_body_color}};">{{body_copy}}</p>
+            <p class="{% unless hb_body_size %}t-body {% endunless %}dm-text-white" style="margin: 0; font-family: Arial, Helvetica, sans-serif; font-weight: normal;{% if hb_body_size %} font-size: {{hb_body_size}}px; line-height: 120%;{% else %} font-size: 24px; line-height: 24px;{% endif %} letter-spacing: 0; mso-line-height-rule: exactly; color: {{hb_body_color}};">{{body_copy}}</p>
           </td>
         </tr>
         {% endif %}
