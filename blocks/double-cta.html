@@ -9,7 +9,7 @@
 {% unless dcta_radius %}{% assign dcta_radius = 200 %}{% endunless %}
 {% unless dcta_height %}{% assign dcta_height = 60 %}{% endunless %}
 {% unless dcta_btn_width %}{% assign dcta_btn_width = 270 %}{% endunless %}
-{% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if canvas.${api_id} != blank %}{% assign _utm_name = canvas.${api_id} %}{% elsif campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
+{% unless _utm %}{% assign _utm = "" %}{% endunless %}
 {% if cta_style == "secondary" %}
   {% unless cta_bg_color %}{% assign cta_bg_color = content_bg_color %}{% endunless %}
   {% unless cta_text_color %}{% assign cta_text_color = "#ffffff" %}{% endunless %}
@@ -85,4 +85,4 @@
 {% assign dcta_radius = null %}
 {% assign dcta_height = null %}
 {% assign dcta_btn_width = null %}
-{% assign _utm = null %}{% assign _utm_name = null %}
+{% assign _utm_name = null %}

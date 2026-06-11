@@ -42,3 +42,5 @@
           <table role="presentation" class="email-container" cellpadding="0" cellspacing="0" border="0" width="600" bgcolor="#000000" style="max-width:600px; background-color:#000000;">
             <tr>
               <td>
+{% assign tubi = "https://tubitv.com/home" %}
+{% if canvas.name != blank %}{% assign _utm_c = canvas.name | url_encode %}{% assign _utm_s = campaign.name | url_encode %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_c | append: "&utm_content=" | append: _utm_s %}{% elsif campaign.name != blank %}{% assign _utm_c = campaign.name | url_encode %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_c %}{% else %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=braze_email" %}{% endif %}

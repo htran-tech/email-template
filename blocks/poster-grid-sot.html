@@ -18,20 +18,7 @@
 {% assign grid_cta_watch_label = grid_cta_watch_label | default: "Watch Now" %}
 {% assign grid_cta_mylist = grid_cta_mylist | default: "false" %}
 {% assign grid_cta_mylist_label = grid_cta_mylist_label | default: "+ My List" %}
-{% if grid_utm_params == "false" %}
-  {% assign _utm = "" %}
-{% elsif grid_utm_params != blank %}
-  {% assign _utm = grid_utm_params %}
-{% else %}
-  {% if campaign.name != blank %}
-    {% assign _utm_name = campaign.name | url_encode %}
-  {% elsif canvas.name != blank %}
-    {% assign _utm_name = canvas.name | url_encode %}
-  {% else %}
-    {% assign _utm_name = "braze_email" %}
-  {% endif %}
-  {% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}
-{% endif %}
+{% unless _utm %}{% assign _utm = "" %}{% endunless %}
 {% assign grid_show_metadata = grid_show_metadata | default: "false" %}
 {% assign grid_show_genre = grid_show_genre | default: grid_show_metadata %}
 {% assign grid_show_title = grid_show_title | default: grid_show_metadata %}
@@ -371,7 +358,7 @@
 {% assign grid_result = nil %}{% assign grid_container_index = nil %}
 {% assign _container_idx = nil %}{% assign _has_containers = nil %}
 {% assign grid_api_items = nil %}{% assign grid_utm_params = nil %}
-{% assign _api_check = nil %}{% assign _utm = nil %}{% assign _utm_name = nil %}{% assign _api_count = nil %}{% assign _gr_api = nil %}{% assign _mod3 = nil %}{% assign _remaining = nil %}{% assign _3v_count = nil %}
+{% assign _api_check = nil %}{% assign _utm_name = nil %}{% assign _api_count = nil %}{% assign _gr_api = nil %}{% assign _mod3 = nil %}{% assign _remaining = nil %}{% assign _3v_count = nil %}
 {% assign _landscape_imgs = nil %}{% assign _landscape_img_arr = nil %}{% assign _ls1 = nil %}{% assign _ls2 = nil %}
 {% assign grid_headline = nil %}{% assign grid_headline_url = nil %}{% assign grid_body = nil %}{% assign _hl_url = nil %}
 {% assign grid_cta_label = nil %}{% assign grid_cta_url = nil %}{% assign grid_cta_style = nil %}{% assign _gcta_url = nil %}{% assign _cta_bg = nil %}{% assign _cta_tc = nil %}{% assign _cta_bd = nil %}

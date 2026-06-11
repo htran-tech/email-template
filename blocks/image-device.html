@@ -8,7 +8,36 @@
 {% unless image_margin_left %}{% assign image_margin_left = 0 %}{% endunless %}
 {% unless image_margin_right %}{% assign image_margin_right = 0 %}{% endunless %}
 {% unless content_bg_color %}{% assign content_bg_color = email_inner_bg | default: "transparent" %}{% endunless %}
-{% if utm_params == "false" %}{% assign _utm = "" %}{% elsif utm_params != blank %}{% assign _utm = utm_params %}{% else %}{% if canvas.${api_id} != blank %}{% assign _utm_name = canvas.${api_id} %}{% elsif campaign.name != blank %}{% assign _utm_name = campaign.name | url_encode %}{% else %}{% assign _utm_name = "braze_email" %}{% endif %}{% assign _utm = "?utm_source=braze&utm_medium=crm_email&utm_campaign=" | append: _utm_name %}{% endif %}
+{% unless _utm %}{% assign _utm = "" %}{% endunless %}
+{% unless image_device_clicktracking %}{% assign image_device_clicktracking = "on" %}{% endunless %}
+{% if image_device_clicktracking == "off" %}{% assign _id_ct_attr = ' clicktracking="off"' %}{% else %}{% assign _id_ct_attr = '' %}{% endif %}
+{% unless image_device_cta_clicktracking %}{% assign image_device_cta_clicktracking = "on" %}{% endunless %}
+{% unless image_device_cta_style %}{% assign image_device_cta_style = "primary" %}{% endunless %}
+{% unless image_device_cta_padding_top %}{% assign image_device_cta_padding_top = 12 %}{% endunless %}
+{% unless image_device_cta_padding_bottom %}{% assign image_device_cta_padding_bottom = 12 %}{% endunless %}
+{% unless image_device_cta_align %}{% assign image_device_cta_align = "center" %}{% endunless %}
+{% unless image_device_cta_radius %}{% assign image_device_cta_radius = 200 %}{% endunless %}
+{% unless image_device_cta_height %}{% assign image_device_cta_height = 60 %}{% endunless %}
+{% unless image_device_cta_width %}{% assign image_device_cta_width = "full" %}{% endunless %}
+{% if image_device_cta_style == "secondary" %}
+  {% unless image_device_cta_bg_color %}{% assign image_device_cta_bg_color = content_bg_color %}{% endunless %}
+  {% unless image_device_cta_text_color %}{% assign image_device_cta_text_color = "#ffffff" %}{% endunless %}
+  {% unless image_device_cta_border_color %}{% assign image_device_cta_border_color = "#cccccc" %}{% endunless %}
+{% elsif image_device_cta_style == "secondary-brand" %}
+  {% unless image_device_cta_bg_color %}{% assign image_device_cta_bg_color = content_bg_color %}{% endunless %}
+  {% unless image_device_cta_text_color %}{% assign image_device_cta_text_color = "#ffff13" %}{% endunless %}
+  {% unless image_device_cta_border_color %}{% assign image_device_cta_border_color = "#ffff13" %}{% endunless %}
+{% else %}
+  {% unless image_device_cta_bg_color %}{% assign image_device_cta_bg_color = "#ffff13" %}{% endunless %}
+  {% unless image_device_cta_text_color %}{% assign image_device_cta_text_color = "#000000" %}{% endunless %}
+  {% unless image_device_cta_border_color %}{% assign image_device_cta_border_color = "none" %}{% endunless %}
+{% endif %}
+{% if image_device_cta_width == "full" %}{% assign _idcta_w_attr = '560' %}{% assign _idcta_w_style = 'width: 560px; max-width: 100%;' %}{% assign _idcta_class = 'grid-cta' %}
+{% elsif image_device_cta_width == "auto" %}{% assign _idcta_w_attr = '' %}{% assign _idcta_w_style = '' %}{% assign _idcta_class = '' %}
+{% else %}{% assign _idcta_w_attr = image_device_cta_width %}{% assign _idcta_w_style = 'width: ' | append: image_device_cta_width | append: 'px; max-width: 100%;' %}{% assign _idcta_class = '' %}
+{% endif %}
+{% if image_device_cta_border_color != 'none' %}{% assign _idcta_border_style = ' border: 3px solid ' | append: image_device_cta_border_color | append: ';' %}{% else %}{% assign _idcta_border_style = '' %}{% endif %}
+{% if image_device_cta_clicktracking == "off" %}{% assign _idcta_ct_attr = ' clicktracking="off"' %}{% else %}{% assign _idcta_ct_attr = '' %}{% endif %}
 {% unless has_mobile %}
   {% if open_on_desktop == true %}
     {% if image_url %}
@@ -18,9 +47,24 @@
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 100%;">
         <tr>
           <td align="center" style="font-size: 0; line-height: 0;">
-            {% if image_link %}<a href="{{image_link | append: _utm}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
+            {% if image_link %}<a href="{{image_link | append: _utm}}" target="_blank"{{_id_ct_attr}} style="text-decoration: none; display: block;">{% endif %}
               <img src="{{image_url}}" alt="{{image_alt}}" width="{{image_width}}" class="fluid-img" style="display: block; width: 100%; height: auto;{% if image_border_radius != 0 %} border-radius: {{image_border_radius}}px;{% endif %} border: 0;" />
             {% if image_link %}</a>{% endif %}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+    {% endif %}
+    {% if image_device_cta_label and image_device_cta_url %}
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
+  <tr>
+    <td align="center" style="padding: {{image_device_cta_padding_top}}px 20px {{image_device_cta_padding_bottom}}px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="{{_idcta_w_attr}}" bgcolor="{{image_device_cta_bg_color}}" class="{{_idcta_class}}" style="border-collapse: separate; border-radius: {{image_device_cta_radius}}px; max-width: 560px; {{_idcta_w_style}}{{_idcta_border_style}}">
+        <tr>
+          <td align="center" height="{{image_device_cta_height}}" style="height: {{image_device_cta_height}}px; text-align: center;">
+            <a href="{{image_device_cta_url | append: _utm}}" target="_blank"{{_idcta_ct_attr}} class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{image_device_cta_text_color}};">{{image_device_cta_label}}</a>
           </td>
         </tr>
       </table>
@@ -36,9 +80,24 @@
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 100%;">
         <tr>
           <td align="center" style="font-size: 0; line-height: 0;">
-            {% if image_mobile_link %}<a href="{{image_mobile_link | append: _utm}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
+            {% if image_mobile_link %}<a href="{{image_mobile_link | append: _utm}}" target="_blank"{{_id_ct_attr}} style="text-decoration: none; display: block;">{% endif %}
               <img src="{{image_mobile_url}}" alt="{{image_mobile_alt}}" width="{{image_width}}" class="fluid-img" style="display: block; width: 100%; height: auto;{% if image_border_radius != 0 %} border-radius: {{image_border_radius}}px;{% endif %} border: 0;" />
             {% if image_mobile_link %}</a>{% endif %}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+    {% endif %}
+    {% if image_device_cta_mobile_label and image_device_cta_mobile_url %}
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
+  <tr>
+    <td align="center" style="padding: {{image_device_cta_padding_top}}px 20px {{image_device_cta_padding_bottom}}px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="{{_idcta_w_attr}}" bgcolor="{{image_device_cta_bg_color}}" class="{{_idcta_class}}" style="border-collapse: separate; border-radius: {{image_device_cta_radius}}px; max-width: 560px; {{_idcta_w_style}}{{_idcta_border_style}}">
+        <tr>
+          <td align="center" height="{{image_device_cta_height}}" style="height: {{image_device_cta_height}}px; text-align: center;">
+            <a href="{{image_device_cta_mobile_url | append: _utm}}" target="_blank"{{_idcta_ct_attr}} class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{image_device_cta_text_color}};">{{image_device_cta_mobile_label}}</a>
           </td>
         </tr>
       </table>
@@ -55,7 +114,7 @@
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 100%;">
         <tr>
           <td align="center" style="font-size: 0; line-height: 0;">
-            {% if image_link %}<a href="{{image_link | append: _utm}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
+            {% if image_link %}<a href="{{image_link | append: _utm}}" target="_blank"{{_id_ct_attr}} style="text-decoration: none; display: block;">{% endif %}
               <img src="{{image_url}}" alt="{{image_alt}}" width="{{image_width}}" class="fluid-img" style="display: block; width: 100%; height: auto;{% if image_border_radius != 0 %} border-radius: {{image_border_radius}}px;{% endif %} border: 0;" />
             {% if image_link %}</a>{% endif %}
           </td>
@@ -64,6 +123,21 @@
     </td>
   </tr>
 </table>
+    {% if image_device_cta_label and image_device_cta_url %}
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
+  <tr>
+    <td align="center" style="padding: {{image_device_cta_padding_top}}px 20px {{image_device_cta_padding_bottom}}px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="{{_idcta_w_attr}}" bgcolor="{{image_device_cta_bg_color}}" class="{{_idcta_class}}" style="border-collapse: separate; border-radius: {{image_device_cta_radius}}px; max-width: 560px; {{_idcta_w_style}}{{_idcta_border_style}}">
+        <tr>
+          <td align="center" height="{{image_device_cta_height}}" style="height: {{image_device_cta_height}}px; text-align: center;">
+            <a href="{{image_device_cta_url | append: _utm}}" target="_blank"{{_idcta_ct_attr}} class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{image_device_cta_text_color}};">{{image_device_cta_label}}</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+    {% endif %}
 </div>
     {% endif %}
     {% if image_mobile_url %}
@@ -74,7 +148,7 @@
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 100%;">
         <tr>
           <td align="center" style="font-size: 0; line-height: 0;">
-            {% if image_mobile_link %}<a href="{{image_mobile_link | append: _utm}}" target="_blank" style="text-decoration: none; display: block;">{% endif %}
+            {% if image_mobile_link %}<a href="{{image_mobile_link | append: _utm}}" target="_blank"{{_id_ct_attr}} style="text-decoration: none; display: block;">{% endif %}
               <img src="{{image_mobile_url}}" alt="{{image_mobile_alt}}" width="{{image_width}}" class="fluid-img" style="display: block; width: 100%; height: auto;{% if image_border_radius != 0 %} border-radius: {{image_border_radius}}px;{% endif %} border: 0;" />
             {% if image_mobile_link %}</a>{% endif %}
           </td>
@@ -83,6 +157,21 @@
     </td>
   </tr>
 </table>
+    {% if image_device_cta_mobile_label and image_device_cta_mobile_url %}
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg-dark">
+  <tr>
+    <td align="center" style="padding: {{image_device_cta_padding_top}}px 20px {{image_device_cta_padding_bottom}}px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="{{_idcta_w_attr}}" bgcolor="{{image_device_cta_bg_color}}" class="{{_idcta_class}}" style="border-collapse: separate; border-radius: {{image_device_cta_radius}}px; max-width: 560px; {{_idcta_w_style}}{{_idcta_border_style}}">
+        <tr>
+          <td align="center" height="{{image_device_cta_height}}" style="height: {{image_device_cta_height}}px; text-align: center;">
+            <a href="{{image_device_cta_mobile_url | append: _utm}}" target="_blank"{{_idcta_ct_attr}} class="t-cta" style="display: block; padding: 18px 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 24px; text-decoration: none; line-height: 100%; color: {{image_device_cta_text_color}};">{{image_device_cta_mobile_label}}</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+    {% endif %}
 </div>
     {% endif %}
   {% endif %}
@@ -101,4 +190,27 @@
 {% assign image_margin_right = null %}
 {% assign has_mobile = null %}
 {% assign open_on_desktop = null %}
-{% assign _utm = null %}{% assign _utm_name = null %}
+{% assign content_bg_color = null %}
+{% assign image_device_clicktracking = null %}
+{% assign _id_ct_attr = null %}
+{% assign _utm_name = null %}
+{% assign image_device_cta_label = null %}
+{% assign image_device_cta_url = null %}
+{% assign image_device_cta_mobile_label = null %}
+{% assign image_device_cta_mobile_url = null %}
+{% assign image_device_cta_style = null %}
+{% assign image_device_cta_bg_color = null %}
+{% assign image_device_cta_text_color = null %}
+{% assign image_device_cta_border_color = null %}
+{% assign image_device_cta_width = null %}
+{% assign image_device_cta_radius = null %}
+{% assign image_device_cta_height = null %}
+{% assign image_device_cta_align = null %}
+{% assign image_device_cta_padding_top = null %}
+{% assign image_device_cta_padding_bottom = null %}
+{% assign image_device_cta_clicktracking = null %}
+{% assign _idcta_w_attr = null %}
+{% assign _idcta_w_style = null %}
+{% assign _idcta_class = null %}
+{% assign _idcta_border_style = null %}
+{% assign _idcta_ct_attr = null %}
