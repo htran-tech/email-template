@@ -414,6 +414,90 @@ Max 18 items | Max 6 rows
 
 ---
 
+## poster-grid-frame
+
+**Full drop-in replacement for `poster-grid`** — every layout (`1l`/`2l`/`2v`/`3v`), every data mode (API `grid_result`,
+mixed `grid_rows`, uniform `grid_layout`, auto mod-3), landscape image swap, metadata, per-item CTAs, Watch/My List, and
+section headline/body/CTA — **plus an optional decorative frame overlay on every poster**. With `grid_frame = "none"`
+(the default) it behaves exactly like `poster-grid`. See TCAMPOPTIM-214.
+
+> **Two-block install (Braze 51,200-char cap):** this module is split into two Content Blocks. Register **both** in
+> Braze: **`poster_grid_frame`** (the one campaigns call) and its companion **`poster_grid_frame_render`** (internal —
+> `poster_grid_frame` includes it automatically; never call it directly). Campaigns are unchanged: still just
+> `{{content_blocks.${poster_grid_frame}}}`. Both files are generated together — see
+> `blocks/poster-grid-frame.html` (setup) and `blocks/poster-grid-frame-render.html` (render); keep them in sync.
+
+The block **auto-selects the frame asset by layout**: `2v`/`3v` → portrait frame; `1l` (full width) → **big** horizontal
+frame; `2l` (narrow) → **small** horizontal frame. The user just picks a number `1–9` (or a URL, or `"none"`) and the
+right orientation/resolution is chosen automatically.
+
+**Framed cell keeps the frame's aspect** (portrait 0.707, horizontal 1.416) so the frame art is never distorted; the
+poster sits in the transparent window via `object-fit:cover`. Unframed cells keep poster-grid's native 16:9 for `1l`/`2l`.
+
+**Graceful fallback (required):** the poster is always a real, linked `<img>`. If the frame can't render — Gmail's
+inconsistent `background-size`, Outlook without VML, or a failed asset load — the poster still shows on `content_bg_color`
+and stays clickable. Frame compositing is reliable in Apple Mail (macOS/iOS), best-effort in Gmail, VML in Outlook.
+
+### Frame selection (the only thing this adds over poster-grid)
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `grid_frame` | Frame for **every** poster: a number `"1"`–`"9"`, a custom URL, or `"none"` | `"none"` |
+| `grid_item_N_frame` | Per-slot override (N = 1–18): number `"1"`–`"9"`, custom URL, or `"none"`; falls back to `grid_frame` | `grid_frame` |
+| `grid_frame_url` | Legacy alias — a single URL for all posters; used as the fallback for `grid_frame` if set | — |
+
+Resolution per slot: `grid_item_N_frame` → else `grid_frame` → interpret (URL if it contains `://`, else look up the
+numbered frame in the set matching that cell's layout, else `none` = plain poster). A custom URL is used as-is for any
+layout, so if you override with a URL make sure it matches the cell's orientation.
+
+### All other variables
+Identical to **[poster-grid](#poster-grid)** — `grid_result`, `grid_container_index`, `grid_rows`, `grid_layout`,
+`grid_items_limit`, `grid_item_N_img/_url/_subhead/_genre/_landscape_img/_cta_label/_cta_url`, `grid_headline*`,
+`grid_body`, `grid_cta_*`, `grid_item_cta_style`, `grid_cta_watch(_label)`, `grid_cta_mylist(_label)`,
+`grid_show_metadata/_genre/_title`, `grid_meta_align`, `grid_meta_position`, `content_bg_color`, `grid_text_color`,
+`grid_dot_color`. See the poster-grid section for full descriptions.
+
+### Built-in frame sets (frames `"1"`–`"9"`, 3 orientations each)
+Baked into the block; referenced by number. To swap artwork, edit the `_fs_v_raw` / `_fs_lg_raw` / `_fs_sm_raw` captures
+at the top of `blocks/poster-grid-frame.html` — campaigns keep using the same `"1"`–`"9"` numbers. Braze Media Library ids:
+
+| # | Portrait (`2v`/`3v`) | Big horizontal (`1l`) | Small horizontal (`2l`) |
+|---|---|---|---|
+| 1 | 6a7a1694d56c4300889e5195 | 6a7ca2fb8f565e008885cad5 | 6a7ca25a6cd3dd008812d3ee |
+| 2 | 6a7a169437ff3000887540c4 | 6a7ca2f9d7bb3c00867c76e4 | 6a7ca25b2a461a008a43aa5c |
+| 3 | 6a7a1694fd692d0086858299 | 6a7ca2f9f39e1d00864333f4 | 6a7ca25bd198a500880d31be |
+| 4 | 6a7a16940d9cf700864bc663 | 6a7ca2fbb4ea7c0088d26607 | 6a7ca25a6f113d00a3b2ff66 |
+| 5 | 6a7a16944e59b30088a1c352 | 6a7ca2fb38cd9400882ae0d9 | 6a7ca25af9e6010088c5a275 |
+| 6 | 6a7a1693b852f20088cff348 | 6a7ca2f9c21e7a0088dad72d | 6a7ca25a210ea200886e7588 |
+| 7 | 6a7a1693843bed008a92d9d7 | 6a7ca2f97365e10088005868 | 6a7ca25a424cc300883aaee8 |
+| 8 | 6a7a16938d1a020086933037 | 6a7ca2f8bfa9f0008ab1a5c9 | 6a7ca259d445d80086d465ae |
+| 9 | 6a7a1693d7904f00863ce8e5 | 6a7ca2f8d9a169008404ecce | 6a7ca2596f113d0088b30527 |
+
+Note: `1l` uses the **big** (~1.3–2 MB) frame since it's full-width; `2l` uses the **small** (~180–280 KB) frame. Stacking
+many `1l` framed rows in one email adds weight — prefer it for a single hero row.
+
+### Examples
+```liquid
+{% assign grid_result = result %}
+{% assign grid_show_metadata = "true" %}
+
+{% comment %} all posters framed with set 3; layout auto-picks portrait vs horizontal {% endcomment %}
+{% assign grid_frame = "3" %}
+{{content_blocks.${poster_grid_frame}}}
+
+{% comment %} mixed layout: 1 landscape hero + a row of 3 portraits, all framed {% endcomment %}
+{% assign grid_rows = "1l,3v" %}
+{% assign grid_frame = "1" %}
+{{content_blocks.${poster_grid_frame}}}
+
+{% comment %} per-slot frame numbers + a custom override {% endcomment %}
+{% assign grid_item_1_frame = "1" %}
+{% assign grid_item_2_frame = "5" %}
+{% assign grid_item_3_frame = "https://braze-images.com/.../custom.png" %}
+{{content_blocks.${poster_grid_frame}}}
+```
+
+---
+
 ## poster-list
 
 List-style block: each row shows one item as a horizontal pair (poster + metadata side by side).

@@ -48,7 +48,7 @@
   {% unless footer_copyright %}{% assign footer_copyright = "Copyright" %}{% endunless %}
   {% unless footer_rights %}{% assign footer_rights = "All Rights Reserved." %}{% endunless %}
 {% endif %}
-{% unless footer_unsubscribe %}{% assign footer_unsubscribe = "{{${set_user_to_unsubscribed_url}}}" %}{% endunless %}
+{% unless footer_unsubscribe %}{% assign footer_unsubscribe = {{${set_user_to_unsubscribed_url}}} %}{% endunless %}
 {% unless footer_address %}{% assign footer_address = "201 3rd Street, Suite 1200, San Francisco, CA 94103" %}{% endunless %}
 {% unless footer_logo_url %}{% assign footer_logo_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/66215b820671880059752ae1/original.png?1713462146" %}{% endunless %}
 {% unless footer_logo_link %}{% assign footer_logo_link = "https://tubitv.com/home" %}{% endunless %}
