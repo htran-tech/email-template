@@ -1,0 +1,48 @@
+{% comment %}
+  AMP Bookmark Fallback Test Campaign
+
+  Tests the token-based bookmark fallback:
+  - Section 1: Simulates amp_token.success = true → interactive bookmark buttons
+  - Section 2: Simulates amp_token.success = false → link fallback buttons
+
+  In Braze, replace the manual amp_token assign with:
+  {% connected_content https://crm.example.com/crm/external/generate-amp-auth-token?user_id={{custom_attribute.${tubi_user_id}}}&endpoint=bookmark :basic_auth tubi :save amp_token %}
+{% endcomment %}
+
+{% assign amp_components = "bind" %}
+{{content_blocks.${AMP_email_header}}}
+
+{% comment %} Fetch auth token and content recommendations {% endcomment %}
+{% connected_content https://crm.example.com/crm/external/generate-amp-auth-token?user_id={{custom_attribute.${tubi_user_id}}}&endpoint=bookmark :basic_auth tubi :save amp_token %}
+
+{% assign container = "most_liked,staff_picks,top_searched,trending,tubi_originals,movie_night,series_spotlight,family_movies,family_series,drama,horror,comedy,killer_thrillers,mystery,romance,reality_tv,sci_fi_and_fantasy" %}
+{% assign limit = "7" %}
+{% assign rank_containers = "true" %}
+{% assign exclude_titles = "100055550,0300020952,0300021079,100055553,100055551" %}
+{{content_blocks.${API_Connected_Content}}}
+
+{% comment %} ===== TEST 1: Token SUCCESS → Interactive Bookmark ===== {% endcomment %}
+{% assign headline_copy = "Test 1: Interactive (Token Valid)" %}
+{% assign body_copy = "Buttons below should toggle bookmark icon on tap" %}
+{{content_blocks.${AMP_headline_body}}}
+
+{% assign grid_interaction = "bookmark" %}
+{% assign grid_layout = "3v" %}
+{% assign grid_result = result %}
+{% assign grid_items_limit = 6 %}
+{{content_blocks.${AMP_poster_grid}}}
+
+{% comment %} ===== TEST 2: Token FAILED → Link Fallback ===== {% endcomment %}
+{% assign amp_token = null %}
+
+{% assign headline_copy = "Test 2: Link Fallback (Token Failed)" %}
+{% assign body_copy = "Buttons below should be plain links to content URL" %}
+{{content_blocks.${AMP_headline_body}}}
+
+{% assign grid_interaction = "bookmark" %}
+{% assign grid_layout = "3v" %}
+{% assign grid_result = result %}
+{% assign grid_items_limit = 6 %}
+{{content_blocks.${AMP_poster_grid}}}
+
+{{content_blocks.${AMP_email_footer}}}

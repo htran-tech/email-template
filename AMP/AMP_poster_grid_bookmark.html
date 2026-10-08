@@ -1,0 +1,244 @@
+<!doctype html>
+<html ⚡4email>
+<head>
+  <meta charset="utf-8">
+  <script async src="https://cdn.ampproject.org/v0.js"></script>
+  <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+  <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
+  <style amp4email-boilerplate>body{visibility:hidden}</style>
+  <style amp-custom>
+    body { margin: 0; padding: 0; background-color: #000000; font-family: Arial, Helvetica, sans-serif; -webkit-text-size-adjust: none; }
+    .container { max-width: 600px; margin: 0 auto; }
+    .headline { font-size: 40px; font-weight: bold; letter-spacing: -0.02em; line-height: 36px; text-transform: uppercase; color: #ffffff; text-align: center; padding: 42px 20px 12px; }
+    .poster-row { display: flex; gap: 12px; justify-content: center; padding: 12px 20px; }
+    .poster-card { display: flex; flex-direction: column; align-items: center; }
+    .poster-card-1l { width: 560px; }
+    .poster-card-2v { width: 274px; }
+    .poster-card-3v { width: 178px; }
+    .poster-img { border-radius: 8px; display: block; width: 100%; height: auto; }
+    .btn-row { display: flex; gap: 12px; justify-content: center; padding: 12px 20px; }
+    .bookmark-form { display: flex; justify-content: center; }
+    .bookmark-form-1l { width: 560px; }
+    .bookmark-form-2v { width: 274px; }
+    .bookmark-form-3v { width: 178px; }
+    .bookmark-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 60px; border-radius: 200px; border: none; background-color: #ffff13; color: #000000; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 20px; text-decoration: none; cursor: pointer; padding: 0 24px; }
+    .bookmark-btn-active { background-color: #ffffff; border: none; color: #000000; }
+    .bookmark-btn-secondary { border: 3px solid #ffffff; background: transparent; color: #ffffff; }
+    .bookmark-btn-secondary.bookmark-btn-active { background-color: #ffff13; border-color: #ffff13; color: #000000; }
+    .bookmark-btn-3v { font-size: 14px; height: 48px; padding: 0 12px; gap: 6px; }
+    .bookmark-icon { width: 28px; height: 28px; }
+    .bookmark-icon-3v { width: 20px; height: 20px; }
+    @media (min-width: 600px) {
+      .container { max-width: 800px; }
+      .poster-card-1l { width: 720px; }
+      .poster-card-2v { width: 352px; }
+      .poster-card-3v { width: 229px; }
+      .bookmark-form-1l { width: 720px; }
+      .bookmark-form-2v { width: 352px; }
+      .bookmark-form-3v { width: 229px; }
+      .bookmark-btn-3v { font-size: 16px; height: 52px; }
+    }
+  </style>
+</head>
+<body>
+{% assign grid_items_limit = grid_items_limit | default: 6 | plus: 0 %}
+{% if grid_items_limit > 18 %}{% assign grid_items_limit = 18 %}{% endif %}
+{% if grid_result and grid_api_items == nil %}
+  {% assign _container_idx = grid_container_index | default: 0 | plus: 0 %}
+  {% assign _has_containers = grid_result.containers[0] | default: "__none__" %}
+  {% if _has_containers != "__none__" %}
+    {% assign grid_api_items = grid_result.containers[_container_idx].items %}
+  {% else %}
+    {% assign grid_api_items = grid_result.items %}
+  {% endif %}
+{% endif %}
+{% assign _api_check = grid_api_items | default: "__none__" %}
+{% if _api_check != "__none__" %}
+  {% assign grid_api_items = grid_api_items | slice: 0, grid_items_limit %}
+  {% for item in grid_api_items %}
+    {% if forloop.index == 1 %}{% assign _img1 = item.posterarts_large[0].url %}{% assign _url1 = item.url %}{% assign _title1 = item.title %}{% assign _limg1 = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 2 %}{% assign _img2 = item.posterarts_large[0].url %}{% assign _url2 = item.url %}{% assign _title2 = item.title %}{% assign _limg2 = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 3 %}{% assign _img3 = item.posterarts_large[0].url %}{% assign _url3 = item.url %}{% assign _title3 = item.title %}{% assign _limg3 = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 4 %}{% assign _img4 = item.posterarts_large[0].url %}{% assign _url4 = item.url %}{% assign _title4 = item.title %}{% endif %}
+    {% if forloop.index == 5 %}{% assign _img5 = item.posterarts_large[0].url %}{% assign _url5 = item.url %}{% assign _title5 = item.title %}{% endif %}
+    {% if forloop.index == 6 %}{% assign _img6 = item.posterarts_large[0].url %}{% assign _url6 = item.url %}{% assign _title6 = item.title %}{% endif %}
+  {% endfor %}
+  {% assign _count = grid_api_items.size %}
+  {% if _count > grid_items_limit %}{% assign _count = grid_items_limit %}{% endif %}
+  {% assign _gr = grid_rows | default: "__auto__" %}
+  {% if _gr == "__auto__" %}
+    {% assign _mod3 = _count | modulo: 3 %}
+    {% if _mod3 == 1 and _count >= 1 %}
+      {% if _limg1 %}{% assign _img1 = _limg1 %}{% endif %}
+      {% assign grid_rows = "1l" %}
+      {% assign _remaining = _count | minus: 1 %}
+    {% elsif _mod3 == 2 and _count >= 2 %}
+      {% assign grid_rows = "2v" %}
+      {% assign _remaining = _count | minus: 2 %}
+    {% else %}
+      {% assign grid_rows = "" %}
+      {% assign _remaining = _count %}
+    {% endif %}
+    {% assign _3v_count = _remaining | divided_by: 3 %}
+    {% if _3v_count >= 1 %}{% if grid_rows != "" %}{% assign grid_rows = grid_rows | append: "," %}{% endif %}{% assign grid_rows = grid_rows | append: "3v" %}{% endif %}
+    {% if _3v_count >= 2 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
+  {% endif %}
+{% endif %}
+{% assign _row_layouts = grid_rows | split: "," %}
+{% assign _offset = 0 %}
+{% assign _bk_style = bookmark_style | default: "primary" %}
+{% if _bk_style == "secondary" %}
+  {% assign _icon_inactive = "https://braze-images.com/appboy/communication/assets/image_assets/images/6a1e0e429ad9f400839b521a/original.png?1780354626" %}
+  {% assign _icon_active = "https://braze-images.com/appboy/communication/assets/image_assets/images/6a1e0e423163c50083506af6/original.png?1780354626" %}
+  {% assign _btn_base = "bookmark-btn bookmark-btn-secondary" %}
+  {% assign _btn_active = "bookmark-btn bookmark-btn-secondary bookmark-btn-active" %}
+  {% assign _btn3_base = "bookmark-btn bookmark-btn-3v bookmark-btn-secondary" %}
+  {% assign _btn3_active = "bookmark-btn bookmark-btn-3v bookmark-btn-secondary bookmark-btn-active" %}
+{% else %}
+  {% assign _icon_inactive = "https://braze-images.com/appboy/communication/assets/image_assets/images/6a1e0e429ad9f400839b521a/original.png?1780354626" %}
+  {% assign _icon_active = "https://braze-images.com/appboy/communication/assets/image_assets/images/6a1e0e4270427a00b728b883/original.png?1780354626" %}
+  {% assign _btn_base = "bookmark-btn" %}
+  {% assign _btn_active = "bookmark-btn bookmark-btn-active" %}
+  {% assign _btn3_base = "bookmark-btn bookmark-btn-3v" %}
+  {% assign _btn3_active = "bookmark-btn bookmark-btn-3v bookmark-btn-active" %}
+{% endif %}
+
+<amp-state id="bookmarks">
+  <script type="application/json">
+    {"item1":false,"item2":false,"item3":false,"item4":false,"item5":false,"item6":false}
+  </script>
+</amp-state>
+
+<div class="container">
+{% if grid_headline %}
+  <div class="headline">{{grid_headline}}</div>
+{% endif %}
+
+{% for _rlt in _row_layouts %}
+  {% assign _i1 = _offset | plus: 1 %}
+  {% assign _i2 = _offset | plus: 2 %}
+  {% assign _i3 = _offset | plus: 3 %}
+
+  {% if _rlt == "1l" %}
+    {% assign _curr_img = _img1 %}{% assign _curr_url = _url1 %}{% assign _curr_title = _title1 %}{% assign _curr_idx = _i1 %}
+    {% if _offset == 1 %}{% assign _curr_img = _img2 %}{% assign _curr_url = _url2 %}{% assign _curr_title = _title2 %}{% assign _curr_idx = _i2 %}{% endif %}
+    {% if _offset == 2 %}{% assign _curr_img = _img3 %}{% assign _curr_url = _url3 %}{% assign _curr_title = _title3 %}{% assign _curr_idx = _i3 %}{% endif %}
+  <div class="poster-row">
+    <div class="poster-card poster-card-1l">
+      <amp-img src="{{_curr_img}}" width="560" height="315" layout="responsive" class="poster-img" alt="{{_curr_title}}"></amp-img>
+    </div>
+  </div>
+  <div class="btn-row">
+    <form method="post" action-xhr="https://placeholder.tubi.tv/api/v1/amp/bookmark" class="bookmark-form bookmark-form-1l"
+          on="submit-success:AMP.setState({bookmarks: {item{{_curr_idx}}: !bookmarks.item{{_curr_idx}}}})">
+      <input type="hidden" name="title_url" value="{{_curr_url}}">
+      <input type="hidden" name="token" value="{{${user_id}}}">
+      <button type="submit" class="{{_btn_base}}"
+              [class]="bookmarks.item{{_curr_idx}} ? '{{_btn_active}}' : '{{_btn_base}}'">
+        <amp-img src="{{_icon_inactive}}" width="28" height="28" layout="fixed" class="bookmark-icon" [hidden]="bookmarks.item{{_curr_idx}}"></amp-img>
+        <amp-img src="{{_icon_active}}" width="28" height="28" layout="fixed" class="bookmark-icon" hidden [hidden]="!bookmarks.item{{_curr_idx}}"></amp-img>
+        <span [text]="bookmarks.item{{_curr_idx}} ? 'Added to My List' : 'Add to My List'">Add to My List</span>
+      </button>
+    </form>
+  </div>
+    {% assign _offset = _offset | plus: 1 %}
+
+  {% elsif _rlt == "2v" %}
+    {% if _offset == 0 %}{% assign _c1_img = _img1 %}{% assign _c1_url = _url1 %}{% assign _c1_title = _title1 %}{% assign _c2_img = _img2 %}{% assign _c2_url = _url2 %}{% assign _c2_title = _title2 %}{% assign _idx1 = 1 %}{% assign _idx2 = 2 %}
+    {% elsif _offset == 1 %}{% assign _c1_img = _img2 %}{% assign _c1_url = _url2 %}{% assign _c1_title = _title2 %}{% assign _c2_img = _img3 %}{% assign _c2_url = _url3 %}{% assign _c2_title = _title3 %}{% assign _idx1 = 2 %}{% assign _idx2 = 3 %}
+    {% elsif _offset == 2 %}{% assign _c1_img = _img3 %}{% assign _c1_url = _url3 %}{% assign _c1_title = _title3 %}{% assign _c2_img = _img4 %}{% assign _c2_url = _url4 %}{% assign _c2_title = _title4 %}{% assign _idx1 = 3 %}{% assign _idx2 = 4 %}
+    {% elsif _offset == 3 %}{% assign _c1_img = _img4 %}{% assign _c1_url = _url4 %}{% assign _c1_title = _title4 %}{% assign _c2_img = _img5 %}{% assign _c2_url = _url5 %}{% assign _c2_title = _title5 %}{% assign _idx1 = 4 %}{% assign _idx2 = 5 %}
+    {% else %}{% assign _c1_img = _img5 %}{% assign _c1_url = _url5 %}{% assign _c1_title = _title5 %}{% assign _c2_img = _img6 %}{% assign _c2_url = _url6 %}{% assign _c2_title = _title6 %}{% assign _idx1 = 5 %}{% assign _idx2 = 6 %}
+    {% endif %}
+  <div class="poster-row">
+    <div class="poster-card poster-card-2v">
+      <amp-img src="{{_c1_img}}" width="274" height="392" layout="responsive" class="poster-img" alt="{{_c1_title}}"></amp-img>
+    </div>
+    <div class="poster-card poster-card-2v">
+      <amp-img src="{{_c2_img}}" width="274" height="392" layout="responsive" class="poster-img" alt="{{_c2_title}}"></amp-img>
+    </div>
+  </div>
+  <div class="btn-row">
+    <form method="post" action-xhr="https://placeholder.tubi.tv/api/v1/amp/bookmark" class="bookmark-form bookmark-form-2v"
+          on="submit-success:AMP.setState({bookmarks: {item{{_idx1}}: !bookmarks.item{{_idx1}}}})">
+      <input type="hidden" name="title_url" value="{{_c1_url}}">
+      <input type="hidden" name="token" value="{{${user_id}}}">
+      <button type="submit" class="{{_btn_base}}"
+              [class]="bookmarks.item{{_idx1}} ? '{{_btn_active}}' : '{{_btn_base}}'">
+        <amp-img src="{{_icon_inactive}}" width="28" height="28" layout="fixed" class="bookmark-icon" [hidden]="bookmarks.item{{_idx1}}"></amp-img>
+        <amp-img src="{{_icon_active}}" width="28" height="28" layout="fixed" class="bookmark-icon" hidden [hidden]="!bookmarks.item{{_idx1}}"></amp-img>
+        <span [text]="bookmarks.item{{_idx1}} ? 'Added ✓' : 'Add to My List'">Add to My List</span>
+      </button>
+    </form>
+    <form method="post" action-xhr="https://placeholder.tubi.tv/api/v1/amp/bookmark" class="bookmark-form bookmark-form-2v"
+          on="submit-success:AMP.setState({bookmarks: {item{{_idx2}}: !bookmarks.item{{_idx2}}}})">
+      <input type="hidden" name="title_url" value="{{_c2_url}}">
+      <input type="hidden" name="token" value="{{${user_id}}}">
+      <button type="submit" class="{{_btn_base}}"
+              [class]="bookmarks.item{{_idx2}} ? '{{_btn_active}}' : '{{_btn_base}}'">
+        <amp-img src="{{_icon_inactive}}" width="28" height="28" layout="fixed" class="bookmark-icon" [hidden]="bookmarks.item{{_idx2}}"></amp-img>
+        <amp-img src="{{_icon_active}}" width="28" height="28" layout="fixed" class="bookmark-icon" hidden [hidden]="!bookmarks.item{{_idx2}}"></amp-img>
+        <span [text]="bookmarks.item{{_idx2}} ? 'Added ✓' : 'Add to My List'">Add to My List</span>
+      </button>
+    </form>
+  </div>
+    {% assign _offset = _offset | plus: 2 %}
+
+  {% elsif _rlt == "3v" %}
+    {% if _offset == 0 %}{% assign _c1_img = _img1 %}{% assign _c1_url = _url1 %}{% assign _c1_title = _title1 %}{% assign _c2_img = _img2 %}{% assign _c2_url = _url2 %}{% assign _c2_title = _title2 %}{% assign _c3_img = _img3 %}{% assign _c3_url = _url3 %}{% assign _c3_title = _title3 %}{% assign _idx1 = 1 %}{% assign _idx2 = 2 %}{% assign _idx3 = 3 %}
+    {% elsif _offset == 1 %}{% assign _c1_img = _img2 %}{% assign _c1_url = _url2 %}{% assign _c1_title = _title2 %}{% assign _c2_img = _img3 %}{% assign _c2_url = _url3 %}{% assign _c2_title = _title3 %}{% assign _c3_img = _img4 %}{% assign _c3_url = _url4 %}{% assign _c3_title = _title4 %}{% assign _idx1 = 2 %}{% assign _idx2 = 3 %}{% assign _idx3 = 4 %}
+    {% elsif _offset == 2 %}{% assign _c1_img = _img3 %}{% assign _c1_url = _url3 %}{% assign _c1_title = _title3 %}{% assign _c2_img = _img4 %}{% assign _c2_url = _url4 %}{% assign _c2_title = _title4 %}{% assign _c3_img = _img5 %}{% assign _c3_url = _url5 %}{% assign _c3_title = _title5 %}{% assign _idx1 = 3 %}{% assign _idx2 = 4 %}{% assign _idx3 = 5 %}
+    {% else %}{% assign _c1_img = _img4 %}{% assign _c1_url = _url4 %}{% assign _c1_title = _title4 %}{% assign _c2_img = _img5 %}{% assign _c2_url = _url5 %}{% assign _c2_title = _title5 %}{% assign _c3_img = _img6 %}{% assign _c3_url = _url6 %}{% assign _c3_title = _title6 %}{% assign _idx1 = 4 %}{% assign _idx2 = 5 %}{% assign _idx3 = 6 %}
+    {% endif %}
+  <div class="poster-row">
+    <div class="poster-card poster-card-3v">
+      <amp-img src="{{_c1_img}}" width="178" height="256" layout="responsive" class="poster-img" alt="{{_c1_title}}"></amp-img>
+    </div>
+    <div class="poster-card poster-card-3v">
+      <amp-img src="{{_c2_img}}" width="178" height="256" layout="responsive" class="poster-img" alt="{{_c2_title}}"></amp-img>
+    </div>
+    <div class="poster-card poster-card-3v">
+      <amp-img src="{{_c3_img}}" width="178" height="256" layout="responsive" class="poster-img" alt="{{_c3_title}}"></amp-img>
+    </div>
+  </div>
+  <div class="btn-row">
+    <form method="post" action-xhr="https://placeholder.tubi.tv/api/v1/amp/bookmark" class="bookmark-form bookmark-form-3v"
+          on="submit-success:AMP.setState({bookmarks: {item{{_idx1}}: !bookmarks.item{{_idx1}}}})">
+      <input type="hidden" name="title_url" value="{{_c1_url}}">
+      <input type="hidden" name="token" value="{{${user_id}}}">
+      <button type="submit" class="{{_btn3_base}}"
+              [class]="bookmarks.item{{_idx1}} ? '{{_btn3_active}}' : '{{_btn3_base}}'">
+        <amp-img src="{{_icon_inactive}}" width="20" height="20" layout="fixed" class="bookmark-icon-3v" [hidden]="bookmarks.item{{_idx1}}"></amp-img>
+        <amp-img src="{{_icon_active}}" width="20" height="20" layout="fixed" class="bookmark-icon-3v" hidden [hidden]="!bookmarks.item{{_idx1}}"></amp-img>
+        <span [text]="bookmarks.item{{_idx1}} ? '✓' : '+ List'">+ List</span>
+      </button>
+    </form>
+    <form method="post" action-xhr="https://placeholder.tubi.tv/api/v1/amp/bookmark" class="bookmark-form bookmark-form-3v"
+          on="submit-success:AMP.setState({bookmarks: {item{{_idx2}}: !bookmarks.item{{_idx2}}}})">
+      <input type="hidden" name="title_url" value="{{_c2_url}}">
+      <input type="hidden" name="token" value="{{${user_id}}}">
+      <button type="submit" class="{{_btn3_base}}"
+              [class]="bookmarks.item{{_idx2}} ? '{{_btn3_active}}' : '{{_btn3_base}}'">
+        <amp-img src="{{_icon_inactive}}" width="20" height="20" layout="fixed" class="bookmark-icon-3v" [hidden]="bookmarks.item{{_idx2}}"></amp-img>
+        <amp-img src="{{_icon_active}}" width="20" height="20" layout="fixed" class="bookmark-icon-3v" hidden [hidden]="!bookmarks.item{{_idx2}}"></amp-img>
+        <span [text]="bookmarks.item{{_idx2}} ? '✓' : '+ List'">+ List</span>
+      </button>
+    </form>
+    <form method="post" action-xhr="https://placeholder.tubi.tv/api/v1/amp/bookmark" class="bookmark-form bookmark-form-3v"
+          on="submit-success:AMP.setState({bookmarks: {item{{_idx3}}: !bookmarks.item{{_idx3}}}})">
+      <input type="hidden" name="title_url" value="{{_c3_url}}">
+      <input type="hidden" name="token" value="{{${user_id}}}">
+      <button type="submit" class="{{_btn3_base}}"
+              [class]="bookmarks.item{{_idx3}} ? '{{_btn3_active}}' : '{{_btn3_base}}'">
+        <amp-img src="{{_icon_inactive}}" width="20" height="20" layout="fixed" class="bookmark-icon-3v" [hidden]="bookmarks.item{{_idx3}}"></amp-img>
+        <amp-img src="{{_icon_active}}" width="20" height="20" layout="fixed" class="bookmark-icon-3v" hidden [hidden]="!bookmarks.item{{_idx3}}"></amp-img>
+        <span [text]="bookmarks.item{{_idx3}} ? '✓' : '+ List'">+ List</span>
+      </button>
+    </form>
+  </div>
+    {% assign _offset = _offset | plus: 3 %}
+  {% endif %}
+{% endfor %}
+</div>
+</body>
+</html>

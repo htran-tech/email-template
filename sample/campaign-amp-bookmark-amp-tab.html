@@ -1,0 +1,45 @@
+{% comment %}
+  ================================================================
+  AMP HTML TAB — Paste this in Braze's "AMP HTML" tab
+  ================================================================
+  This is the interactive version that Gmail renders.
+  It uses the SAME connected_content result as the Regular HTML tab.
+
+  NOTE: Braze processes Liquid in the AMP tab independently from the
+  HTML tab. You MUST include the connected_content call here too —
+  variables don't carry over between tabs.
+  ================================================================
+{% endcomment %}
+
+
+{% comment %} ---- API CALL (same as HTML tab) ---- {% endcomment %}
+
+{% assign container = 'most_popular' %}
+{% assign limit = 6 %}
+
+{% assign device_id = {{custom_attribute.${preferred_device_id}}} %}
+{% assign platform = {{custom_attribute.${preferred_user_platform} | downcase }} | default: 'web' %}
+
+{% if {{canvas.${api_id}}} != null %}
+{% assign campaign_id = '' %}
+{% assign canvas_id = {{canvas.${api_id}}} %}
+{% else %}
+{% assign campaign_id = {{campaign.${api_id}}} %}
+{% assign canvas_id = '' %}
+{% endif %}
+
+{% assign channel = 'EMAIL' %}
+
+{% connected_content https://crm.example.com/crm/external/ml-recommendations?container={{container}}&country={{${country} | default: 'US' }}&device_id={{device_id}}&user_id={{custom_attribute.${tubi_user_id}}}&tubi_id=null&limit={{limit}}&braze_id={{${braze_id}}}&platform={{platform}}&container_priority=1&variant_id={{campaign.${message_api_id}}}&campaign_id={{campaign_id}}&canvas_id={{canvas_id}}&channel={{channel}}&exclude_series=false&use_cache=true&rank_containers=false&region={{custom_attribute.${home_state}}}&language={{${language} | upcase }}&city={{${city} | url_escape }}&timezone={{${time_zone}}}&exclude_titles=&ranking_feature_flags=YOUR_RANKING_FLAGS :basic_auth tubi :save result :retry :cache_max_age 60 %}
+
+{% if result.count == 0 %}
+{% abort_message('No content to show') %}
+{% endif %}
+
+
+{% comment %} ---- AMP CONTENT ---- {% endcomment %}
+
+{% assign grid_result = result %}
+{% assign grid_headline = "Add to My List" %}
+{% assign grid_items_limit = 6 %}
+{{content_blocks.${AMP_poster_grid_bookmark}}}

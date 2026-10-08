@@ -1,0 +1,28 @@
+<!doctype html>
+<html ⚡4email>
+<head>
+  <meta charset="utf-8">
+  <script async src="https://cdn.ampproject.org/v0.js"></script>
+{% if amp_components contains "form" %}
+  <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+{% endif %}
+{% if amp_components contains "bind" %}
+  <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
+{% endif %}
+{% if amp_components contains "list" %}
+  <script async custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js"></script>
+{% endif %}
+{% if amp_components contains "carousel" %}
+  <script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
+{% endif %}
+{% if amp_components contains "mustache" %}
+  <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
+{% endif %}
+  <style amp4email-boilerplate>body{visibility:hidden}</style>
+  <style amp-custom>
+{{content_blocks.${AMP_css}}}
+  </style>
+</head>
+<body>
+<div class="amp-container">
+{% assign amp_components = null %}

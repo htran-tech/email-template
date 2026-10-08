@@ -1,0 +1,58 @@
+{% assign amp_components = "bind,form" %}
+{{content_blocks.${AMP_email_header}}}
+
+{% connected_content https://crm.example.com/crm/external/generate-amp-auth-token?user_id={{custom_attribute.${tubi_user_id}}}&endpoint=bookmark :basic_auth tubi :save amp_token %}
+
+{% assign image_url = "https://braze-images.com/appboy/communication/assets/image_assets/images/6a0b982cf1718300863658d8/original.png?1779144746" %}
+{% assign image_link = "https://tubitv.com/add-account" %}
+{% assign image_width = 1200 %}
+{% assign image_height = 1594 %}
+{{content_blocks.${AMP_image_only}}}
+
+{% assign container = "family_movies,kid_classics,saturday_morning_cartoons" %}
+{% assign limit = "7" %}
+{% assign exclude_titles = "200324859,300019823,100055572,100055715,100055571" %}
+{{content_blocks.${API_Connected_Content}}}
+
+{% assign grid_items_limit = "6" %}
+{% assign grid_headline = "Family Movies" %}
+{% assign grid_headline_url = "https://tubitv.com/category/family_movies" %}
+{% assign grid_cta_label = "Explore More" %}
+{% assign grid_cta_url = "https://tubitv.com/category/family_movies" %}
+{% assign grid_result = result %}
+{% assign grid_rows = "3v,3v" %}
+{{content_blocks.${AMP_poster_grid}}}
+
+{% assign grid_items_limit = "5" %}
+{% assign grid_headline = "Saturday Morning Cartoons" %}
+{% assign grid_headline_url = "https://tubitv.com/category/saturday_morning_cartoons" %}
+{% assign grid_cta_label = "Explore More" %}
+{% assign grid_cta_url = "https://tubitv.com/category/saturday_morning_cartoons" %}
+{% assign grid_result = result %}
+{% assign grid_container_index = 2 %}
+{% assign grid_interaction = "bookmark" %}
+{% assign grid_rows = "2v,3v" %}
+{% assign bookmark_user_id = {{custom_attribute.${tubi_user_id}}} %}
+{% assign bookmark_endpoint = "https://crm.production-public.tubi.io/api/v1/amp/bookmark" %}
+{{content_blocks.${AMP_poster_grid}}}
+
+{% assign headline_copy = "KID-FRIENDLY CLASSICS" %}
+{% assign headline_url = "https://tubitv.com/category/kid_classics" %}
+{{content_blocks.${AMP_headline_body}}}
+
+{% assign grid_item_1_img = "https://s3.us-west-1.amazonaws.com/img.adrise.tv/8995773d-9d56-40c9-b02f-c0660231ca7d.png" %}
+{% assign grid_item_1_landscape_img = "https://s3.us-west-1.amazonaws.com/img.adrise.tv/8995773d-9d56-40c9-b02f-c0660231ca7d.png" %}
+{% assign grid_item_1_url = "https://tubitv.com/series/300019823/sesame-street" %}
+{% assign grid_padding_bottom = 4 %}
+{{content_blocks.${AMP_poster_grid}}}
+
+{% assign grid_items_limit = "4" %}
+{% assign grid_padding_top = 4 %}
+{% assign grid_cta_label = "Explore More" %}
+{% assign grid_cta_url = "https://tubitv.com/category/kid_classics" %}
+{% assign grid_result = result %}
+{% assign grid_container_index = 1 %}
+{% assign grid_rows = "2l,2l" %}
+{{content_blocks.${AMP_poster_grid}}}
+
+{{content_blocks.${AMP_email_footer}}}

@@ -1,0 +1,48 @@
+{% comment %}
+  AMP Bookmark Form Test — Happy Path
+  Tests: real token + real content + form POST to bookmark endpoint
+  Debug: prints token response and user info at top
+{% endcomment %}
+
+{% assign amp_components = "bind,form,mustache" %}
+{{content_blocks.${AMP_email_header}}}
+
+{% comment %} === Fetch auth token === {% endcomment %}
+{% connected_content https://crm.example.com/crm/external/generate-amp-auth-token?user_id={{custom_attribute.${tubi_user_id}}}&endpoint=bookmark :basic_auth tubi :save amp_token %}
+
+{% comment %} === Fetch content recommendations === {% endcomment %}
+{% assign container = "most_liked,staff_picks,top_searched,trending,tubi_originals,movie_night,series_spotlight,family_movies,family_series,drama,horror,comedy,killer_thrillers,mystery,romance,reality_tv,sci_fi_and_fantasy" %}
+{% assign limit = "10" %}
+{% assign rank_containers = "true" %}
+{% assign exclude_titles = "100055550,0300020952,0300021079,100055553,100055551" %}
+{{content_blocks.${API_Connected_Content}}}
+
+{% comment %} === DEBUG: Print token + user info === {% endcomment %}
+{% assign headline_copy = "DEBUG: Token & User Info" %}
+{% assign body_copy = "" %}
+{{content_blocks.${AMP_headline_body}}}
+
+<div class="amp-content-pad" style="padding-bottom: 16px;">
+  <p class="amp-hb-body" style="color: #aaa; font-size: 12px; word-break: break-all;">
+    User ID: {{custom_attribute.${tubi_user_id}}}<br>
+    Token success: {{amp_token.success}}<br>
+    Auth token: {{amp_token.auth_token}}<br>
+    Endpoint: https://crm.production-public.tubi.io/api/v1/amp/bookmark
+  </p>
+</div>
+
+{% comment %} === Bookmark Grid === {% endcomment %}
+{% assign headline_copy = "Add to My List" %}
+{% assign body_copy = "Tap a button — should POST to endpoint and toggle icon on success" %}
+{{content_blocks.${AMP_headline_body}}}
+
+{% assign grid_interaction = "bookmark" %}
+{% assign grid_rows = "1l,2l,3v" %}
+{% assign grid_debug = "true" %}
+{% assign grid_result = result %}
+{% assign grid_items_limit = 6 %}
+{% assign bookmark_user_id = {{custom_attribute.${tubi_user_id}}} %}
+{% assign bookmark_endpoint = "https://crm.production-public.tubi.io/api/v1/amp/bookmark" %}
+{{content_blocks.${AMP_poster_grid}}}
+
+{{content_blocks.${AMP_email_footer}}}

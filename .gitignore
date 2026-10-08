@@ -1,4 +1,5 @@
-# Keep only: blocks/, docs/, Assets/ (plus this file)
+# Keep only: blocks/, docs/, Assets/, AMP/ (plus this file)
+# and the two AMP reference campaigns in sample/
 /*
 !.gitignore
 !blocks/
@@ -7,6 +8,12 @@
 !docs/**
 !Assets/
 !Assets/**
+!AMP/
+!AMP/**
+!sample/
+/sample/*
+!sample/campaign-amp-bookmark.html
+!sample/campaign-amp-bookmark-amp-tab.html
 
 .DS_Store
 Thumbs.db

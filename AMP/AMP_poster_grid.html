@@ -1,0 +1,403 @@
+{% assign grid_padding_top = grid_padding_top | default: 12 %}
+{% assign grid_padding_bottom = grid_padding_bottom | default: 12 %}
+{% assign _grid_layout_user = grid_layout | default: "__none__" %}
+{% assign grid_layout = grid_layout | default: "3v" %}
+{% assign grid_items_limit = grid_items_limit | default: 18 | plus: 0 %}
+{% if grid_items_limit > 18 %}{% assign grid_items_limit = 18 %}{% endif %}
+{% assign content_bg_color = content_bg_color | default: "transparent" %}
+{% assign grid_text_color = grid_text_color | default: "#ffffff" %}
+{% assign grid_headline = grid_headline | default: "" %}
+{% assign grid_headline_url = grid_headline_url | default: "" %}
+{% assign grid_body = grid_body | default: "" %}
+{% assign grid_cta_label = grid_cta_label | default: "" %}
+{% assign grid_cta_url = grid_cta_url | default: "" %}
+{% assign grid_cta_style = grid_cta_style | default: "primary" %}
+{% assign grid_interaction = grid_interaction | default: "none" %}
+{% if grid_interaction == "rate" %}{% assign grid_layout = "1l" %}{% assign _grid_layout_user = "1l" %}{% endif %}
+{% if grid_interaction == "bookmark" %}{% if amp_token.success == true %}{% assign _bookmark_mode = "interactive" %}{% else %}{% assign _bookmark_mode = "link" %}{% endif %}{% endif %}
+{% assign _bookmark_endpoint = bookmark_endpoint | default: "https://crm.production-public.tubi.io/api/v1/amp/bookmark" %}
+{% assign _bookmark_user_id = bookmark_user_id | default: "" %}
+{% assign _bk_icon = "https://braze-images.com/appboy/communication/assets/image_assets/images/6a1e0e429ad9f400839b521a/original.png?1780354626" %}
+{% assign _bk_icon_filled = "https://braze-images.com/appboy/communication/assets/image_assets/images/6a289e8d608a3500b9321621/original.png?1781046924" %}
+{% assign grid_debug = grid_debug | default: "false" %}
+{% assign grid_cta_watch = grid_cta_watch | default: "false" %}
+{% assign grid_cta_watch_label = grid_cta_watch_label | default: "Watch Now" %}
+{% assign grid_item_cta_style = grid_item_cta_style | default: "primary" %}
+{% if grid_item_cta_style == "primary" %}{% assign _icta_class = "amp-grid-btn" %}
+{% elsif grid_item_cta_style == "secondary-brand" %}{% assign _icta_class = "amp-grid-btn" %}{% assign _icta_style = "background:transparent; color:#ffff13; border:3px solid #ffff13;" %}
+{% else %}{% assign _icta_class = "amp-grid-btn amp-grid-btn-secondary" %}
+{% endif %}
+{% unless _utm %}{% assign _utm = "" %}{% endunless %}
+{% if grid_result and grid_api_items == nil %}
+  {% assign _container_idx = grid_container_index | default: 0 | plus: 0 %}
+  {% assign _has_containers = grid_result.containers[0] | default: "__none__" %}
+  {% if _has_containers != "__none__" %}
+    {% assign grid_api_items = grid_result.containers[_container_idx].items %}
+  {% else %}
+    {% assign grid_api_items = grid_result.items %}
+  {% endif %}
+{% endif %}
+{% assign _api_check = grid_api_items | default: "__none__" %}
+{% if _api_check != "__none__" %}
+  {% assign grid_api_items = grid_api_items | slice: 0, grid_items_limit %}
+  {% for item in grid_api_items %}
+    {% if forloop.index == 1 %}{% assign grid_item_1_img = item.posterarts_large[0].url %}{% assign grid_item_1_url = item.url %}{% assign grid_item_1_title = item.title %}{% assign grid_item_1_id = item.id %}{% assign grid_item_1_type = item.type %}{% assign grid_item_1_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 2 %}{% assign grid_item_2_img = item.posterarts_large[0].url %}{% assign grid_item_2_url = item.url %}{% assign grid_item_2_title = item.title %}{% assign grid_item_2_id = item.id %}{% assign grid_item_2_type = item.type %}{% assign grid_item_2_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 3 %}{% assign grid_item_3_img = item.posterarts_large[0].url %}{% assign grid_item_3_url = item.url %}{% assign grid_item_3_title = item.title %}{% assign grid_item_3_id = item.id %}{% assign grid_item_3_type = item.type %}{% assign grid_item_3_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 4 %}{% assign grid_item_4_img = item.posterarts_large[0].url %}{% assign grid_item_4_url = item.url %}{% assign grid_item_4_title = item.title %}{% assign grid_item_4_id = item.id %}{% assign grid_item_4_type = item.type %}{% assign grid_item_4_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 5 %}{% assign grid_item_5_img = item.posterarts_large[0].url %}{% assign grid_item_5_url = item.url %}{% assign grid_item_5_title = item.title %}{% assign grid_item_5_id = item.id %}{% assign grid_item_5_type = item.type %}{% assign grid_item_5_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 6 %}{% assign grid_item_6_img = item.posterarts_large[0].url %}{% assign grid_item_6_url = item.url %}{% assign grid_item_6_title = item.title %}{% assign grid_item_6_id = item.id %}{% assign grid_item_6_type = item.type %}{% assign grid_item_6_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 7 %}{% assign grid_item_7_img = item.posterarts_large[0].url %}{% assign grid_item_7_url = item.url %}{% assign grid_item_7_title = item.title %}{% assign grid_item_7_id = item.id %}{% assign grid_item_7_type = item.type %}{% assign grid_item_7_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 8 %}{% assign grid_item_8_img = item.posterarts_large[0].url %}{% assign grid_item_8_url = item.url %}{% assign grid_item_8_title = item.title %}{% assign grid_item_8_id = item.id %}{% assign grid_item_8_type = item.type %}{% assign grid_item_8_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 9 %}{% assign grid_item_9_img = item.posterarts_large[0].url %}{% assign grid_item_9_url = item.url %}{% assign grid_item_9_title = item.title %}{% assign grid_item_9_id = item.id %}{% assign grid_item_9_type = item.type %}{% assign grid_item_9_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 10 %}{% assign grid_item_10_img = item.posterarts_large[0].url %}{% assign grid_item_10_url = item.url %}{% assign grid_item_10_title = item.title %}{% assign grid_item_10_id = item.id %}{% assign grid_item_10_type = item.type %}{% assign grid_item_10_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 11 %}{% assign grid_item_11_img = item.posterarts_large[0].url %}{% assign grid_item_11_url = item.url %}{% assign grid_item_11_title = item.title %}{% assign grid_item_11_id = item.id %}{% assign grid_item_11_type = item.type %}{% assign grid_item_11_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 12 %}{% assign grid_item_12_img = item.posterarts_large[0].url %}{% assign grid_item_12_url = item.url %}{% assign grid_item_12_title = item.title %}{% assign grid_item_12_id = item.id %}{% assign grid_item_12_type = item.type %}{% assign grid_item_12_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 13 %}{% assign grid_item_13_img = item.posterarts_large[0].url %}{% assign grid_item_13_url = item.url %}{% assign grid_item_13_title = item.title %}{% assign grid_item_13_id = item.id %}{% assign grid_item_13_type = item.type %}{% assign grid_item_13_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 14 %}{% assign grid_item_14_img = item.posterarts_large[0].url %}{% assign grid_item_14_url = item.url %}{% assign grid_item_14_title = item.title %}{% assign grid_item_14_id = item.id %}{% assign grid_item_14_type = item.type %}{% assign grid_item_14_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 15 %}{% assign grid_item_15_img = item.posterarts_large[0].url %}{% assign grid_item_15_url = item.url %}{% assign grid_item_15_title = item.title %}{% assign grid_item_15_id = item.id %}{% assign grid_item_15_type = item.type %}{% assign grid_item_15_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 16 %}{% assign grid_item_16_img = item.posterarts_large[0].url %}{% assign grid_item_16_url = item.url %}{% assign grid_item_16_title = item.title %}{% assign grid_item_16_id = item.id %}{% assign grid_item_16_type = item.type %}{% assign grid_item_16_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 17 %}{% assign grid_item_17_img = item.posterarts_large[0].url %}{% assign grid_item_17_url = item.url %}{% assign grid_item_17_title = item.title %}{% assign grid_item_17_id = item.id %}{% assign grid_item_17_type = item.type %}{% assign grid_item_17_landscape_img = item.landscape_images[0].url %}{% endif %}
+    {% if forloop.index == 18 %}{% assign grid_item_18_img = item.posterarts_large[0].url %}{% assign grid_item_18_url = item.url %}{% assign grid_item_18_title = item.title %}{% assign grid_item_18_id = item.id %}{% assign grid_item_18_type = item.type %}{% assign grid_item_18_landscape_img = item.landscape_images[0].url %}{% endif %}
+  {% endfor %}
+  {% assign _api_count = grid_api_items.size %}
+  {% if _api_count > grid_items_limit %}{% assign _api_count = grid_items_limit %}{% endif %}
+  {% assign _gr = grid_rows | default: "__auto__" %}
+  {% if _gr == "__auto__" %}
+    {% assign _mod3 = _api_count | modulo: 3 %}
+    {% assign _remaining = _api_count %}
+    {% if _mod3 == 1 and _api_count >= 1 %}
+      {% if grid_api_items[0].landscape_images[0] %}
+        {% assign grid_item_1_img = grid_api_items[0].landscape_images[0].url %}
+      {% endif %}
+      {% assign grid_rows = "1l" %}
+      {% assign _remaining = _remaining | minus: 1 %}
+    {% elsif _mod3 == 2 and _api_count >= 2 %}
+      {% assign grid_rows = "2v" %}
+      {% assign _remaining = _remaining | minus: 2 %}
+    {% else %}
+      {% assign grid_rows = "" %}
+    {% endif %}
+    {% assign _3v_count = _remaining | divided_by: 3 %}
+    {% if _3v_count >= 1 %}{% if grid_rows != "" %}{% assign grid_rows = grid_rows | append: "," %}{% endif %}{% assign grid_rows = grid_rows | append: "3v" %}{% endif %}
+    {% if _3v_count >= 2 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
+    {% if _3v_count >= 3 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
+    {% if _3v_count >= 4 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
+    {% if _3v_count >= 5 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
+  {% endif %}
+{% endif %}
+{% assign _item_count = 0 %}
+{% if grid_item_1_img %}{% assign _item_count = 1 %}{% endif %}{% if grid_item_2_img %}{% assign _item_count = 2 %}{% endif %}{% if grid_item_3_img %}{% assign _item_count = 3 %}{% endif %}{% if grid_item_4_img %}{% assign _item_count = 4 %}{% endif %}{% if grid_item_5_img %}{% assign _item_count = 5 %}{% endif %}{% if grid_item_6_img %}{% assign _item_count = 6 %}{% endif %}
+{% if grid_item_7_img %}{% assign _item_count = 7 %}{% endif %}{% if grid_item_8_img %}{% assign _item_count = 8 %}{% endif %}{% if grid_item_9_img %}{% assign _item_count = 9 %}{% endif %}{% if grid_item_10_img %}{% assign _item_count = 10 %}{% endif %}{% if grid_item_11_img %}{% assign _item_count = 11 %}{% endif %}{% if grid_item_12_img %}{% assign _item_count = 12 %}{% endif %}
+{% if grid_item_13_img %}{% assign _item_count = 13 %}{% endif %}{% if grid_item_14_img %}{% assign _item_count = 14 %}{% endif %}{% if grid_item_15_img %}{% assign _item_count = 15 %}{% endif %}{% if grid_item_16_img %}{% assign _item_count = 16 %}{% endif %}{% if grid_item_17_img %}{% assign _item_count = 17 %}{% endif %}{% if grid_item_18_img %}{% assign _item_count = 18 %}{% endif %}
+{% if _item_count > grid_items_limit %}{% assign _item_count = grid_items_limit %}{% endif %}
+{% capture _imgs %}{{grid_item_1_img}}~^~{{grid_item_2_img}}~^~{{grid_item_3_img}}~^~{{grid_item_4_img}}~^~{{grid_item_5_img}}~^~{{grid_item_6_img}}~^~{{grid_item_7_img}}~^~{{grid_item_8_img}}~^~{{grid_item_9_img}}~^~{{grid_item_10_img}}~^~{{grid_item_11_img}}~^~{{grid_item_12_img}}~^~{{grid_item_13_img}}~^~{{grid_item_14_img}}~^~{{grid_item_15_img}}~^~{{grid_item_16_img}}~^~{{grid_item_17_img}}~^~{{grid_item_18_img}}{% endcapture %}
+{% assign _img_arr = _imgs | split: "~^~" %}
+{% capture _urls %}{{grid_item_1_url}}~^~{{grid_item_2_url}}~^~{{grid_item_3_url}}~^~{{grid_item_4_url}}~^~{{grid_item_5_url}}~^~{{grid_item_6_url}}~^~{{grid_item_7_url}}~^~{{grid_item_8_url}}~^~{{grid_item_9_url}}~^~{{grid_item_10_url}}~^~{{grid_item_11_url}}~^~{{grid_item_12_url}}~^~{{grid_item_13_url}}~^~{{grid_item_14_url}}~^~{{grid_item_15_url}}~^~{{grid_item_16_url}}~^~{{grid_item_17_url}}~^~{{grid_item_18_url}}{% endcapture %}
+{% assign _url_arr = _urls | split: "~^~" %}
+{% capture _titles %}{{grid_item_1_title}}~^~{{grid_item_2_title}}~^~{{grid_item_3_title}}~^~{{grid_item_4_title}}~^~{{grid_item_5_title}}~^~{{grid_item_6_title}}~^~{{grid_item_7_title}}~^~{{grid_item_8_title}}~^~{{grid_item_9_title}}~^~{{grid_item_10_title}}~^~{{grid_item_11_title}}~^~{{grid_item_12_title}}~^~{{grid_item_13_title}}~^~{{grid_item_14_title}}~^~{{grid_item_15_title}}~^~{{grid_item_16_title}}~^~{{grid_item_17_title}}~^~{{grid_item_18_title}}{% endcapture %}
+{% assign _title_arr = _titles | split: "~^~" %}
+{% capture _ids %}{{grid_item_1_id}}~^~{{grid_item_2_id}}~^~{{grid_item_3_id}}~^~{{grid_item_4_id}}~^~{{grid_item_5_id}}~^~{{grid_item_6_id}}~^~{{grid_item_7_id}}~^~{{grid_item_8_id}}~^~{{grid_item_9_id}}~^~{{grid_item_10_id}}~^~{{grid_item_11_id}}~^~{{grid_item_12_id}}~^~{{grid_item_13_id}}~^~{{grid_item_14_id}}~^~{{grid_item_15_id}}~^~{{grid_item_16_id}}~^~{{grid_item_17_id}}~^~{{grid_item_18_id}}{% endcapture %}
+{% assign _id_arr = _ids | split: "~^~" %}
+{% capture _types %}{{grid_item_1_type}}~^~{{grid_item_2_type}}~^~{{grid_item_3_type}}~^~{{grid_item_4_type}}~^~{{grid_item_5_type}}~^~{{grid_item_6_type}}~^~{{grid_item_7_type}}~^~{{grid_item_8_type}}~^~{{grid_item_9_type}}~^~{{grid_item_10_type}}~^~{{grid_item_11_type}}~^~{{grid_item_12_type}}~^~{{grid_item_13_type}}~^~{{grid_item_14_type}}~^~{{grid_item_15_type}}~^~{{grid_item_16_type}}~^~{{grid_item_17_type}}~^~{{grid_item_18_type}}{% endcapture %}
+{% assign _type_arr = _types | split: "~^~" %}
+{% capture _landscape_imgs %}{{grid_item_1_landscape_img}}~^~{{grid_item_2_landscape_img}}~^~{{grid_item_3_landscape_img}}~^~{{grid_item_4_landscape_img}}~^~{{grid_item_5_landscape_img}}~^~{{grid_item_6_landscape_img}}~^~{{grid_item_7_landscape_img}}~^~{{grid_item_8_landscape_img}}~^~{{grid_item_9_landscape_img}}~^~{{grid_item_10_landscape_img}}~^~{{grid_item_11_landscape_img}}~^~{{grid_item_12_landscape_img}}~^~{{grid_item_13_landscape_img}}~^~{{grid_item_14_landscape_img}}~^~{{grid_item_15_landscape_img}}~^~{{grid_item_16_landscape_img}}~^~{{grid_item_17_landscape_img}}~^~{{grid_item_18_landscape_img}}{% endcapture %}
+{% assign _landscape_img_arr = _landscape_imgs | split: "~^~" %}
+{% assign _gr = grid_rows | default: "__auto__" %}
+{% if _gr == "__auto__" %}
+  {% if _grid_layout_user == "__none__" %}
+    {% assign _mod3 = _item_count | modulo: 3 %}
+    {% assign _remaining = _item_count %}
+    {% if _mod3 == 1 and _item_count >= 1 %}
+      {% assign grid_rows = "1l" %}
+      {% assign _remaining = _remaining | minus: 1 %}
+    {% elsif _mod3 == 2 and _item_count >= 2 %}
+      {% assign grid_rows = "2v" %}
+      {% assign _remaining = _remaining | minus: 2 %}
+    {% else %}
+      {% assign grid_rows = "" %}
+    {% endif %}
+    {% assign _3v_count = _remaining | divided_by: 3 %}
+    {% if _3v_count >= 1 %}{% if grid_rows != "" %}{% assign grid_rows = grid_rows | append: "," %}{% endif %}{% assign grid_rows = grid_rows | append: "3v" %}{% endif %}
+    {% if _3v_count >= 2 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
+    {% if _3v_count >= 3 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
+    {% if _3v_count >= 4 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
+    {% if _3v_count >= 5 %}{% assign grid_rows = grid_rows | append: ",3v" %}{% endif %}
+  {% else %}
+    {% if grid_layout == "1l" %}{% assign _auto_ipr = 1 %}
+    {% elsif grid_layout == "2l" or grid_layout == "2v" %}{% assign _auto_ipr = 2 %}
+    {% else %}{% assign _auto_ipr = 3 %}{% endif %}
+    {% assign _num_rows = _item_count | divided_by: _auto_ipr %}
+    {% assign _rem = _item_count | modulo: _auto_ipr %}
+    {% if _rem > 0 %}{% assign _num_rows = _num_rows | plus: 1 %}{% endif %}
+    {% if _num_rows > 6 %}{% assign _num_rows = 6 %}{% endif %}
+    {% if _num_rows >= 1 %}{% assign grid_rows = grid_layout %}{% else %}{% assign grid_rows = "" %}{% endif %}
+    {% if _num_rows >= 2 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
+    {% if _num_rows >= 3 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
+    {% if _num_rows >= 4 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
+    {% if _num_rows >= 5 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
+    {% if _num_rows >= 6 %}{% assign grid_rows = grid_rows | append: "," | append: grid_layout %}{% endif %}
+  {% endif %}
+{% endif %}
+{% assign _row_layouts = grid_rows | split: "," %}
+{% if _item_count > 0 %}
+{% if grid_headline != "" or grid_body != "" %}
+<div class="amp-content-pad" style="padding-top: 42px; padding-bottom: 12px; text-align: center; background-color: {{content_bg_color}};">
+  {% if grid_headline != "" %}
+  <p class="amp-hb-headline" style="color: {{grid_text_color}}; margin-bottom: {% if grid_body != "" %}8{% else %}0{% endif %}px;">{% if grid_headline_url != "" %}<a href="{{grid_headline_url | append: _utm}}">{% endif %}{{grid_headline}}{% if grid_headline_url != "" %}</a>{% endif %}</p>
+  {% endif %}
+  {% if grid_body != "" %}
+  <p class="amp-hb-body" style="color: {{grid_text_color}};">{{grid_body}}</p>
+  {% endif %}
+</div>
+{% endif %}
+{% if grid_interaction == "bookmark" and _bookmark_mode == "interactive" %}
+<amp-state id="bookmarks"><script type="application/json">{"i1":false,"i2":false,"i3":false,"i4":false,"i5":false,"i6":false,"i7":false,"i8":false,"i9":false,"i10":false,"i11":false,"i12":false,"i13":false,"i14":false,"i15":false,"i16":false,"i17":false,"i18":false}</script></amp-state>
+{% elsif grid_interaction == "rate" %}
+<amp-state id="ratings"><script type="application/json">{"i1":"","i2":"","i3":"","i4":"","i5":"","i6":"","i7":"","i8":"","i9":"","i10":"","i11":"","i12":"","i13":"","i14":"","i15":"","i16":"","i17":"","i18":""}</script></amp-state>
+{% endif %}
+<div class="amp-grid" style="padding-top: {{grid_padding_top}}px; padding-bottom: {{grid_padding_bottom}}px; background-color: {{content_bg_color}};">
+{% assign _offset = 0 %}
+{% for _rlt in _row_layouts %}
+  {% assign _i1 = _offset %}
+  {% assign _i2 = _offset | plus: 1 %}
+  {% assign _i3 = _offset | plus: 2 %}
+  {% if _rlt == "1l" %}
+    {% assign _c1_img = _img_arr[_i1] %}{% if _landscape_img_arr[_i1] != "" %}{% assign _c1_img = _landscape_img_arr[_i1] %}{% endif %}{% assign _c1_url = _url_arr[_i1] | append: _utm %}{% assign _c1_title = _title_arr[_i1] %}
+    {% assign _idx1 = _i1 | plus: 1 %}
+  <div class="amp-grid-row">
+    <div class="amp-grid-poster">
+      {% if grid_interaction == "none" or _bookmark_mode == "link" %}<a href="{{_c1_url}}" target="_blank">{% endif %}<amp-img src="{{_c1_img}}" alt="{{_c1_title}}" width="560" height="315" layout="responsive"></amp-img>{% if grid_interaction == "none" or _bookmark_mode == "link" %}</a>{% endif %}
+    </div>
+  </div>
+  {% if grid_interaction == "bookmark" and _bookmark_mode == "interactive" %}
+  <div class="amp-grid-btn-row">
+    <form method="post" action-xhr="{{_bookmark_endpoint}}" on="submit-success:AMP.setState({bookmarks:{i{{_idx1}}: !bookmarks.i{{_idx1}}}})">
+      <input type="hidden" name="authToken" value="{{amp_token.auth_token}}"><input type="hidden" name="userId" value="{{_bookmark_user_id}}"><input type="hidden" name="contentId" value="{{_id_arr[_i1]}}"><input type="hidden" name="contentType" value="{{_type_arr[_i1]}}"><input type="hidden" name="bookmarked" value="true" [value]="bookmarks.i{{_idx1}} == false ? 'true' : 'false'">
+      <button type="submit" class="amp-grid-btn"><span>Add to My List</span><span class="amp-icon-m"><amp-img src="{{_bk_icon}}" width="14" height="14" layout="fixed" [hidden]="bookmarks.i{{_idx1}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="14" height="14" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx1}}"></amp-img></span><span class="amp-icon-d"><amp-img src="{{_bk_icon}}" width="24" height="24" layout="fixed" [hidden]="bookmarks.i{{_idx1}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="24" height="24" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx1}}"></amp-img></span></button>
+      {% if grid_debug == "true" %}<div submit-success><template type="amp-mustache">{% raw %}<p style="color:#0f0;font-size:10px;margin:4px 0 0;">{{message}} | success: {{success}}</p>{% endraw %}</template></div>{% endif %}
+    </form>
+  </div>
+  {% elsif grid_interaction == "bookmark" and _bookmark_mode == "link" %}
+  <div class="amp-grid-btn-row">
+    <a href="{{_c1_url}}" target="_blank" class="amp-grid-btn">Add to My List</a>
+  </div>
+  {% elsif grid_interaction == "rate" %}
+  <div class="amp-grid-btn-row">
+    <div role="button" tabindex="0" class="amp-grid-btn" on="tap:AMP.setState({ratings:{i{{_idx1}}: ratings.i{{_idx1}} == 'like' ? '' : 'like'}})">
+      <span>Like</span>
+      <span class="amp-icon-m"><amp-img src="https://braze-images.com/appboy/communication/assets/image_assets/images/6a1e0e426df28f0081236221/original.png?1780354626" width="14" height="14" layout="fixed" [hidden]="ratings.i{{_idx1}} == 'like'"></amp-img><amp-img src="https://braze-images.com/appboy/communication/assets/image_assets/images/6a1e0e4214351900839e2e5b/original.png?1780354626" width="14" height="14" layout="fixed" hidden [hidden]="ratings.i{{_idx1}} != 'like'"></amp-img></span>
+      <span class="amp-icon-d"><amp-img src="https://braze-images.com/appboy/communication/assets/image_assets/images/6a1e0e426df28f0081236221/original.png?1780354626" width="24" height="24" layout="fixed" [hidden]="ratings.i{{_idx1}} == 'like'"></amp-img><amp-img src="https://braze-images.com/appboy/communication/assets/image_assets/images/6a1e0e4214351900839e2e5b/original.png?1780354626" width="24" height="24" layout="fixed" hidden [hidden]="ratings.i{{_idx1}} != 'like'"></amp-img></span>
+    </div>
+    <div role="button" tabindex="0" class="amp-grid-btn-outline" on="tap:AMP.setState({ratings:{i{{_idx1}}: ratings.i{{_idx1}} == 'dislike' ? '' : 'dislike'}})">
+      <span>Dislike</span>
+      <span class="amp-icon-m"><amp-img src="https://braze-images.com/appboy/communication/assets/image_assets/images/6a1e0e42ee8d9b009e3ef9e5/original.png?1780354626" width="14" height="14" layout="fixed" [hidden]="ratings.i{{_idx1}} == 'dislike'"></amp-img><amp-img src="https://braze-images.com/appboy/communication/assets/image_assets/images/6a1e0e42ee8d9b009e3ef9e5/original.png?1780354626" width="14" height="14" layout="fixed" hidden [hidden]="ratings.i{{_idx1}} != 'dislike'"></amp-img></span>
+      <span class="amp-icon-d"><amp-img src="https://braze-images.com/appboy/communication/assets/image_assets/images/6a1e0e42ee8d9b009e3ef9e5/original.png?1780354626" width="24" height="24" layout="fixed" [hidden]="ratings.i{{_idx1}} == 'dislike'"></amp-img><amp-img src="https://braze-images.com/appboy/communication/assets/image_assets/images/6a1e0e42ee8d9b009e3ef9e5/original.png?1780354626" width="24" height="24" layout="fixed" hidden [hidden]="ratings.i{{_idx1}} != 'dislike'"></amp-img></span>
+    </div>
+  </div>
+  {% elsif grid_cta_watch == "true" and grid_interaction == "none" %}
+  <div class="amp-grid-btn-row">
+    <a href="{{_c1_url}}" target="_blank" class="{{_icta_class}}"{% if _icta_style %} style="{{_icta_style}}"{% endif %}>{{grid_cta_watch_label}}</a>
+  </div>
+  {% endif %}
+    {% assign _offset = _offset | plus: 1 %}
+  {% elsif _rlt == "2v" %}
+    {% assign _c1_img = _img_arr[_i1] %}{% assign _c1_url = _url_arr[_i1] | append: _utm %}{% assign _c1_title = _title_arr[_i1] %}
+    {% assign _c2_img = _img_arr[_i2] %}{% assign _c2_url = _url_arr[_i2] | append: _utm %}{% assign _c2_title = _title_arr[_i2] %}
+    {% assign _idx1 = _i1 | plus: 1 %}{% assign _idx2 = _i2 | plus: 1 %}
+  <div class="amp-grid-row">
+    <div class="amp-grid-poster">
+      {% if grid_interaction == "none" or _bookmark_mode == "link" %}<a href="{{_c1_url}}" target="_blank">{% endif %}<amp-img src="{{_c1_img}}" alt="{{_c1_title}}" width="274" height="392" layout="responsive"></amp-img>{% if grid_interaction == "none" or _bookmark_mode == "link" %}</a>{% endif %}
+    </div>
+    <div class="amp-grid-poster">
+      {% if grid_interaction == "none" or _bookmark_mode == "link" %}<a href="{{_c2_url}}" target="_blank">{% endif %}<amp-img src="{{_c2_img}}" alt="{{_c2_title}}" width="274" height="392" layout="responsive"></amp-img>{% if grid_interaction == "none" or _bookmark_mode == "link" %}</a>{% endif %}
+    </div>
+  </div>
+  {% if grid_interaction == "bookmark" and _bookmark_mode == "interactive" %}
+  <div class="amp-grid-btn-row">
+    <form method="post" action-xhr="{{_bookmark_endpoint}}" on="submit-success:AMP.setState({bookmarks:{i{{_idx1}}: !bookmarks.i{{_idx1}}}})">
+      <input type="hidden" name="authToken" value="{{amp_token.auth_token}}"><input type="hidden" name="userId" value="{{_bookmark_user_id}}"><input type="hidden" name="contentId" value="{{_id_arr[_i1]}}"><input type="hidden" name="contentType" value="{{_type_arr[_i1]}}"><input type="hidden" name="bookmarked" value="true" [value]="bookmarks.i{{_idx1}} == false ? 'true' : 'false'">
+      <button type="submit" class="amp-grid-btn"><span>Add to My List</span><span class="amp-icon-m"><amp-img src="{{_bk_icon}}" width="14" height="14" layout="fixed" [hidden]="bookmarks.i{{_idx1}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="14" height="14" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx1}}"></amp-img></span><span class="amp-icon-d"><amp-img src="{{_bk_icon}}" width="24" height="24" layout="fixed" [hidden]="bookmarks.i{{_idx1}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="24" height="24" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx1}}"></amp-img></span></button>
+      {% if grid_debug == "true" %}<div submit-success><template type="amp-mustache">{% raw %}<p style="color:#0f0;font-size:10px;margin:4px 0 0;">{{message}} | success: {{success}}</p>{% endraw %}</template></div>{% endif %}
+    </form>
+    <form method="post" action-xhr="{{_bookmark_endpoint}}" on="submit-success:AMP.setState({bookmarks:{i{{_idx2}}: !bookmarks.i{{_idx2}}}})">
+      <input type="hidden" name="authToken" value="{{amp_token.auth_token}}"><input type="hidden" name="userId" value="{{_bookmark_user_id}}"><input type="hidden" name="contentId" value="{{_id_arr[_i2]}}"><input type="hidden" name="contentType" value="{{_type_arr[_i2]}}"><input type="hidden" name="bookmarked" value="true" [value]="bookmarks.i{{_idx2}} == false ? 'true' : 'false'">
+      <button type="submit" class="amp-grid-btn"><span>Add to My List</span><span class="amp-icon-m"><amp-img src="{{_bk_icon}}" width="14" height="14" layout="fixed" [hidden]="bookmarks.i{{_idx2}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="14" height="14" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx2}}"></amp-img></span><span class="amp-icon-d"><amp-img src="{{_bk_icon}}" width="24" height="24" layout="fixed" [hidden]="bookmarks.i{{_idx2}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="24" height="24" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx2}}"></amp-img></span></button>
+      {% if grid_debug == "true" %}<div submit-success><template type="amp-mustache">{% raw %}<p style="color:#0f0;font-size:10px;margin:4px 0 0;">{{message}} | success: {{success}}</p>{% endraw %}</template></div>{% endif %}
+    </form>
+  </div>
+  {% elsif grid_interaction == "bookmark" and _bookmark_mode == "link" %}
+  <div class="amp-grid-btn-row">
+    <a href="{{_c1_url}}" target="_blank" class="amp-grid-btn">Add to My List</a>
+    <a href="{{_c2_url}}" target="_blank" class="amp-grid-btn">Add to My List</a>
+  </div>
+  {% elsif grid_cta_watch == "true" and grid_interaction == "none" %}
+  <div class="amp-grid-btn-row">
+    <a href="{{_c1_url}}" target="_blank" class="{{_icta_class}}"{% if _icta_style %} style="{{_icta_style}}"{% endif %}>{{grid_cta_watch_label}}</a>
+    <a href="{{_c2_url}}" target="_blank" class="{{_icta_class}}"{% if _icta_style %} style="{{_icta_style}}"{% endif %}>{{grid_cta_watch_label}}</a>
+  </div>
+  {% endif %}
+    {% assign _offset = _offset | plus: 2 %}
+  {% elsif _rlt == "2l" %}
+    {% assign _c1_img = _img_arr[_i1] %}{% if _landscape_img_arr[_i1] != "" %}{% assign _c1_img = _landscape_img_arr[_i1] %}{% endif %}{% assign _c1_url = _url_arr[_i1] | append: _utm %}{% assign _c1_title = _title_arr[_i1] %}
+    {% assign _c2_img = _img_arr[_i2] %}{% if _landscape_img_arr[_i2] != "" %}{% assign _c2_img = _landscape_img_arr[_i2] %}{% endif %}{% assign _c2_url = _url_arr[_i2] | append: _utm %}{% assign _c2_title = _title_arr[_i2] %}
+    {% assign _idx1 = _i1 | plus: 1 %}{% assign _idx2 = _i2 | plus: 1 %}
+  <div class="amp-grid-row">
+    <div class="amp-grid-poster">
+      {% if grid_interaction == "none" or _bookmark_mode == "link" %}<a href="{{_c1_url}}" target="_blank">{% endif %}<amp-img src="{{_c1_img}}" alt="{{_c1_title}}" width="274" height="154" layout="responsive"></amp-img>{% if grid_interaction == "none" or _bookmark_mode == "link" %}</a>{% endif %}
+    </div>
+    <div class="amp-grid-poster">
+      {% if grid_interaction == "none" or _bookmark_mode == "link" %}<a href="{{_c2_url}}" target="_blank">{% endif %}<amp-img src="{{_c2_img}}" alt="{{_c2_title}}" width="274" height="154" layout="responsive"></amp-img>{% if grid_interaction == "none" or _bookmark_mode == "link" %}</a>{% endif %}
+    </div>
+  </div>
+  {% if grid_interaction == "bookmark" and _bookmark_mode == "interactive" %}
+  <div class="amp-grid-btn-row">
+    <form method="post" action-xhr="{{_bookmark_endpoint}}" on="submit-success:AMP.setState({bookmarks:{i{{_idx1}}: !bookmarks.i{{_idx1}}}})">
+      <input type="hidden" name="authToken" value="{{amp_token.auth_token}}"><input type="hidden" name="userId" value="{{_bookmark_user_id}}"><input type="hidden" name="contentId" value="{{_id_arr[_i1]}}"><input type="hidden" name="contentType" value="{{_type_arr[_i1]}}"><input type="hidden" name="bookmarked" value="true" [value]="bookmarks.i{{_idx1}} == false ? 'true' : 'false'">
+      <button type="submit" class="amp-grid-btn"><span>Add to My List</span><span class="amp-icon-m"><amp-img src="{{_bk_icon}}" width="14" height="14" layout="fixed" [hidden]="bookmarks.i{{_idx1}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="14" height="14" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx1}}"></amp-img></span><span class="amp-icon-d"><amp-img src="{{_bk_icon}}" width="24" height="24" layout="fixed" [hidden]="bookmarks.i{{_idx1}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="24" height="24" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx1}}"></amp-img></span></button>
+      {% if grid_debug == "true" %}<div submit-success><template type="amp-mustache">{% raw %}<p style="color:#0f0;font-size:10px;margin:4px 0 0;">{{message}} | success: {{success}}</p>{% endraw %}</template></div>{% endif %}
+    </form>
+    <form method="post" action-xhr="{{_bookmark_endpoint}}" on="submit-success:AMP.setState({bookmarks:{i{{_idx2}}: !bookmarks.i{{_idx2}}}})">
+      <input type="hidden" name="authToken" value="{{amp_token.auth_token}}"><input type="hidden" name="userId" value="{{_bookmark_user_id}}"><input type="hidden" name="contentId" value="{{_id_arr[_i2]}}"><input type="hidden" name="contentType" value="{{_type_arr[_i2]}}"><input type="hidden" name="bookmarked" value="true" [value]="bookmarks.i{{_idx2}} == false ? 'true' : 'false'">
+      <button type="submit" class="amp-grid-btn"><span>Add to My List</span><span class="amp-icon-m"><amp-img src="{{_bk_icon}}" width="14" height="14" layout="fixed" [hidden]="bookmarks.i{{_idx2}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="14" height="14" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx2}}"></amp-img></span><span class="amp-icon-d"><amp-img src="{{_bk_icon}}" width="24" height="24" layout="fixed" [hidden]="bookmarks.i{{_idx2}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="24" height="24" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx2}}"></amp-img></span></button>
+      {% if grid_debug == "true" %}<div submit-success><template type="amp-mustache">{% raw %}<p style="color:#0f0;font-size:10px;margin:4px 0 0;">{{message}} | success: {{success}}</p>{% endraw %}</template></div>{% endif %}
+    </form>
+  </div>
+  {% elsif grid_interaction == "bookmark" and _bookmark_mode == "link" %}
+  <div class="amp-grid-btn-row">
+    <a href="{{_c1_url}}" target="_blank" class="amp-grid-btn">Add to My List</a>
+    <a href="{{_c2_url}}" target="_blank" class="amp-grid-btn">Add to My List</a>
+  </div>
+  {% elsif grid_cta_watch == "true" and grid_interaction == "none" %}
+  <div class="amp-grid-btn-row">
+    <a href="{{_c1_url}}" target="_blank" class="{{_icta_class}}"{% if _icta_style %} style="{{_icta_style}}"{% endif %}>{{grid_cta_watch_label}}</a>
+    <a href="{{_c2_url}}" target="_blank" class="{{_icta_class}}"{% if _icta_style %} style="{{_icta_style}}"{% endif %}>{{grid_cta_watch_label}}</a>
+  </div>
+  {% endif %}
+    {% assign _offset = _offset | plus: 2 %}
+  {% elsif _rlt == "3v" %}
+    {% assign _c1_img = _img_arr[_i1] %}{% assign _c1_url = _url_arr[_i1] | append: _utm %}{% assign _c1_title = _title_arr[_i1] %}
+    {% assign _c2_img = _img_arr[_i2] %}{% assign _c2_url = _url_arr[_i2] | append: _utm %}{% assign _c2_title = _title_arr[_i2] %}
+    {% assign _c3_img = _img_arr[_i3] %}{% assign _c3_url = _url_arr[_i3] | append: _utm %}{% assign _c3_title = _title_arr[_i3] %}
+    {% assign _idx1 = _i1 | plus: 1 %}{% assign _idx2 = _i2 | plus: 1 %}{% assign _idx3 = _i3 | plus: 1 %}
+  <div class="amp-grid-row">
+    <div class="amp-grid-poster">
+      {% if grid_interaction == "none" or _bookmark_mode == "link" %}<a href="{{_c1_url}}" target="_blank">{% endif %}<amp-img src="{{_c1_img}}" alt="{{_c1_title}}" width="178" height="256" layout="responsive"></amp-img>{% if grid_interaction == "none" or _bookmark_mode == "link" %}</a>{% endif %}
+    </div>
+    <div class="amp-grid-poster">
+      {% if grid_interaction == "none" or _bookmark_mode == "link" %}<a href="{{_c2_url}}" target="_blank">{% endif %}<amp-img src="{{_c2_img}}" alt="{{_c2_title}}" width="178" height="256" layout="responsive"></amp-img>{% if grid_interaction == "none" or _bookmark_mode == "link" %}</a>{% endif %}
+    </div>
+    <div class="amp-grid-poster">
+      {% if grid_interaction == "none" or _bookmark_mode == "link" %}<a href="{{_c3_url}}" target="_blank">{% endif %}<amp-img src="{{_c3_img}}" alt="{{_c3_title}}" width="178" height="256" layout="responsive"></amp-img>{% if grid_interaction == "none" or _bookmark_mode == "link" %}</a>{% endif %}
+    </div>
+  </div>
+  {% if grid_interaction == "bookmark" and _bookmark_mode == "interactive" %}
+  <div class="amp-grid-btn-row">
+    <form method="post" action-xhr="{{_bookmark_endpoint}}" on="submit-success:AMP.setState({bookmarks:{i{{_idx1}}: !bookmarks.i{{_idx1}}}})">
+      <input type="hidden" name="authToken" value="{{amp_token.auth_token}}"><input type="hidden" name="userId" value="{{_bookmark_user_id}}"><input type="hidden" name="contentId" value="{{_id_arr[_i1]}}"><input type="hidden" name="contentType" value="{{_type_arr[_i1]}}"><input type="hidden" name="bookmarked" value="true" [value]="bookmarks.i{{_idx1}} == false ? 'true' : 'false'">
+      <button type="submit" class="amp-grid-btn"><span>+ My List</span><span class="amp-icon-m"><amp-img src="{{_bk_icon}}" width="14" height="14" layout="fixed" [hidden]="bookmarks.i{{_idx1}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="14" height="14" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx1}}"></amp-img></span><span class="amp-icon-d"><amp-img src="{{_bk_icon}}" width="24" height="24" layout="fixed" [hidden]="bookmarks.i{{_idx1}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="24" height="24" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx1}}"></amp-img></span></button>
+      {% if grid_debug == "true" %}<div submit-success><template type="amp-mustache">{% raw %}<p style="color:#0f0;font-size:10px;margin:4px 0 0;">{{message}} | success: {{success}}</p>{% endraw %}</template></div>{% endif %}
+    </form>
+    <form method="post" action-xhr="{{_bookmark_endpoint}}" on="submit-success:AMP.setState({bookmarks:{i{{_idx2}}: !bookmarks.i{{_idx2}}}})">
+      <input type="hidden" name="authToken" value="{{amp_token.auth_token}}"><input type="hidden" name="userId" value="{{_bookmark_user_id}}"><input type="hidden" name="contentId" value="{{_id_arr[_i2]}}"><input type="hidden" name="contentType" value="{{_type_arr[_i2]}}"><input type="hidden" name="bookmarked" value="true" [value]="bookmarks.i{{_idx2}} == false ? 'true' : 'false'">
+      <button type="submit" class="amp-grid-btn"><span>+ My List</span><span class="amp-icon-m"><amp-img src="{{_bk_icon}}" width="14" height="14" layout="fixed" [hidden]="bookmarks.i{{_idx2}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="14" height="14" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx2}}"></amp-img></span><span class="amp-icon-d"><amp-img src="{{_bk_icon}}" width="24" height="24" layout="fixed" [hidden]="bookmarks.i{{_idx2}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="24" height="24" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx2}}"></amp-img></span></button>
+      {% if grid_debug == "true" %}<div submit-success><template type="amp-mustache">{% raw %}<p style="color:#0f0;font-size:10px;margin:4px 0 0;">{{message}} | success: {{success}}</p>{% endraw %}</template></div>{% endif %}
+    </form>
+    <form method="post" action-xhr="{{_bookmark_endpoint}}" on="submit-success:AMP.setState({bookmarks:{i{{_idx3}}: !bookmarks.i{{_idx3}}}})">
+      <input type="hidden" name="authToken" value="{{amp_token.auth_token}}"><input type="hidden" name="userId" value="{{_bookmark_user_id}}"><input type="hidden" name="contentId" value="{{_id_arr[_i3]}}"><input type="hidden" name="contentType" value="{{_type_arr[_i3]}}"><input type="hidden" name="bookmarked" value="true" [value]="bookmarks.i{{_idx3}} == false ? 'true' : 'false'">
+      <button type="submit" class="amp-grid-btn"><span>+ My List</span><span class="amp-icon-m"><amp-img src="{{_bk_icon}}" width="14" height="14" layout="fixed" [hidden]="bookmarks.i{{_idx3}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="14" height="14" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx3}}"></amp-img></span><span class="amp-icon-d"><amp-img src="{{_bk_icon}}" width="24" height="24" layout="fixed" [hidden]="bookmarks.i{{_idx3}}"></amp-img><amp-img src="{{_bk_icon_filled}}" width="24" height="24" layout="fixed" hidden [hidden]="!bookmarks.i{{_idx3}}"></amp-img></span></button>
+      {% if grid_debug == "true" %}<div submit-success><template type="amp-mustache">{% raw %}<p style="color:#0f0;font-size:10px;margin:4px 0 0;">{{message}} | success: {{success}}</p>{% endraw %}</template></div>{% endif %}
+    </form>
+  </div>
+  {% elsif grid_interaction == "bookmark" and _bookmark_mode == "link" %}
+  <div class="amp-grid-btn-row">
+    <a href="{{_c1_url}}" target="_blank" class="amp-grid-btn">+ My List</a>
+    <a href="{{_c2_url}}" target="_blank" class="amp-grid-btn">+ My List</a>
+    <a href="{{_c3_url}}" target="_blank" class="amp-grid-btn">+ My List</a>
+  </div>
+  {% elsif grid_cta_watch == "true" and grid_interaction == "none" %}
+  <div class="amp-grid-btn-row">
+    <a href="{{_c1_url}}" target="_blank" class="{{_icta_class}}"{% if _icta_style %} style="{{_icta_style}}"{% endif %}>{{grid_cta_watch_label}}</a>
+    <a href="{{_c2_url}}" target="_blank" class="{{_icta_class}}"{% if _icta_style %} style="{{_icta_style}}"{% endif %}>{{grid_cta_watch_label}}</a>
+    <a href="{{_c3_url}}" target="_blank" class="{{_icta_class}}"{% if _icta_style %} style="{{_icta_style}}"{% endif %}>{{grid_cta_watch_label}}</a>
+  </div>
+  {% endif %}
+    {% assign _offset = _offset | plus: 3 %}
+  {% endif %}
+{% endfor %}
+</div>
+{% if grid_cta_label != "" and grid_cta_url != "" %}
+{% if grid_cta_style == "secondary" %}{% assign _gcta_bg = "transparent" %}{% assign _gcta_tc = grid_text_color %}{% assign _gcta_bd = " border: 3px solid #cccccc;" %}
+{% elsif grid_cta_style == "secondary-brand" %}{% assign _gcta_bg = "transparent" %}{% assign _gcta_tc = "#ffff13" %}{% assign _gcta_bd = " border: 3px solid #ffff13;" %}
+{% else %}{% assign _gcta_bg = "#ffff13" %}{% assign _gcta_tc = "#000000" %}{% assign _gcta_bd = " border: none;" %}
+{% endif %}
+<div class="amp-content-pad" style="padding-top: 0; padding-bottom: 12px; background-color: {{content_bg_color}}; display: flex; justify-content: center;">
+  <a href="{{grid_cta_url | append: _utm}}" target="_blank" class="amp-cta amp-cta-full" style="border-radius: 200px; background-color: {{_gcta_bg}}; color: {{_gcta_tc}};{{_gcta_bd}}">{{grid_cta_label}}</a>
+</div>
+{% endif %}
+{% endif %}
+{% assign _bookmark_mode = null %}
+{% assign _bookmark_endpoint = null %}
+{% assign _bookmark_user_id = null %}
+{% assign _id_arr = null %}
+{% assign _ids = null %}
+{% assign _type_arr = null %}
+{% assign _types = null %}
+{% assign _landscape_img_arr = null %}
+{% assign _landscape_imgs = null %}
+{% assign grid_padding_top = null %}
+{% assign grid_padding_bottom = null %}
+{% assign _grid_layout_user = null %}
+{% assign grid_layout = null %}
+{% assign grid_items_limit = null %}
+{% assign content_bg_color = null %}
+{% assign grid_text_color = null %}
+{% assign grid_headline = null %}
+{% assign grid_headline_url = null %}
+{% assign grid_body = null %}
+{% assign grid_cta_label = null %}
+{% assign grid_cta_url = null %}
+{% assign grid_cta_style = null %}
+{% assign grid_interaction = null %}
+{% assign grid_cta_watch = null %}
+{% assign grid_cta_watch_label = null %}
+{% assign grid_item_cta_style = null %}
+{% assign _icta_class = null %}
+{% assign _icta_style = null %}
+{% assign _idx1 = null %}
+{% assign _idx2 = null %}
+{% assign _idx3 = null %}
+{% assign _gcta_bg = null %}
+{% assign _gcta_tc = null %}
+{% assign _gcta_bd = null %}
+{% assign _bk_icon = null %}
+{% assign _bk_icon_filled = null %}
+{% assign grid_result = null %}
+{% assign grid_container_index = null %}
+{% assign _container_idx = null %}
+{% assign _has_containers = null %}
+{% assign grid_api_items = null %}
+{% assign _api_check = null %}
+{% assign _api_count = null %}
+{% assign _mod3 = null %}
+{% assign _remaining = null %}
+{% assign _3v_count = null %}
+{% assign _auto_ipr = null %}
+{% assign _num_rows = null %}
+{% assign _rem = null %}
+{% assign grid_rows = null %}
+{% assign _row_layouts = null %}
+{% assign _item_count = null %}
+{% assign _offset = null %}
+{% assign _i1 = null %}
+{% assign _i2 = null %}
+{% assign _i3 = null %}
+{% assign _c1_img = null %}
+{% assign _c1_url = null %}{% assign _c1_title = null %}{% assign _c2_img = null %}{% assign _c2_url = null %}{% assign _c2_title = null %}{% assign _c3_img = null %}{% assign _c3_url = null %}{% assign _c3_title = null %}
+{% assign _imgs = null %}{% assign _img_arr = null %}{% assign _urls = null %}{% assign _url_arr = null %}{% assign _titles = null %}{% assign _title_arr = null %}{% assign _gr = null %}
+{% assign grid_item_1_img = null %}{% assign grid_item_1_url = null %}{% assign grid_item_1_title = null %}{% assign grid_item_1_id = null %}{% assign grid_item_1_type = null %}{% assign grid_item_1_landscape_img = null %}{% assign grid_item_2_img = null %}{% assign grid_item_2_url = null %}{% assign grid_item_2_title = null %}{% assign grid_item_2_id = null %}{% assign grid_item_2_type = null %}{% assign grid_item_2_landscape_img = null %}{% assign grid_item_3_img = null %}{% assign grid_item_3_url = null %}{% assign grid_item_3_title = null %}{% assign grid_item_3_id = null %}{% assign grid_item_3_type = null %}{% assign grid_item_3_landscape_img = null %}
+{% assign grid_item_4_img = null %}{% assign grid_item_4_url = null %}{% assign grid_item_4_title = null %}{% assign grid_item_4_id = null %}{% assign grid_item_4_type = null %}{% assign grid_item_4_landscape_img = null %}{% assign grid_item_5_img = null %}{% assign grid_item_5_url = null %}{% assign grid_item_5_title = null %}{% assign grid_item_5_id = null %}{% assign grid_item_5_type = null %}{% assign grid_item_5_landscape_img = null %}{% assign grid_item_6_img = null %}{% assign grid_item_6_url = null %}{% assign grid_item_6_title = null %}{% assign grid_item_6_id = null %}{% assign grid_item_6_type = null %}{% assign grid_item_6_landscape_img = null %}
+{% assign grid_item_7_img = null %}{% assign grid_item_7_url = null %}{% assign grid_item_7_title = null %}{% assign grid_item_7_id = null %}{% assign grid_item_7_type = null %}{% assign grid_item_7_landscape_img = null %}{% assign grid_item_8_img = null %}{% assign grid_item_8_url = null %}{% assign grid_item_8_title = null %}{% assign grid_item_8_id = null %}{% assign grid_item_8_type = null %}{% assign grid_item_8_landscape_img = null %}{% assign grid_item_9_img = null %}{% assign grid_item_9_url = null %}{% assign grid_item_9_title = null %}{% assign grid_item_9_id = null %}{% assign grid_item_9_type = null %}{% assign grid_item_9_landscape_img = null %}
+{% assign grid_item_10_img = null %}{% assign grid_item_10_url = null %}{% assign grid_item_10_title = null %}{% assign grid_item_10_id = null %}{% assign grid_item_10_type = null %}{% assign grid_item_10_landscape_img = null %}{% assign grid_item_11_img = null %}{% assign grid_item_11_url = null %}{% assign grid_item_11_title = null %}{% assign grid_item_11_id = null %}{% assign grid_item_11_type = null %}{% assign grid_item_11_landscape_img = null %}{% assign grid_item_12_img = null %}{% assign grid_item_12_url = null %}{% assign grid_item_12_title = null %}{% assign grid_item_12_id = null %}{% assign grid_item_12_type = null %}{% assign grid_item_12_landscape_img = null %}
+{% assign grid_item_13_img = null %}{% assign grid_item_13_url = null %}{% assign grid_item_13_title = null %}{% assign grid_item_13_id = null %}{% assign grid_item_13_type = null %}{% assign grid_item_13_landscape_img = null %}{% assign grid_item_14_img = null %}{% assign grid_item_14_url = null %}{% assign grid_item_14_title = null %}{% assign grid_item_14_id = null %}{% assign grid_item_14_type = null %}{% assign grid_item_14_landscape_img = null %}{% assign grid_item_15_img = null %}{% assign grid_item_15_url = null %}{% assign grid_item_15_title = null %}{% assign grid_item_15_id = null %}{% assign grid_item_15_type = null %}{% assign grid_item_15_landscape_img = null %}
+{% assign grid_item_16_img = null %}{% assign grid_item_16_url = null %}{% assign grid_item_16_title = null %}{% assign grid_item_16_id = null %}{% assign grid_item_16_type = null %}{% assign grid_item_16_landscape_img = null %}{% assign grid_item_17_img = null %}{% assign grid_item_17_url = null %}{% assign grid_item_17_title = null %}{% assign grid_item_17_id = null %}{% assign grid_item_17_type = null %}{% assign grid_item_17_landscape_img = null %}{% assign grid_item_18_img = null %}{% assign grid_item_18_url = null %}{% assign grid_item_18_title = null %}{% assign grid_item_18_id = null %}{% assign grid_item_18_type = null %}{% assign grid_item_18_landscape_img = null %}

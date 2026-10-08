@@ -1,0 +1,54 @@
+{% unless cta_clicktracking %}{% assign cta_clicktracking = "on" %}{% endunless %}
+{% unless cta_style %}{% assign cta_style = "primary" %}{% endunless %}
+{% unless content_bg_color %}{% assign content_bg_color = email_inner_bg | default: "transparent" %}{% endunless %}
+{% unless cta_padding_top %}{% assign cta_padding_top = 12 %}{% endunless %}
+{% unless cta_padding_bottom %}{% assign cta_padding_bottom = 12 %}{% endunless %}
+{% unless cta_align %}{% assign cta_align = "center" %}{% endunless %}
+{% unless cta_radius %}{% assign cta_radius = 200 %}{% endunless %}
+{% unless cta_height %}{% assign cta_height = 60 %}{% endunless %}
+{% unless cta_width %}{% assign cta_width = "full" %}{% endunless %}
+{% unless _utm %}{% assign _utm = "" %}{% endunless %}
+{% if cta_style == "secondary" %}
+  {% unless cta_bg_color %}{% assign cta_bg_color = "transparent" %}{% endunless %}
+  {% unless cta_text_color %}{% assign cta_text_color = "#ffffff" %}{% endunless %}
+  {% unless cta_border_color %}{% assign cta_border_color = "#cccccc" %}{% endunless %}
+{% elsif cta_style == "secondary-brand" %}
+  {% unless cta_bg_color %}{% assign cta_bg_color = "transparent" %}{% endunless %}
+  {% unless cta_text_color %}{% assign cta_text_color = "#ffff13" %}{% endunless %}
+  {% unless cta_border_color %}{% assign cta_border_color = "#ffff13" %}{% endunless %}
+{% else %}
+  {% unless cta_bg_color %}{% assign cta_bg_color = "#ffff13" %}{% endunless %}
+  {% unless cta_text_color %}{% assign cta_text_color = "#000000" %}{% endunless %}
+  {% unless cta_border_color %}{% assign cta_border_color = "none" %}{% endunless %}
+{% endif %}
+{% if cta_width == "full" %}{% assign _cta_w_style = "max-width: 100%;" %}{% assign _cta_w_class = " amp-cta-full" %}
+{% elsif cta_width == "auto" %}{% assign _cta_w_style = "" %}{% assign _cta_w_class = "" %}
+{% else %}{% assign _cta_w_style = "width: " | append: cta_width | append: "px; max-width: 100%;" %}{% assign _cta_w_class = "" %}
+{% endif %}
+{% if cta_border_color != "none" %}{% assign _cta_border_style = " border: 3px solid " | append: cta_border_color | append: ";" %}{% else %}{% assign _cta_border_style = " border: none;" %}{% endif %}
+{% if cta_align == "left" %}{% assign _cta_justify = "flex-start" %}
+{% elsif cta_align == "right" %}{% assign _cta_justify = "flex-end" %}
+{% else %}{% assign _cta_justify = "center" %}
+{% endif %}
+{% if cta_label and cta_url %}
+<div class="amp-content-pad" style="padding-top: {{cta_padding_top}}px; padding-bottom: {{cta_padding_bottom}}px; background-color: {{content_bg_color}}; display: flex; justify-content: {{_cta_justify}};">
+  <a href="{{cta_url | append: _utm}}" target="_blank"{% if cta_clicktracking == "off" %} clicktracking="off"{% endif %} class="amp-cta{{_cta_w_class}}" style="{{_cta_w_style}} border-radius: {{cta_radius}}px; background-color: {{cta_bg_color}}; color: {{cta_text_color}};{{_cta_border_style}}">{{cta_label}}</a>
+</div>
+{% endif %}
+{% assign cta_clicktracking = null %}
+{% assign cta_label = null %}
+{% assign cta_url = null %}
+{% assign cta_style = null %}
+{% assign cta_bg_color = null %}
+{% assign cta_text_color = null %}
+{% assign cta_border_color = null %}
+{% assign cta_width = null %}
+{% assign _cta_w_style = null %}
+{% assign _cta_w_class = null %}
+{% assign _cta_border_style = null %}
+{% assign _cta_justify = null %}
+{% assign cta_padding_top = null %}
+{% assign cta_padding_bottom = null %}
+{% assign cta_align = null %}
+{% assign cta_radius = null %}
+{% assign cta_height = null %}

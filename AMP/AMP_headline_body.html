@@ -1,0 +1,37 @@
+{% unless hb_clicktracking %}{% assign hb_clicktracking = "on" %}{% endunless %}
+{% unless content_bg_color %}{% assign content_bg_color = email_inner_bg | default: "transparent" %}{% endunless %}
+{% unless hb_text_color %}{% assign hb_text_color = "#ffffff" %}{% endunless %}
+{% unless hb_headline_color %}{% assign hb_headline_color = hb_text_color %}{% endunless %}
+{% unless hb_body_color %}{% assign hb_body_color = hb_text_color %}{% endunless %}
+{% unless hb_align %}{% assign hb_align = "center" %}{% endunless %}
+{% unless hb_padding_top %}{% if headline_copy %}{% assign hb_padding_top = 42 %}{% else %}{% assign hb_padding_top = 10 %}{% endif %}{% endunless %}
+{% unless hb_padding_bottom %}{% assign hb_padding_bottom = 12 %}{% endunless %}
+{% unless hb_padding_side %}{% assign hb_padding_side = 20 %}{% endunless %}
+{% unless hb_gap %}{% assign hb_gap = 8 %}{% endunless %}
+{% unless hb_headline_transform %}{% assign hb_headline_transform = "uppercase" %}{% endunless %}
+{% unless _utm %}{% assign _utm = "" %}{% endunless %}
+{% if headline_copy or body_copy %}
+<div class="amp-content-pad" style="padding-top: {{hb_padding_top}}px; padding-bottom: {{hb_padding_bottom}}px; text-align: {{hb_align}}; background-color: {{content_bg_color}};">
+  {% if headline_copy %}
+  <p class="amp-hb-headline" style="color: {{hb_headline_color}}; text-transform: {{hb_headline_transform}};{% if hb_headline_size %} font-size: {{hb_headline_size}}px;{% endif %} margin-bottom: {% if body_copy %}{{hb_gap}}{% else %}0{% endif %}px;">{% if headline_url %}<a href="{{headline_url | append: _utm}}"{% if hb_clicktracking == "off" %} clicktracking="off"{% endif %}>{% endif %}{{headline_copy}}{% if headline_url %}</a>{% endif %}</p>
+  {% endif %}
+  {% if body_copy %}
+  <p class="amp-hb-body" style="color: {{hb_body_color}};{% if hb_body_size %} font-size: {{hb_body_size}}px; line-height: 120%;{% endif %}">{{body_copy}}</p>
+  {% endif %}
+</div>
+{% endif %}
+{% assign hb_clicktracking = null %}
+{% assign headline_copy = null %}
+{% assign headline_url = null %}
+{% assign body_copy = null %}
+{% assign hb_text_color = null %}
+{% assign hb_headline_color = null %}
+{% assign hb_body_color = null %}
+{% assign hb_align = null %}
+{% assign hb_padding_top = null %}
+{% assign hb_padding_bottom = null %}
+{% assign hb_padding_side = null %}
+{% assign hb_gap = null %}
+{% assign hb_headline_size = null %}
+{% assign hb_body_size = null %}
+{% assign hb_headline_transform = null %}

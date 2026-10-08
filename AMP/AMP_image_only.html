@@ -1,0 +1,31 @@
+{% unless image_alt %}{% assign image_alt = "Tubi" %}{% endunless %}
+{% unless image_width %}{% assign image_width = 600 %}{% endunless %}
+{% unless image_height %}{% assign image_height = 338 %}{% endunless %}
+{% unless image_border_radius %}{% assign image_border_radius = 0 %}{% endunless %}
+{% unless image_margin_top %}{% assign image_margin_top = 0 %}{% endunless %}
+{% unless image_margin_bottom %}{% assign image_margin_bottom = 24 %}{% endunless %}
+{% unless image_margin_left %}{% assign image_margin_left = 0 %}{% endunless %}
+{% unless image_margin_right %}{% assign image_margin_right = 0 %}{% endunless %}
+{% unless image_clicktracking %}{% assign image_clicktracking = "on" %}{% endunless %}
+{% unless content_bg_color %}{% assign content_bg_color = email_inner_bg | default: "transparent" %}{% endunless %}
+{% unless _utm %}{% assign _utm = "" %}{% endunless %}
+{% if image_url %}
+<div class="amp-img-wrap" style="padding: {{image_margin_top}}px {{image_margin_right}}px {{image_margin_bottom}}px {{image_margin_left}}px; background-color: {{content_bg_color}};">
+  {% if image_link %}<a href="{{image_link | append: _utm}}" target="_blank"{% if image_clicktracking == "off" %} clicktracking="off"{% endif %} style="display: block; text-decoration: none;">{% endif %}
+    {% if image_border_radius != 0 %}<div style="border-radius: {{image_border_radius}}px; overflow: hidden;">{% endif %}
+      <amp-img src="{{image_url}}" alt="{{image_alt}}" width="{{image_width}}" height="{{image_height}}" layout="responsive"></amp-img>
+    {% if image_border_radius != 0 %}</div>{% endif %}
+  {% if image_link %}</a>{% endif %}
+</div>
+{% endif %}
+{% assign image_clicktracking = null %}
+{% assign image_url = null %}
+{% assign image_link = null %}
+{% assign image_alt = null %}
+{% assign image_width = null %}
+{% assign image_height = null %}
+{% assign image_border_radius = null %}
+{% assign image_margin_top = null %}
+{% assign image_margin_bottom = null %}
+{% assign image_margin_left = null %}
+{% assign image_margin_right = null %}
